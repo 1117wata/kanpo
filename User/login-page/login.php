@@ -11,22 +11,26 @@
 
     <img src="../../images/Kanpo.png" class="Kanpo_picture" alt="サンプル画像">
 
-    <h1>ログイン</h1>
+    <form action="home.php" method="post">
+        <h1>ログイン</h1>
 
-    会員の方は、登録時に入力されたメールアドレスとパスワードでログインしてください。<br>
+        <p>会員の方は、登録時に入力されたメールアドレスとパスワードでログインしてください。</p>
 
-    <div class="message">メールアドレス</div><br>
-    <input type="text" name="email"><br>
+        <div class="message">メールアドレス</div><br>
+        <input type="text" name="email" class="input"><br>
 
-    <div class="message">パスワード</div><br>
-    <input type="password" name="password"><br>
+        <div class="message">パスワード</div><br>
+        <input type="password" name="password" class="input"><br>
 
-    <p><button type="submit" class="button">ログイン</button></p>
+        <p><button type="submit" class="button">ログイン</button></p>
+    </form>
 
     <hr>
 
-    <h3>まだ会員登録されてない方</h3>
-    <p>初めてご利用される方は、こちらから会員登録すると便利にご利用できます。</p>
-    <p><button type="submit" class="button">新規会員登録</button></p>
+    <form action="../signup-page/signup-page.php" method="get">
+        <h3>まだ会員登録されてない方</h3>
+        <p>初めてご利用される方は、こちらから会員登録すると便利にご利用できます。</p>
+        <p><button type="submit" class="button">新規会員登録</button></p>
+    </form>
 </body>
 </html>

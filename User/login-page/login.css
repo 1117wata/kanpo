@@ -15,7 +15,16 @@ header {
 }
 
 .message {
-    background-color: #f7d76b;
+    background-color: #b4b4b4;
+    display: inline-block;
+    width: 300px;
+    margin: 0 auto;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.input {
+    width:300px;
 }
 
 .Kanpo_picture {
@@ -28,7 +37,7 @@ button.button {
     border: none;
     color: white;
     padding: 5px;
-    width: 200px;
+    width: 300px;
     text-align: center;
     font-size: 16px;
     margin: 5px;
