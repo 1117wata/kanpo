@@ -24,7 +24,7 @@
             display: flex;
             align-items: center;
             box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
-            border-bottom: 3px solid black; /* 黒線を追加 */
+            border-bottom: 2px solid black; /* 黒線を追加 */
         }
 
         .header-bar img {
@@ -131,7 +131,7 @@
     </div>
 
     <div class="form-container">
-        <h1>新規会員登録</h1>
+        <h2>新規会員登録</h2>
         
         <div class="form-group">
             <label class="form-label">お名前</label>
