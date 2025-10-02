@@ -1,14 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.filter-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const group = card.parentElement;
-      group.querySelectorAll('.filter-card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      console.log('選択されたID:', card.dataset.id);
-    });
-  });
-});
-
 function toggleCategory() {
   const hiddenCards = document.querySelectorAll('#category-grid .hidden');
   const btn = document.getElementById('toggle-category-btn');
