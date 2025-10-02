@@ -21,12 +21,33 @@
     header img {
       height: 40px;
     }
-    header .mypage {
-      font-size: 14px;
+    /* マイページボタン */
+    .mypage-btn {
       display: flex;
       align-items: center;
       gap: 5px;
+      padding: 6px 10px;
+      border-radius: 20px;
+      border: 1px solid #aaa;
+      background: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.2s;
     }
+    .mypage-btn:hover {
+      background: #f0f0f0;
+    }
+    .mypage-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #dcdcdc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
     main {
       padding: 15px;
     }
@@ -63,13 +84,24 @@
       border-radius: 4px;
       resize: none;
     }
+
+    /* 写真追加ボタン */
     .photo-upload {
-      background: #e6f3ff;
-      padding: 12px;
+      display: block;
+      width: 100%;
+      background: #d6f0ff;
+      padding: 14px;
       text-align: center;
-      border-radius: 6px;
+      border-radius: 10px;
+      border: 1px solid #a8d4f5;
       cursor: pointer;
       margin-bottom: 15px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+    }
+    .photo-upload:hover {
+      background: #c4e6ff;
     }
     .photo-upload input {
       display: none;
@@ -87,6 +119,7 @@
       border-radius: 6px;
       border: 1px solid #ccc;
     }
+
     .cost-box {
       background: #e6f3ff;
       padding: 12px;
@@ -115,6 +148,7 @@
       color: #fff;
       border-color: #66aaff;
     }
+
     .submit {
       width: 100%;
       padding: 12px;
@@ -128,9 +162,13 @@
   </style>
 </head>
 <body>
-      <header>
-    <img src="https://via.placeholder.com/100x40?text=KANPO" alt="KANPO Logo">
-    <div class="mypage">マイページ</div>
+  <header>
+    <img src="../../images/Kanpo.png" alt="KANPO Logo">
+    <!-- マイページボタン -->
+    <button class="mypage-btn">
+      <div class="mypage-icon">👤</div>
+      マイページ
+    </button>
   </header>
 
   <main>
