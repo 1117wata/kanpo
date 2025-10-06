@@ -5,7 +5,7 @@ $pdo = new PDO('mysql:host=localhost;dbname=kanpo', 'root', '');
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-$stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
+$stmt = $pdo->prepare("SELECT * FROM user WHERE email = ? AND password = ?");
 $stmt->execute([$email, $password]);
 $user = $stmt->fetch();
 
