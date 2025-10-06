@@ -19,12 +19,14 @@ header {
 }
 
 .logo img {
-  width: 120px;
+  width: 300px;
   height: auto;
 }
 
 .search-box {
+  width: 600px;
   padding: 0 16px;
+  margin: 0 auto 24px;
   margin-bottom: 16px;
   display: flex;
   gap: 8px;
@@ -56,6 +58,9 @@ header {
 }
 
 .filter-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   border: 2px solid transparent;
   padding: 0;
@@ -88,9 +93,9 @@ header {
   z-index: 1;
   color: #fff;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 21px;
   text-align: center;
-  line-height: 100px;
+  line-height: normal;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
 }
 
@@ -103,4 +108,38 @@ header {
   margin: 0 auto 24px;
   padding: 8px 16px;
   font-size: 14px;
+}
+
+.filter-card .card-bg {
+  background-size: cover;
+  background-position: center;
+  transition: filter 0.3s ease;
+}
+
+/* ホバー時に明るくする */
+.filter-card:hover .card-bg {
+  filter: brightness(1);
+}
+
+
+.toggle-btn {
+  display: block;
+  margin: 50px auto 24px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #2dbe60;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* ホバー時の効果 */
+.toggle-btn:hover {
+  background-color: #28a956;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
