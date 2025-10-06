@@ -1,6 +1,5 @@
 <?php
 $error = '';
-$success = '';
 $username = $nickname = $email = $password = $address = '';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -10,16 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = trim($_POST['password'] ?? '');
     $address  = trim($_POST['address'] ?? '');
 
-    // 未入力チェック（どれが未入力か判定）
-    $missing = [];
-    if ($username === '') $missing[] = "お名前";
-    if ($nickname === '') $missing[] = "ニックネーム";
-    if ($email === '') $missing[] = "メールアドレス";
-    if ($password === '') $missing[] = "パスワード";
-    if ($address === '') $missing[] = "住所";
-
-    if (!empty($missing)) {
-        $error = "未入力の項目があります：" . implode("、", $missing);
+    if ($username === '' || $email === '' || $password === '') {
+        $error = "必須項目（お名前・メールアドレス・パスワード）を入力してください。";
     } else {
         try {
             $pdo = new PDO("mysql:host=localhost;dbname=kanpo;charset=utf8", "root", "");
@@ -39,11 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(':icon_path', $icon_path);
             $stmt->execute();
 
-            // 成功メッセージを表示
-            $success = "登録が完了しました！2秒後にホームへ移動します。";
+            header("Location: ../home-page/home.php");
+            exit;
 
-            // 2秒後にホームページに遷移
-            echo "<meta http-equiv='refresh' content='2;url=../home-page/home.php'>";
         } catch (PDOException $e) {
             $error = "DBエラー: " . $e->getMessage();
         }
@@ -56,81 +45,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>新規登録画面</title>
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    flex-direction: column;
-}
-.header-bar {
-    width: 100%;
-    background-color: #FFEC6E;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
-    border-bottom: 2px solid black;
-}
-.header-bar img {
-    height: 40px;
-    width: auto;
-    margin-left: 20px;
-    cursor: pointer;
-}
-.logo-link { display: inline-block; }
-
-.form-container {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
-    width: 100%;
-    max-width: 500px;
-    margin-top: 40px;
-}
-h2 { text-align: left; margin-bottom: 20px; }
-.form-group { margin-bottom: 20px; }
-.form-label { display: block; background-color: #ccc; padding: 8px; border-radius: 5px 5px 0 0; }
-.input-wrapper { background-color: #eee; padding: 10px; border-radius: 0 0 5px 5px; }
-input[type="text"], input[type="email"], input[type="password"] {
-    width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;
-    box-sizing: border-box; background-color: white;
-}
-.note { font-size: 0.9em; color: #555; margin-top: 5px; }
-
-.button-group { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
-button { padding: 12px; border-radius: 5px; cursor: pointer; font-size: 1em; width: 100%; border: 2px solid black; }
-.back-btn { background-color: #FFEC6E; color: black; }
-.back-btn:hover { background-color: #ddc50bff; }
-.submit-btn { background-color: #454646ff; color: white; }
-.submit-btn:hover { background-color: #212120ff; }
-
-.alert { padding: 10px; border-radius: 5px; margin-bottom: 15px; font-weight: bold; }
-.alert-error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-.alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-</style>
+<link rel="stylesheet" href="signup.css">
 <script>
 function validateForm(event) {
     const username = document.forms["signupForm"]["username"].value.trim();
-    const nickname = document.forms["signupForm"]["nickname"].value.trim();
     const email = document.forms["signupForm"]["email"].value.trim();
     const password = document.forms["signupForm"]["password"].value.trim();
-    const address = document.forms["signupForm"]["address"].value.trim();
-
-    let missing = [];
-    if (username === "") missing.push("お名前");
-    if (nickname === "") missing.push("ニックネーム");
-    if (email === "") missing.push("メールアドレス");
-    if (password === "") missing.push("パスワード");
-    if (address === "") missing.push("住所");
-
-    if (missing.length > 0) {
-        alert("未入力の項目があります：" + missing.join("、"));
+    if (username === "" || email === "" || password === "") {
+        alert("必須項目（お名前・メールアドレス・パスワード）を入力してください。");
         event.preventDefault();
     }
 }
@@ -148,8 +70,6 @@ function validateForm(event) {
 
     <?php if($error): ?>
         <div class="alert alert-error"><?= htmlspecialchars($error, ENT_QUOTES) ?></div>
-    <?php elseif($success): ?>
-        <div class="alert alert-success"><?= htmlspecialchars($success, ENT_QUOTES) ?></div>
     <?php endif; ?>
 
     <form name="signupForm" method="post" action="" onsubmit="validateForm(event)">
