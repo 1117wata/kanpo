@@ -1,3 +1,24 @@
+<?php
+session_start();
+$pdo = new PDO('mysql:host=localhost;dbname=kanpo', 'root', '');
+
+$email = $_POST['email'];
+$password = $_POST['password'];
+
+$stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
+$stmt->execute([$email, $password]);
+$user = $stmt->fetch();
+
+if ($user) {
+    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['email'] = $user['email'];
+    header("Location: home.php");
+    exit();
+} else {
+    $error = "メールアドレスまたはパスワードが間違っています。";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +37,10 @@
 
         <p>会員の方は、登録時に入力されたメールアドレスとパスワードでログインしてください。</p>
 
+        <?php if (!empty($error)): ?>
+            <p style="color:red;"><?php echo $error; ?></p>
+        <?php endif; ?>
+        
         <div class="message">メールアドレス</div><br>
         <input type="text" name="email" class="input"><br>
 
