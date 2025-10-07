@@ -109,7 +109,7 @@ window.addEventListener('load', checkNickname);
 <body>
 <div class="header-bar">
     <a href="../home-page/home.php" class="logo-link">
-        <img src="images/kanpo.png" alt="サイトロゴ">
+        <img src="images/Ukanpo.png" alt="サイトロゴ">
     </a>
 </div>
 
