@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>新規登録画面</title>
-<link rel="stylesheet" href="signup.css">
+<link rel="stylesheet" href="css/signup.css">
 <style>
 /* ニックネームチェック用表示 */
 .check-msg { font-size: 0.9em; margin-top: 5px; font-weight: bold; }
@@ -109,7 +109,7 @@ window.addEventListener('load', checkNickname);
 <body>
 <div class="header-bar">
     <a href="../home-page/home.php" class="logo-link">
-        <img src="kanpo.png" alt="サイトロゴ">
+        <img src="images/kanpo.png" alt="サイトロゴ">
     </a>
 </div>
 
