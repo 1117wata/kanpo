@@ -1,4 +1,4 @@
-/* members.css (修正版) */
+/* stores.css (members.cssに揃えた版) */
 
 /* ベース */
 * { box-sizing: border-box; }
@@ -12,22 +12,37 @@ body {
 /* ヘッダー */
 .header-bar {
     background-color: #F9A9FF;
-    padding: 12px 20px;
+    padding: 35px 20px;
     display: flex;
     align-items: center;
+    justify-content: center; /* タイトル中央 */
+    position: relative;
 }
+
+.header-bar .logo-link {
+    position: absolute;
+    left: 20px; /* ロゴを左固定 */
+}
+
 .header-bar .logo-link img {
     height: 60px;
 }
 
-/* 検索エリア（中央寄せ） */
+/* ページタイトル */
+.page-title {
+    font-size: 35px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* 検索エリア */
 .search-container {
     width: 90%;
     max-width: 1100px;
     margin: 26px auto 6px;
 }
 
-/* 検索ボックスラッパー：input と button を横並びで一体化 */
+/* 検索ボックスラッパー */
 .search-box-wrapper {
     display: flex;
     width: 100%;
@@ -40,7 +55,7 @@ body {
     background: #fff;
 }
 
-/* 入力欄：伸縮する */
+/* 入力欄 */
 .search-box {
     flex: 1;
     padding: 12px 16px;
@@ -55,7 +70,7 @@ body {
     text-align: left;
 }
 
-/* 検索ボタン：ボックス内の右端にピッタリ */
+/* 検索ボタン */
 .search-btn {
     display: flex;
     align-items: center;
@@ -65,25 +80,47 @@ body {
     padding: 10px 18px;
     cursor: pointer;
 }
+
 .search-btn .search-icon {
     width: 22px;
     height: 22px;
     display: block;
 }
 
-/* 並び替え：ボックス幅に合わせて右寄せ */
-.sort-container {
+/* 並び替えと新規追加ボタンのコンテナ */
+.button-row {
     width: 100%;
     max-width: 1000px;
     margin: 8px auto 0;
     display: flex;
-    justify-content: flex-end; /* 右寄せ */
+    justify-content: space-between; /* 左右に振り分け */
     align-items: center;
     gap: 8px;
 }
-.sort-container label { font-weight: 600; color: #333; }
-.sort-container select {
+
+/* 左：新規追加ボタン */
+.left-btn .add-btn {
+    background-color: #4CAF50;
+    color: #fff;
+    border: 1px solid #388E3C;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+}
+.left-btn .add-btn:hover {
+    background-color: #45A049;
+}
+
+/* 右：並び替えセレクト */
+.right-btn label {
+    font-weight: 600;
+    color: #333;
+    margin-right: 6px;
+}
+.right-btn select {
     padding: 6px 10px;
+    font-size: 16px;
     border: 1px solid #000;
     border-radius: 6px;
     background: #fff;
@@ -98,7 +135,7 @@ body {
     border-top: 1px solid #ddd;
 }
 
-/* 会員カード一覧（中央寄せ） */
+/* 店舗カード一覧（中央寄せ） */
 .members-container {
     width: 90%;
     max-width: 1100px;
@@ -108,10 +145,10 @@ body {
     gap: 14px;
 }
 
-/* 1ユーザーカード */
+/* 1店舗カード */
 .member-card {
     width: 100%;
-    max-width: 1000px; /* カード幅 */
+    max-width: 1000px; /* カード幅揃える */
     margin: 0 auto;
     background: #fff;
     border: 2px solid #000;
@@ -122,7 +159,7 @@ body {
     flex-direction: column;
 }
 
-/* 上段：ID と 詳細ボタン */
+/* 上段：店舗IDと詳細ボタン */
 .member-id-row,
 .member-name-row {
     display: flex;
@@ -131,7 +168,7 @@ body {
     gap: 12px;
 }
 
-/* 下段：名前とアイコンは左右揃え */
+/* 下段：店舗名 */
 .member-name-row { margin-top: 8px; }
 
 /* テキスト */
@@ -151,94 +188,9 @@ body {
     font-weight: 700;
 }
 
-/* アイコン（丸く） */
-.user-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 1px solid #ddd;
-}
-
 /* 表示がない場合 */
 .no-user {
     text-align: center;
     color: #777;
     padding: 20px 0;
-}
-
-/* ページタイトル */
-.header-bar {
-    background-color: #F9A9FF;
-    padding: 12px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* ← 中央寄せ */
-    position: relative;
-}
-
-.header-bar .logo-link {
-    position: absolute;
-    left: 20px; /* ロゴを左固定 */
-}
-
-.page-title {
-    font-size: 35px;
-    font-weight: bold;
-    color: #ffffff;
-}
-
-/* member_detailのcss */
-.detail-container {
-    width: 90%;
-    max-width: 700px;
-    margin: 40px auto;
-    background: #fff;
-    border: 2px solid #000;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-}
-.detail-container p {
-    font-size: 16px;
-    margin: 12px 0;
-    color: #222;
-}
-.delete-btn {
-    display: block;
-    width: 180px;
-    margin: 30px auto 0;
-    background-color: #ff6b6b;
-    color: #fff;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-.delete-btn:hover {
-    background-color: #ff4b4b;
-}
-.no-data {
-    text-align: center;
-    font-size: 18px;
-    color: #777;
-    margin-top: 80px;
-}
-
-.back-btn-container {
-    position: absolute;
-    top: 140px;   /* 位置調整（上から） */
-    left: 20px;  /* 位置調整（左から） */
-}
-
-.back-link {
-    display: inline-block;
-}
-
-.back-icon {
-    width: 40px;   /* サイズ調整 */
-    height: auto;
-    cursor: pointer; /* マウスカーソルを「手」にする */
 }

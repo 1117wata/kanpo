@@ -28,70 +28,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete"])) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>会員詳細</title>
 <link rel="stylesheet" href="css/members.css">
-<style>
-.detail-container {
-    width: 90%;
-    max-width: 700px;
-    margin: 40px auto;
-    background: #fff;
-    border: 2px solid #000;
-    border-radius: 12px;
-    padding: 24px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-}
-.detail-container p {
-    font-size: 16px;
-    margin: 12px 0;
-    color: #222;
-}
-.delete-btn {
-    display: block;
-    width: 180px;
-    margin: 30px auto 0;
-    background-color: #ff6b6b;
-    color: #fff;
-    font-weight: bold;
-    border: none;
-    border-radius: 8px;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-.delete-btn:hover {
-    background-color: #ff4b4b;
-}
-.no-data {
-    text-align: center;
-    font-size: 18px;
-    color: #777;
-    margin-top: 80px;
-}
-</style>
 </head>
-
+<link rel="stylesheet" href="css/members.css">
 <body>
-<div class="header-bar">
-    <a href="../home-page/home.php" class="logo-link">
-        <img src="../images/Akanpo.png" alt="サイトロゴ">
-    </a>
-    <span class="page-title">会員詳細</span>
-</div>
+    <header class="header-bar">
+        <a href="../admin_home.php" class="logo-link">
+            <img src="../images/Akanpo.png" alt="サイトロゴ">
+        </a>
+        <h1 class="page-title">会員詳細</h1>
+    </header>
 
-<?php if ($user): ?>
-<div class="detail-container">
-    <p><strong>ユーザーID：</strong><?= htmlspecialchars($user['user_id']) ?></p>
-    <p><strong>ユーザー名：</strong><?= htmlspecialchars($user['username']) ?></p>
-    <p><strong>ニックネーム：</strong><?= htmlspecialchars($user['nickname']) ?></p>
-    <p><strong>メールアドレス：</strong><?= htmlspecialchars($user['email']) ?></p>
-    <p><strong>登録日：</strong><?= htmlspecialchars($user['created_at'] ?? '不明') ?></p>
+    <!-- 戻るボタン -->
+    <div class="back-btn-container">
+        <a href="javascript:history.back();" class="back-link">
+            <img src="../images/back.png" alt="戻る" class="back-icon">
+        </a>
+    </div>
 
-    <form method="post" onsubmit="return confirm('本当にこのアカウントを削除しますか？');">
-        <button type="submit" name="delete" class="delete-btn">アカウント削除</button>
-    </form>
-</div>
-<?php else: ?>
-<p class="no-data">該当するユーザーが見つかりません。</p>
-<?php endif; ?>
 
+    <div class="detail-container">
+        <p><strong>ユーザー名：</strong><?= htmlspecialchars($user['username']) ?></p>
+        <p><strong>ユーザーID：</strong><?= htmlspecialchars($user['user_id']) ?></p>
+        <p><strong>ニックネーム：</strong><?= htmlspecialchars($user['nickname']) ?></p>
+        <p><strong>メールアドレス：</strong><?= htmlspecialchars($user['email']) ?></p>
+        <p><strong>登録日：</strong>
+            <?php
+            if (!empty($user['created_at'])) {
+                echo date('Y/m/d', strtotime($user['created_at']));
+            } else {
+                echo '未登録';
+            }
+            ?>
+        </p>
+
+        <button class="delete-btn">アカウント削除</button>
+    </div>
 </body>
+
 </html>
