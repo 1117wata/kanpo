@@ -44,6 +44,13 @@ $stores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <h2>検索結果</h2>
 
+<!-- 検索フォーム -->
+<form action="search_results.php" method="GET" class="search-box">
+  <input type="text" name="keyword" placeholder="店舗名・キーワードで検索" />
+  <button type="submit">検索</button>
+</form>
+
+
 <?php if (count($stores) === 0): ?>
   <p>該当する店舗は見つかりませんでした。</p>
 <?php else: ?>

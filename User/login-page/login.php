@@ -12,20 +12,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    $stmt = $pdo->prepare("SELECT * FROM `user` WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT * FROM user WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch();
 
-    if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['id'];
+    if ($user && password_verify($password, $user['password_hash'])) {
+        $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['email'] = $user['email'];
-        header("Location: home.php");
+        header("Location: ../home-page/home.php");
         exit();
     } else {
         $error = "メールアドレスまたはパスワードが間違っています。";
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ja">
