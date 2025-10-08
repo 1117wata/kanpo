@@ -43,7 +43,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
 
 <header class="header-bar">
-    <a href="../home-page/home.php" class="logo-link">
+    <a href="admin_home.php" class="logo-link">
         <img src="../images/Akanpo.png" alt="サイトロゴ">
     </a>
     <h1 class="page-title">会員一覧</h1>

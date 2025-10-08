@@ -60,8 +60,8 @@
 
         <section class="page home-wrap">
             <div class="home-stack" role="navigation" aria-label="ホームメニュー">
-                <a class="big-button" href="/admin/members.html" aria-label="会員一覧へ">会員一覧</a>
-                <a class="big-button" href="/admin/shops.html" aria-label="店舗一覧へ">店舗一覧</a>
+                <a class="big-button" href="members.php" aria-label="会員一覧へ">会員一覧</a>
+                <a class="big-button" href="admin_stores.php" aria-label="店舗一覧へ">店舗一覧</a>
             </div>
         </section>
     </main>
