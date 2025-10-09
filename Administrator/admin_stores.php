@@ -53,7 +53,7 @@ $stores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <div class="button-row">
     <div class="left-btn">
-        <button class="add-btn" onclick="location.href='store_add.php'">新規追加</button>
+        <button class="add-btn" onclick="location.href='admin_store_add.php'">新規追加</button>
     </div>
     <div class="right-btn">
         <form method="get" id="sortForm">
