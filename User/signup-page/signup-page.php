@@ -23,22 +23,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($stmt->fetchColumn() > 0) {
                 $error = "このニックネームは既に使用されています。";
             } else {
-                $password_hash = password_hash($password, PASSWORD_DEFAULT);
-                $icon_path = 'default.png';
-                $sql = "INSERT INTO user (username, nickname, email, password_hash, address, icon_path)
-                        VALUES (:username, :nickname, :email, :password, :address, :icon_path)";
-                $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(':username', $username);
-                $stmt->bindParam(':nickname', $nickname);
+                // メールアドレス重複チェック
+                $stmt = $pdo->prepare("SELECT COUNT(*) FROM user WHERE email = :email");
                 $stmt->bindParam(':email', $email);
-                $stmt->bindParam(':password', $password_hash);
-                $stmt->bindParam(':address', $address);
-                $stmt->bindParam(':icon_path', $icon_path);
                 $stmt->execute();
+                if ($stmt->fetchColumn() > 0) {
+                    $error = "このメールアドレスは既に登録されています。";
+                } else {
+                    $password_hash = password_hash($password, PASSWORD_DEFAULT);
+                    $icon_path = 'default.png';
+                    $sql = "INSERT INTO user (username, nickname, email, password_hash, address, icon_path)
+                            VALUES (:username, :nickname, :email, :password, :address, :icon_path)";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindParam(':username', $username);
+                    $stmt->bindParam(':nickname', $nickname);
+                    $stmt->bindParam(':email', $email);
+                    $stmt->bindParam(':password', $password_hash);
+                    $stmt->bindParam(':address', $address);
+                    $stmt->bindParam(':icon_path', $icon_path);
+                    $stmt->execute();
 
-                // 登録完了したら3秒後に success-page.php に遷移
-                header("Location: success-page.php");
-                exit;
+                    header("Location: success-page.php");
+                    exit;
+                }
             }
 
         } catch (PDOException $e) {
@@ -109,7 +116,7 @@ window.addEventListener('load', checkNickname);
 <body>
 <div class="header-bar">
     <a href="../home-page/home.php" class="logo-link">
-        <img src="images/Ukanpo.png" alt="サイトロゴ">
+        <img src="images/kanpo.png" alt="サイトロゴ">
     </a>
 </div>
 
