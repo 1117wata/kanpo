@@ -16,9 +16,41 @@
       ４<br>
       口コミ
     </div>
-    <button type="submit">プロフィール編集</button>
   </div>
+  <button type="submit" class="profile_edit">プロフィール編集</button>
   <div class="border_box"></div>
+
+  <div class="store">
+    <div class="store_name">
+      バーガーキング 博多駅筑紫口店<br>
+    </div>
+    <div class="store_genre">
+      博多/ハンバーガー、サンドウィッチ、ファーストフード
+    </div>
+    <div class="ellipsis-menu">
+      <button class="ellipsis-button">...</button>
+      <ul class="menu">
+        <li>編集</li>
+        <li>削除</li>
+      </ul>
+    </div>
+    <hr>
+    <div class="store_review">
+      2025/09/01 訪問<br>
+      ☆☆☆☆☆ 5.0
+    </div>
+    <div class="store_image">
+      <img src="uploads/burger_king1.png">
+      <img src="uploads/burger_king2.png">
+      <img src="uploads/burger_king3.png">
+    </div>
+    <div class="store_review_comment">
+      初バーガーキングのワッパーです。セットでDr.pepperとフレンチフライと王道の組み合わせでしょうか。肉肉しさも感じつつ野菜も割と入ってておいしかったです。ソースもケチャップとシンプルisベストでした。ソース味で食べてる感がしなかったのが良かったです。並んでなかったから入りました。
+    </div>
+  </div>
+
+  <div class="border_box"></div>
+
   <div class="store">
     <div class="store_name">
       博多もつ鍋 徳永屋 総本店<br>
@@ -31,6 +63,42 @@
       2025/09/01 訪問<br>
       ☆☆☆☆☆ 5.0
     </div>
+    <div class="store_image">
+      <img src="uploads/burger_king1.png">
+      <img src="uploads/burger_king2.png">
+      <img src="uploads/burger_king3.png">
+    </div>
+    <div class="store_review_comment">
+      初バーガーキングのワッパーです。セットでDr.pepperとフレンチフライと王道の組み合わせでしょうか。肉肉しさも感じつつ野菜も割と入ってておいしかったです。ソースもケチャップとシンプルisベストでした。ソース味で食べてる感がしなかったのが良かったです。並んでなかったから入りました。
+    </div>
   </div>
+
+<script>
+const button = document.querySelector('.ellipsis-button');
+const menu = document.querySelector('.menu');
+
+button.addEventListener('click', () => {
+  menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+});
+
+// メニュー外をクリックしたら閉じる
+document.addEventListener('click', (e) => {
+  if (!button.contains(e.target) && !menu.contains(e.target)) {
+    menu.style.display = 'none';
+  }
+});
+
+// 編集・削除のクリックイベント
+document.getElementById('edit').addEventListener('click', () => {
+  windoe.location.href = 'review_edit.php';
+  menu.style.display = 'none';
+});
+
+document.getElementById('delete').addEventListener('click', () => {
+  window.location.href = 'review'
+  menu.style.display = 'none';
+});
+
+</script>
 </body>
 </html>
