@@ -30,8 +30,8 @@
     <div class="ellipsis-menu">
       <button class="ellipsis-button">...</button>
       <ul class="menu">
-        <li>編集</li>
-        <li>削除</li>
+        <li id="edit">編集</li>
+        <li id="delete">削除</li>
       </ul>
     </div>
     <hr>
@@ -90,7 +90,7 @@ document.addEventListener('click', (e) => {
 
 // 編集・削除のクリックイベント
 document.getElementById('edit').addEventListener('click', () => {
-  windoe.location.href = 'review_edit.php';
+  window.location.href = 'review_edit.php';
   menu.style.display = 'none';
 });
 
