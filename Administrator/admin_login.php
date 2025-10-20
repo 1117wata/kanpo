@@ -45,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_email'], $_POST
 <form method="post" class="login-form">
     <h1>管理者ログイン</h1>
 
-    <!-- メッセージをh1の下に -->
     <div class="login-message <?= $message_class ?>"><?= $error_message ?></div>
 
     <div class="form-group">
@@ -61,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_email'], $_POST
     <button type="submit">ログイン</button>
 </form>
 
-<!-- クラゲ -->
+<!-- アニメーション -->
 <script>
 function createJellyfish() {
     const jelly = document.createElement('div');
