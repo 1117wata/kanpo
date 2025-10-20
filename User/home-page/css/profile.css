@@ -16,6 +16,13 @@ header {
     font-weight: bold;
 }
 
+.logo {
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    Left: 5%;
+}
+
 .profile {
     display: flex;
     justify-content: space-between;
@@ -75,6 +82,8 @@ header {
 .ellipsis-menu {
   position: relative;
   display: inline-block;
+  position: absolute;
+  right: 10%;
 }
 
 .ellipsis-button {
