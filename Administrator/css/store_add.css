@@ -29,7 +29,7 @@ body {
     color: #ffffff;
 }
 
-/* ===== フォーム全体 ===== */
+/* フォーム全体 */
 .store-add-form {
     width: 80%;
     max-width: 700px;
@@ -39,7 +39,7 @@ body {
     gap: 18px;
 }
 
-/* ===== 横並び ===== */
+/* 横並び */
 .form-group {
     display: flex;
     align-items: center;
@@ -77,7 +77,7 @@ body {
 .add-btn {
     background-color: #4CAF50;
     color: white;
-    padding: 10px 30px;
+    padding: 10px 150px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -87,3 +87,44 @@ body {
 .add-btn:hover {
     background-color: #45a049;
 }
+
+/* ジャンル選択　*/
+.dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.dropdown input {
+    width: 95%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    margin-left: 30px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    border-radius: 5px;
+    z-index: 10;
+}
+
+.dropdown-content div {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.dropdown-content div:hover {
+    background-color: #f1f1f1;
+}
+
