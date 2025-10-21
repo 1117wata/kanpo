@@ -212,13 +212,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <button class="add-btn" type="submit">登録</button>
         </div>
     </form>
-    
         <!-- フッター -->
         <footer class="footer">
             <div class="footer-content">
                 &copy; <?= date('Y') ?> KANPO 管理者画面
             </div>
-        </footer>
+    </footer>
 
 </body>
 </html>

@@ -23,7 +23,7 @@
     color: #ffffff;
 }
 
-/* 店舗詳細 */
+/* 店舗詳細全体 */
 .store-detail {
     text-align: center;
     padding: 40px 20px;
@@ -34,11 +34,11 @@
     margin-bottom: 30px;
 }
 
-/* Swiper */
+/* Swiper カルーセル */
 .swiper {
-    width: 100%;
+    width: 100%;  /* 画面いっぱいに近く */
     max-width: 1500px;
-    margin: 0 auto;
+    margin: 0 auto 50px auto;
 }
 
 .store-image {
@@ -48,32 +48,57 @@
     border-radius: 10px;
 }
 
+/* 店舗情報 */
 .store-info {
     width: 90%;
     max-width: 1000px;
-    margin: 40px auto;
+    margin: 0 auto 50px auto;
     text-align: left;
 }
 
-.store-info h2 {
-    font-size: 28px;
+/* タイトル + 編集ボタン */
+.store-info-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
-    position: relative;
-    padding-left: 30px;
 }
 
-.store-info h2::before {
-    content: "";               /* 空のコンテンツ */
+.store-info-header h2 {
+    position: relative;
+    font-size: 28px;
+    margin: 0;
+    padding-left: 30px; /* 四角用 */
+}
+
+.store-info-header h2::before {
+    content: "";
     display: inline-block;
-    width: 20px;               /* 四角の横幅 */
-    height: 20px;              /* 四角の高さ */
-    background-color: #F9A9FF; /* 色 */
+    width: 20px;
+    height: 20px;
+    background-color: #F9A9FF;
     position: absolute;
     left: 0;
     top: 50%;
-    transform: translateY(-50%); /* 縦中央 */
+    transform: translateY(-50%);
 }
 
+/* 編集ボタン */
+.edit-btn {
+    background-color: #F9A9FF;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.edit-btn:hover {
+    background-color: #e08ae0;
+}
+
+/* テーブル */
 .store-info-table {
     width: 100%;
     border-collapse: collapse;
@@ -88,6 +113,7 @@
 .store-info-table th {
     width: 150px;
     background-color: #F9A9FF;
+    color: #ffffff;
     text-align: left;
 }
 
@@ -100,6 +126,7 @@
     text-decoration: underline;
 }
 
+/* フッター */
 .footer {
     background-color: #F9A9FF;
     color: #ffffff;
