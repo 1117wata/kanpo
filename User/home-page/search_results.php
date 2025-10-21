@@ -50,14 +50,17 @@ $stores = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <button type="submit">検索</button>
 </form>
 
-
 <?php if (count($stores) === 0): ?>
   <p>該当する店舗は見つかりませんでした。</p>
 <?php else: ?>
   <ul class="store-list">
     <?php foreach ($stores as $store): ?>
       <li>
-        <h3><?= htmlspecialchars($store['store_name']) ?></h3>
+        <h3>
+          <a href="store_detail.php?store_id=<?= htmlspecialchars($store['store_id']) ?>">
+            <?= htmlspecialchars($store['store_name']) ?>
+          </a>
+        </h3>
         <p><?= htmlspecialchars($store['genre']) ?> / <?= htmlspecialchars($store['store_address']) ?></p>
       </li>
     <?php endforeach; ?>
