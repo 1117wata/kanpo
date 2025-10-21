@@ -91,7 +91,7 @@ try {
 <!-- 店舗基本情報 -->
 <div class="store-info">
     <div class="store-info-header">
-        <h2>店舗情報</h2>
+        <h2>店舗基本情報</h2>
         <button class="edit-btn" onclick="location.href='admin_store_edit.php?id=<?= $store['store_id'] ?>'">編集</button>
     </div>
     <table class="store-info-table">
