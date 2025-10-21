@@ -1,0 +1,110 @@
+/* ヘッダー */
+.header-bar {
+    background-color: #F9A9FF;
+    padding: 35px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.header-bar .logo-link {
+    position: absolute;
+    left: 20px;
+}
+
+.header-bar .logo-link img {
+    height: 60px;
+}
+
+.page-title {
+    font-size: 35px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* 店舗詳細 */
+.store-detail {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.store-detail h1 {
+    font-size: 40px;
+    margin-bottom: 30px;
+}
+
+/* Swiper */
+.swiper {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.store-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.store-info {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+    text-align: left;
+}
+
+.store-info h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    position: relative;
+    padding-left: 30px;
+}
+
+.store-info h2::before {
+    content: "";               /* 空のコンテンツ */
+    display: inline-block;
+    width: 20px;               /* 四角の横幅 */
+    height: 20px;              /* 四角の高さ */
+    background-color: #F9A9FF; /* 色 */
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%); /* 縦中央 */
+}
+
+.store-info-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.store-info-table th,
+.store-info-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+.store-info-table th {
+    width: 150px;
+    background-color: #F9A9FF;
+    text-align: left;
+}
+
+.store-info-table td a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.store-info-table td a:hover {
+    text-decoration: underline;
+}
+
+.footer {
+    background-color: #F9A9FF;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 50px;
+    font-size: 14px;
+}

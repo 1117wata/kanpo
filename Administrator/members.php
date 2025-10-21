@@ -97,5 +97,13 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php endif; ?>
 </div>
 
+<!-- フッター -->
+<footer class="footer">
+    <div class="footer-content">
+        &copy; <?= date('Y') ?> KANPO 管理者画面
+    </div>
+</footer>
+
+
 </body>
 </html>

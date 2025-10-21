@@ -194,3 +194,13 @@ body {
     color: #777;
     padding: 20px 0;
 }
+
+/* フッター */
+.footer {
+    background-color: #F9A9FF;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 50px;
+    font-size: 14px;
+}
