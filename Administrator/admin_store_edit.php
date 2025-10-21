@@ -52,12 +52,28 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
         $stmt_update = $pdo->prepare($sql);
         $stmt_update->execute($data);
 
+        // 画像追加処理
+        if(!empty($_FILES['new_photos']['name'][0])){
+            $uploadDir = __DIR__.'/uploads/store_photos/';
+            foreach($_FILES['new_photos']['name'] as $key => $name){
+                $tmpName = $_FILES['new_photos']['tmp_name'][$key];
+                $ext = pathinfo($name, PATHINFO_EXTENSION);
+                $filename = uniqid().'.'.$ext;
+                $target = $uploadDir.$filename;
+                if(move_uploaded_file($tmpName, $target)){
+                    $stmt_photo = $pdo->prepare("INSERT INTO store_photo (store_id, store_photo_path) VALUES (?, ?)");
+                    $stmt_photo->execute([$store_id, 'uploads/store_photos/'.$filename]);
+                }
+            }
+        }
+
         $_SESSION['success_msg'] = "店舗情報を更新しました！";
         header("Location: admin_store_info.php?id=".$store_id);
         exit;
     }catch(PDOException $e){ $error = "DBエラー: ".$e->getMessage(); }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -85,7 +101,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 <input type="text" name="store_name" value="<?= htmlspecialchars($store['store_name']) ?>">
 </div>
 
-<!-- ジャンルドロップダウン -->
+<!-- ジャンル -->
 <div class="form-group">
 <label>ジャンル：</label>
 <div class="dropdown">
@@ -105,14 +121,12 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 </div>
 </div>
 </div>
-
-<!-- お問い合わせ -->
+<!-- 連絡先、予約可否 -->
 <div class="form-group">
 <label>お問い合わせ：</label>
 <input type="text" name="contact_info" value="<?= htmlspecialchars($store['contact_info']) ?>">
 </div>
 
-<!-- 予約可否 -->
 <div class="form-group">
 <label>予約可否：</label>
 <div class="radio-group">
@@ -121,45 +135,46 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 </div>
 </div>
 
-<!-- 住所・交通手段・営業時間など -->
+<!-- 他の情報 -->
 <div class="form-group"><label>住所：</label><input type="text" name="store_address" value="<?= htmlspecialchars($store['store_address']) ?>"></div>
 <div class="form-group"><label>交通手段：</label><input type="text" name="access" value="<?= htmlspecialchars($store['access']) ?>"></div>
 <div class="form-group"><label>営業時間：</label><input type="text" name="opening_hours" value="<?= htmlspecialchars($store['opening_hours']) ?>"></div>
 <div class="form-group"><label>予算口コミ：</label><input type="text" name="budget_review" value="<?= htmlspecialchars($store['budget']) ?>"></div>
 <div class="form-group"><label>支払い方法：</label><input type="text" name="payment_method" value="<?= htmlspecialchars($store['payment_methods']) ?>"></div>
-
-<div class="form-group"><label>貸切：</label>
+<div class="form-group">
+<label>貸切：</label>
 <div class="radio-group">
 <label><input type="radio" name="private_available" value="1" <?= $store['private_available']?'checked':'' ?>>可</label>
 <label><input type="radio" name="private_available" value="0" <?= !$store['private_available']?'checked':'' ?>>不可</label>
-</div></div>
-
-<div class="form-group"><label>たばこ：</label>
+</div>
+</div>
+<div class="form-group">
+<label>たばこ：</label>
 <div class="radio-group">
 <label><input type="radio" name="non_smoking" value="1" <?= $store['non_smoking']?'checked':'' ?>>禁煙</label>
 <label><input type="radio" name="non_smoking" value="0" <?= !$store['non_smoking']?'checked':'' ?>>喫煙可</label>
-</div></div>
-
+</div>
+</div>
 <div class="form-group"><label>ホームページ：</label><input type="text" name="homepage_url" value="<?= htmlspecialchars($store['homepage_url']) ?>"></div>
 <div class="form-group"><label>オープン日：</label><input type="date" name="open_date" value="<?= htmlspecialchars($store['open_date']) ?>"></div>
 
-<!-- 既存画像表示 -->
+<!-- 既存画像 -->
 <div class="form-group">
 <label>既存画像：</label>
-<div class="existing-images">
+<div class="existing-photos">
 <?php foreach($photos as $photo): ?>
-<div class="photo-wrapper" data-photo-id="<?= $photo['store_photo_id'] ?>">
-    <img src="<?= htmlspecialchars($photo['store_photo_path']) ?>" alt="店舗画像">
-    <button type="button" class="delete-photo-btn">✕</button>
-</div>
+    <div class="photo-container" data-id="<?= $photo['store_photo_id'] ?>">
+        <img src="<?= htmlspecialchars($photo['store_photo_path']) ?>" class="preview-img">
+        <span class="delete-photo">✕</span>
+    </div>
 <?php endforeach; ?>
 </div>
 </div>
 
-<!-- 追加画像アップロード -->
+<!-- 画像追加 -->
 <div class="form-group">
 <label>画像追加：</label>
-<input type="file" name="store_images[]" multiple>
+<input type="file" name="new_photos[]" multiple>
 </div>
 
 <div class="btn-center"><button class="edit-btn" type="submit">更新</button></div>
@@ -175,7 +190,7 @@ const genreInput = document.getElementById('genre_name');
 
 displayInput.addEventListener('click', ()=>{ dropdownList.style.display = dropdownList.style.display==='block'?'none':'block'; });
 dropdownList.querySelectorAll('div').forEach(item=>{
-    item.addEventListener('click',()=>{
+    item.addEventListener('click', ()=>{
         displayInput.value=item.textContent;
         hiddenInput.value=item.dataset.id;
         genreInput.value=item.textContent;
@@ -184,28 +199,23 @@ dropdownList.querySelectorAll('div').forEach(item=>{
 });
 document.addEventListener('click', e=>{if(!dropdown.contains(e.target)){dropdownList.style.display='none';}});
 
-// 画像削除
-document.querySelectorAll('.delete-photo-btn').forEach(btn=>{
-    btn.addEventListener('click', function(){
-        const wrapper = this.closest('.photo-wrapper');
-        const photoId = wrapper.dataset.photoId;
-
-        if(!confirm('この画像を削除しますか？')) return;
-
-        fetch('admin_store_delete_photo.php?id='+photoId, {method:'POST'})
-        .then(res=>res.json())
-        .then(data=>{
-            if(data.success){
-                wrapper.remove();
-            } else {
-                alert('削除失敗: '+data.message);
-            }
-        }).catch(err=>{
-            alert('通信エラー');
-            console.error(err);
-        });
+// 画像削除（Ajax）
+document.querySelectorAll('.delete-photo').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+        const container = btn.parentElement;
+        const photo_id = container.dataset.id;
+        if(confirm('この画像を削除しますか？')){
+            fetch('admin_store_delete_photo.php?id='+photo_id)
+            .then(res=>res.json())
+            .then(data=>{
+                if(data.success) container.remove();
+                else alert('削除失敗: '+data.message);
+            })
+            .catch(err=>alert('通信エラー'));
+        }
     });
 });
 </script>
+
 </body>
 </html>
