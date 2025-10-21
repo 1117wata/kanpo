@@ -7,7 +7,10 @@
   <link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
-  <header>プロフィール</header>
+  <header>
+    <img src="../../images/Kanpo.png" alt="Logo" class="logo">
+    プロフィール
+  </header>
   <div class="profile">
     <div class="name">
       おいしいもの大好きマン
@@ -18,6 +21,7 @@
     </div>
   </div>
   <button type="submit" class="profile_edit">プロフィール編集</button>
+
   <div class="border_box"></div>
 
   <div class="store">
@@ -58,6 +62,13 @@
     <div class="store_genre">
       祇園/もつ鍋、手羽先、郷土料理
     </div>
+    <div class="ellipsis-menu">
+      <button class="ellipsis-button">...</button>
+      <ul class="menu">
+        <li id="edit">編集</li>
+        <li id="delete">削除</li>
+      </ul>
+    </div>
     <hr>
     <div class="store_review">
       2025/09/01 訪問<br>
@@ -95,7 +106,7 @@ document.getElementById('edit').addEventListener('click', () => {
 });
 
 document.getElementById('delete').addEventListener('click', () => {
-  window.location.href = 'review'
+  window.location.href = 'profile_delete.php';
   menu.style.display = 'none';
 });
 

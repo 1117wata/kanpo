@@ -66,5 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p>初めてご利用される方は、こちらから会員登録すると便利にご利用できます。</p>
         <p><button type="submit" class="button">新規会員登録</button></p>
     </form>
+
+
+    <hr>
+
+    <form action="../../Administrator/admin_login.php" method="post">
+        <h3>管理者の方はこちら</h3>
+        <p><button type="submit" class="button">管理者ログイン</button></p>
 </body>
 </html>
