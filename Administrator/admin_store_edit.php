@@ -1,17 +1,26 @@
-<?php
+<?php 
 session_start();
 try {
     $pdo = new PDO("mysql:host=localhost;dbname=kanpo;charset=utf8", 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) { echo "DB接続エラー: ".$e->getMessage(); exit; }
+} catch (PDOException $e) { 
+    echo "DB接続エラー: ".$e->getMessage(); 
+    exit; 
+}
 
 $store_id = $_GET['id'] ?? $_POST['store_id'] ?? null;
 if(!$store_id){ echo "店舗IDが不正です"; exit; }
 
+// 店舗情報取得
 $stmt = $pdo->prepare("SELECT * FROM store WHERE store_id=?");
 $stmt->execute([$store_id]);
 $store = $stmt->fetch(PDO::FETCH_ASSOC);
 if(!$store){ echo "店舗情報が存在しません"; exit; }
+
+// 既存画像取得
+$stmt = $pdo->prepare("SELECT * FROM store_photo WHERE store_id=?");
+$stmt->execute([$store_id]);
+$photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $error = '';
 if($_SERVER["REQUEST_METHOD"]==="POST"){
@@ -67,7 +76,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 <p class="msg-error"><?= htmlspecialchars($error) ?></p>
 <?php endif; ?>
 
-<form class="store-info" method="post">
+<form class="store-info" method="post" enctype="multipart/form-data">
 <input type="hidden" name="store_id" value="<?= htmlspecialchars($store['store_id']) ?>">
 
 <!-- 店名 -->
@@ -112,7 +121,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 </div>
 </div>
 
-<!-- 以下住所、交通手段、営業時間、予算、支払い方法、貸切、たばこ、ホームページ、オープン日 -->
+<!-- 住所・交通手段・営業時間など -->
 <div class="form-group"><label>住所：</label><input type="text" name="store_address" value="<?= htmlspecialchars($store['store_address']) ?>"></div>
 <div class="form-group"><label>交通手段：</label><input type="text" name="access" value="<?= htmlspecialchars($store['access']) ?>"></div>
 <div class="form-group"><label>営業時間：</label><input type="text" name="opening_hours" value="<?= htmlspecialchars($store['opening_hours']) ?>"></div>
@@ -134,6 +143,25 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 <div class="form-group"><label>ホームページ：</label><input type="text" name="homepage_url" value="<?= htmlspecialchars($store['homepage_url']) ?>"></div>
 <div class="form-group"><label>オープン日：</label><input type="date" name="open_date" value="<?= htmlspecialchars($store['open_date']) ?>"></div>
 
+<!-- 既存画像表示 -->
+<div class="form-group">
+<label>既存画像：</label>
+<div class="existing-images">
+<?php foreach($photos as $photo): ?>
+<div class="photo-wrapper" data-photo-id="<?= $photo['store_photo_id'] ?>">
+    <img src="<?= htmlspecialchars($photo['store_photo_path']) ?>" alt="店舗画像">
+    <button type="button" class="delete-photo-btn">✕</button>
+</div>
+<?php endforeach; ?>
+</div>
+</div>
+
+<!-- 追加画像アップロード -->
+<div class="form-group">
+<label>画像追加：</label>
+<input type="file" name="store_images[]" multiple>
+</div>
+
 <div class="btn-center"><button class="edit-btn" type="submit">更新</button></div>
 </form>
 
@@ -147,15 +175,37 @@ const genreInput = document.getElementById('genre_name');
 
 displayInput.addEventListener('click', ()=>{ dropdownList.style.display = dropdownList.style.display==='block'?'none':'block'; });
 dropdownList.querySelectorAll('div').forEach(item=>{
-item.addEventListener('click',()=>{
-displayInput.value=item.textContent;
-hiddenInput.value=item.dataset.id;
-genreInput.value=item.textContent;
-dropdownList.style.display='none';
-});
+    item.addEventListener('click',()=>{
+        displayInput.value=item.textContent;
+        hiddenInput.value=item.dataset.id;
+        genreInput.value=item.textContent;
+        dropdownList.style.display='none';
+    });
 });
 document.addEventListener('click', e=>{if(!dropdown.contains(e.target)){dropdownList.style.display='none';}});
-</script>
 
+// 画像削除
+document.querySelectorAll('.delete-photo-btn').forEach(btn=>{
+    btn.addEventListener('click', function(){
+        const wrapper = this.closest('.photo-wrapper');
+        const photoId = wrapper.dataset.photoId;
+
+        if(!confirm('この画像を削除しますか？')) return;
+
+        fetch('admin_store_delete_photo.php?id='+photoId, {method:'POST'})
+        .then(res=>res.json())
+        .then(data=>{
+            if(data.success){
+                wrapper.remove();
+            } else {
+                alert('削除失敗: '+data.message);
+            }
+        }).catch(err=>{
+            alert('通信エラー');
+            console.error(err);
+        });
+    });
+});
+</script>
 </body>
 </html>
