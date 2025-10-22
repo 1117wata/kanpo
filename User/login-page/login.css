@@ -11,7 +11,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 12px;
-    min-height: 125px;
+    min-height: 25px;
 }
 
 .message {
