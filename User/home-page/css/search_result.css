@@ -28,7 +28,6 @@ h2 {
   width: 600px;
   padding: 0 16px;
   margin: 0 auto 24px;
-  margin-bottom: 16px;
   display: flex;
   gap: 8px;
 }
@@ -58,18 +57,19 @@ h2 {
 }
 
 .store-list li {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  background-color: #fafafa;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  padding: 12px 0;
+  margin: 0;
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .store-list h3 {
   margin: 0 0 6px;
   font-size: 16px;
-  color: #2dbe60;
+  color: #000;
 }
 
 .store-list p {

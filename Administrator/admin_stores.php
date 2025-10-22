@@ -53,7 +53,7 @@ $stores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <div class="button-row">
     <div class="left-btn">
-        <button class="add-btn" onclick="location.href='store_add.php'">新規追加</button>
+        <button class="add-btn" onclick="location.href='admin_store_add.php'">新規追加</button>
     </div>
     <div class="right-btn">
         <form method="get" id="sortForm">
@@ -77,7 +77,7 @@ $stores = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="member-card">
                 <div class="member-id-row">
                     <p class="user-id">店舗ID：<?= htmlspecialchars($store['store_id']) ?></p>
-                    <button class="detail-btn" onclick="location.href='store_detail.php?id=<?= urlencode($store['store_id']) ?>'">詳細</button>
+                    <button class="detail-btn" onclick="location.href='admin_store_info.php?id=<?= urlencode($store['store_id']) ?>'">詳細</button>
                 </div>
                 <div class="member-name-row">
                     <p class="username">店舗名：<?= htmlspecialchars($store['store_name']) ?></p>
@@ -89,5 +89,10 @@ $stores = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php endif; ?>
 </div>
 
+    <footer class="footer">
+            <div class="footer-content">
+                &copy; <?= date('Y') ?> KANPO 管理者画面
+            </div>
+    </footer>
 </body>
 </html>

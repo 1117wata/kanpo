@@ -1,0 +1,42 @@
+.header-bar {
+    background-color: #F9A9FF;
+    padding: 35px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.header-bar .logo-link { position: absolute; left:20px; }
+.header-bar .logo-link img { height:60px; }
+.page-title { font-size:35px; font-weight:bold; color:#fff; }
+
+.store-info { width:90%; max-width:800px; margin:50px auto; }
+
+.form-group { display:flex; align-items:center; margin-bottom:15px; }
+.form-group label { width:150px; font-weight:bold; margin-right:10px; }
+.form-group input[type=text], .form-group input[type=date], .form-group input[type=file] { flex:1; padding:8px; border:1px solid #ccc; border-radius:4px; }
+
+.radio-group label { margin-right:20px; }
+
+/* ドロップダウン */
+.dropdown { position:relative; flex:1; }
+.dropdown input[readonly] { width:100%; padding:8px; border:1px solid #ccc; border-radius:4px; cursor:pointer; }
+.dropdown-content { display:none; position:absolute; background:#fff; width:100%; border:1px solid #ccc; z-index:1000; }
+.dropdown-content div { padding:8px; cursor:pointer; }
+.dropdown-content div:hover { background-color:#F9A9FF; color:#fff; }
+
+/* 既存画像 */
+.existing-photos { display:flex; gap:10px; flex-wrap:wrap; }
+.photo-container { position:relative; display:inline-block; }
+.photo-container img.preview-img { width:120px; height:120px; object-fit:cover; border-radius:6px; }
+.photo-container .delete-photo {
+    position:absolute; top:2px; right:2px; background:red; color:#fff; border-radius:50%;
+    width:24px; height:24px; text-align:center; line-height:24px; font-weight:bold; cursor:pointer;
+}
+
+.btn-center { text-align:center; margin-top:30px; }
+.edit-btn { background-color:#F9A9FF; color:#fff; border:none; padding:10px 150px; border-radius:5px; font-size:16px; cursor:pointer; }
+.edit-btn:hover { background-color:#e08ae0; }
+
+.footer { text-align:center; padding:20px 0; margin-top:50px; font-size:14px; color:#555; }
+.msg-error { color:red; text-align:center; margin-top:20px; }

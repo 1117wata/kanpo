@@ -63,6 +63,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete"])) {
 
         <button class="delete-btn">アカウント削除</button>
     </div>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="footer-content">
+            &copy; <?= date('Y') ?> KANPO 管理者画面
+        </div>
+    </footer>
+
+
 </body>
 
 </html>

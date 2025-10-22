@@ -1,106 +1,119 @@
 body {
-    font-family: "Noto Sans JP", sans-serif;
+    font-family: sans-serif;
     margin: 0;
-    background-color: #fdfdfd;
-    color: #333;
+    background: #fff;
+    text-align: center;
 }
 
 header {
-    background-color: #ffe45c;
+    background: #f7d76b;
     display: flex;
+    justify-content: center;
     align-items: center;
-    padding: 10px 20px;
-}
-
-header .logo {
+    padding: 12px;
+    height: 25px;
+    font-size: 22px;
     font-weight: bold;
-    margin-right: 10px;
 }
 
-header h1 {
-    font-size: 1.4rem;
-    margin: 0;
+.logo {
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    Left: 5%;
 }
 
-.user-info {
+.profile {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid #ccc;
+    margin: 16px 24px;
 }
 
-.icon {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 20px;
-    border: 2px solid #ccc;
-}
-
-.user-details h2 {
-    margin: 0;
-    font-size: 1.2rem;
-}
-
-.user-details p {
-    margin: 5px 0;
-    color: #555;
-}
-
-.edit-btn {
-    background-color: #fff;
-    border: 1px solid #000;
-    border-radius: 20px;
-    padding: 5px 15px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.edit-btn:hover {
-    background-color: #000;
-    color: #fff;
-}
-
-.review-list {
-    padding: 15px 20px;
+.name {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
 }
 
 .review {
-    border-bottom: 1px solid #ddd;
-    padding: 15px 0;
-}
-
-.review h3 {
-    margin: 0;
-    font-size: 1.1rem;
-}
-
-.meta {
-    font-size: 0.9rem;
-    color: #666;
+    text-align: center;
     display: flex;
-    justify-content: space-between;
-    margin: 5px 0;
+    flex-direction: column;
+    font-size: 16px;
 }
 
-.rating {
-    color: #e44;
+.profile_edit {
+    background: #fff;
+    width: 60%;
+    border-radius: 4px;
+}
+
+.border_box {
+    border: 1px solid #000000;
+    background-color: #dad6d1;
+    padding: 12px;
+    margin: 8px auto;
+}
+
+.store {
+    font-size: 10px;
+    text-align: left;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.store_name {
+    font-size: 14px;
     font-weight: bold;
 }
 
-.comment {
-    margin: 10px 0;
-}
-
-.images {
+.store_image {
     display: flex;
-    gap: 10px;
+    width: 100px;
+    height: 100px;
+    gap: 6px;
 }
 
-.image-box {
-    width: 90px;
-    height: 90px;
-    background-color: #ddd;
-    border-radius: 10px;
+.store_review_comment {
+    margin-top: 6px;
+}
+
+.ellipsis-menu {
+  position: relative;
+  display: inline-block;
+  position: absolute;
+  right: 10%;
+}
+
+.ellipsis-button {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu {
+  display: none; /* 初期は非表示 */
+  position: absolute;
+  top: 100%; /* ボタンの下に表示 */
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0 0;
+  min-width: 80px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 100; /* 上に表示 */
+}
+
+.menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.menu li:hover {
+  background-color: #f0f0f0;
 }
