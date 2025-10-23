@@ -1,3 +1,25 @@
+<?php
+session_start();
+$_SESSION['user_id'] = 1; // テスト用にユーザーIDをセット
+$user_id = $_SESSION['user_id'];
+$pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8mb4', 'root', '', [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+]);
+
+$sql = "SELECT * FROM review LEFT JOIN review_photo_id 
+ON review.review_id = review_photo_id.review_id WHERE review.user_id = ?
+ORDER BY review.created_at DESC";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([$user_id]);
+$reviews = $stmt->fetchAll();
+
+$user_sql = "SELECT username FROM user WHERE user_id = ?";
+$user_stmt = $pdo->prepare($user_sql);
+$user_stmt->execute([$user_id]);
+$user = $user_stmt->fetch();
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -13,10 +35,10 @@
   </header>
   <div class="profile">
     <div class="name">
-      おいしいもの大好きマン
+      <?= $user['username'] ?>
     </div>
     <div class="review">
-      ４<br>
+      <?= count($reviews) ?><br>
       口コミ
     </div>
   </div>
