@@ -35,10 +35,6 @@ try {
 </head>
 <body>
 
-<?php if(!empty($_SESSION['success_msg'])): ?>
-<div id="alertMsg" class="alert-msg"><?= htmlspecialchars($_SESSION['success_msg']) ?></div>
-<?php unset($_SESSION['success_msg']); endif; ?>
-
 <!-- ヘッダー -->
 <div class="header-bar">
     <a href="home.php" class="logo-link">
