@@ -5,13 +5,19 @@ try {
     $pdo = new PDO("mysql:host=localhost;dbname=kanpo;charset=utf8",'root','');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $store_id = $_GET['id'] ?? 0;
+    $store_id = $_GET['id'] ?? $_GET['store_id'] ?? 0;
 
-    // 店舗情報取得
-    $stmt = $pdo->prepare("SELECT * FROM store WHERE store_id=:id");
-    $stmt->bindParam(':id', $store_id);
-    $stmt->execute();
-    $store = $stmt->fetch(PDO::FETCH_ASSOC);
+// 店舗情報取得
+$stmt = $pdo->prepare("SELECT * FROM store WHERE store_id=:id");
+$stmt->bindParam(':id', $store_id);
+$stmt->execute();
+$store = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$store) {
+    echo "<p style='color:red; text-align:center; margin-top:50px;'>該当する店舗情報が見つかりません。</p>";
+    exit;
+}
+
 
     // 画像取得
     $stmt = $pdo->prepare("SELECT * FROM store_photo WHERE store_id=:id");
@@ -49,10 +55,10 @@ try {
 
     <?php if (!empty($photos)): ?>
     <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
+        <div class="swiper-wrapper">w
             <?php foreach($photos as $photo): ?>
             <div class="swiper-slide">
-                <img src="<?= htmlspecialchars($photo['store_photo_path'], ENT_QUOTES) ?>" alt="店舗画像" class="store-image">
+                <img src="../../Administrator/<?= htmlspecialchars($photo['store_photo_path'], ENT_QUOTES) ?>" alt="店舗画像" class="store-image">
             </div>
             <?php endforeach; ?>
         </div>
