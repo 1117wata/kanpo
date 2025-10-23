@@ -16,7 +16,7 @@ $pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8mb4', 'root', '', 
 </head>
 <body>
     <header class="header">
-    <img src="../../images/Kanpo.png" alt="KANPO Logo">
+    <img src="../../images/Kinpo.png" alt="KANPO Logo">
     <button id="mypageBtn" class="mypage">マイページ</button>
     <style>
 body {
@@ -29,7 +29,7 @@ body {
 
 /* ヘッダー */
 header {
-  background-color: #ffeb75;
+  background-color: #f7d76b;
   padding: 10px 15px;
   display: flex;
   justify-content: space-between;

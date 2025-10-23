@@ -169,7 +169,7 @@ $pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8mb4', 'root', '', 
 </head>
 <body>
   <header>
-    <img src="../../images/Kanpo.png" alt="KANPO Logo">
+    <img src="../../images/Kinpo.png" alt="KANPO Logo">
     <!-- マイページボタン -->
     <button class="mypage-btn">
       <div class="mypage-icon">👤</div>
