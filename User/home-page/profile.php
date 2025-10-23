@@ -13,6 +13,11 @@ ORDER BY review.created_at DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$user_id]);
 $reviews = $stmt->fetchAll();
+
+$user_sql = "SELECT username FROM user WHERE user_id = ?";
+$user_stmt = $pdo->prepare($user_sql);
+$user_stmt->execute([$user_id]);
+$user = $user_stmt->fetch();
 ?>
 
 <!DOCTYPE html>
@@ -30,10 +35,10 @@ $reviews = $stmt->fetchAll();
   </header>
   <div class="profile">
     <div class="name">
-      おいしいもの大好きマン
+      <?= $user['username'] ?>
     </div>
     <div class="review">
-      ４<br>
+      <?= count($reviews) ?><br>
       口コミ
     </div>
   </div>
