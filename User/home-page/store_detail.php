@@ -55,7 +55,7 @@ if (!$store) {
 
     <?php if (!empty($photos)): ?>
     <div class="swiper mySwiper">
-        <div class="swiper-wrapper">w
+        <div class="swiper-wrapper">
             <?php foreach($photos as $photo): ?>
             <div class="swiper-slide">
                 <img src="../../Administrator/<?= htmlspecialchars($photo['store_photo_path'], ENT_QUOTES) ?>" alt="店舗画像" class="store-image">
