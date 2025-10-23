@@ -7,8 +7,9 @@ $pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8mb4', 'root', '', 
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 ]);
 
-$sql = "SELECT * FROM review LEFT JOIN review_photo_id 
-ON review.review_id = review_photo_id.review_id WHERE review.user_id = ?
+$sql = "SELECT * FROM review INNER JOIN store 
+ON review.store_id = store.store_id 
+WHERE review.user_id = ? 
 ORDER BY review.created_at DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$user_id]);
@@ -30,7 +31,7 @@ $user = $user_stmt->fetch();
 </head>
 <body>
   <header>
-    <img src="../../images/Kanpo.png" alt="Logo" class="logo">
+    <img src="../../images/Kinpo.png" alt="Logo" class="logo">
     プロフィール
   </header>
   <div class="profile">
@@ -48,7 +49,7 @@ $user = $user_stmt->fetch();
 
   <div class="store">
     <div class="store_name">
-      バーガーキング 博多駅筑紫口店<br>
+      <?= $reviews['store_name'] ?><br>
     </div>
     <div class="store_genre">
       博多/ハンバーガー、サンドウィッチ、ファーストフード
