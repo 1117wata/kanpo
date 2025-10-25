@@ -66,6 +66,13 @@ try {
     <div class="page-title">店舗情報詳細</div>
 </div>
 
+<!-- 戻るボタン -->
+<div class="back-btn-container">
+    <a href="javascript:history.back();" class="back-link">
+        <img src="../images/back.png" alt="戻る" class="back-icon">
+    </a>
+</div>
+
 <!-- 店舗カルーセル -->
 <div class="store-detail">
     <h1><?= htmlspecialchars($store['store_name'], ENT_QUOTES) ?></h1>

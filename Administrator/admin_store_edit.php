@@ -83,10 +83,18 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 </head>
 <body>
 
+<!-- ヘッダー -->
 <div class="header-bar">
     <a href="admin_home.php" class="logo-link"><img src="../images/Akanpo.png" alt="サイトロゴ"></a>
     <div class="page-title">店舗編集</div>
 </div>
+
+<!-- 戻るボタン -->
+ <div class="back-btn-container">
+    <a href="javascript:history.back();" class="back-link">
+        <img src="../images/back.png" alt="戻る" class="back-icon">
+    </a>
+ </div>
 
 <?php if($error): ?>
 <p class="msg-error"><?= htmlspecialchars($error) ?></p>

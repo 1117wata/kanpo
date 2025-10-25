@@ -1,5 +1,3 @@
-/* members.css (修正版) */
-
 /* ベース */
 * { box-sizing: border-box; }
 body {
@@ -227,6 +225,7 @@ body {
     margin-top: 80px;
 }
 
+/* 戻るボタン */
 .back-btn-container {
     position: absolute;
     top: 140px;   /* 位置調整（上から） */

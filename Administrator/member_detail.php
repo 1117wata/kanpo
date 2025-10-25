@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete"])) {
 <link rel="stylesheet" href="css/members.css">
 <body>
     <header class="header-bar">
-        <a href="../admin_home.php" class="logo-link">
+        <a href="admin_home.php" class="logo-link">
             <img src="../images/Akanpo.png" alt="サイトロゴ">
         </a>
         <h1 class="page-title">会員詳細</h1>
