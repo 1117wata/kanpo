@@ -10,9 +10,6 @@
 
 <body>
     <div class="header-bar">
-        <a href="admin_home.php" class="logo-link">
-            <img src="../images/Akanpo.png" alt="サイトロゴ">
-        </a>
         <div class="page-title">管理者ホーム画面</div>
     </div>
 

@@ -6,14 +6,25 @@ html, body {
 }
 
 body {
-    font-family: 'Noto Sans JP', sans-serif;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     background: #fff;
-    margin: 0;
-    padding: 0;
 
-    display: flex;            /* ← これが超重要 */
-    flex-direction: column;   /* 上から下に配置 */
-    min-height: 100vh;        /* 画面の高さ分は最低確保 */
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../uploads/Bkanpo.png) no-repeat center center;
+    background-size: 500px;
+    opacity: 0.15; 
+    z-index: -1; 
 }
 
 /* ヘッダー */
@@ -53,9 +64,9 @@ body {
 
 /* 共通ボタンスタイル */
 .menu-btn {
-    width: 350px;
-    padding: 20px 0;
-    font-size: 25px;
+    width: 200px;
+    padding: 15px 0;
+    font-size: 20px;
     font-weight: bold;
     color: #ffffff;
     background-color: #838383;
