@@ -43,3 +43,19 @@ button.button {
     margin: 5px;
     text-align: center;
 }
+
+.header-left {
+    flex: 1; 
+}
+
+.admin-login-link {
+    font-size: 14px;
+    color: #838383;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.admin-login-link:hover {
+    color: #F9A9FF;
+}

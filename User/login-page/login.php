@@ -37,7 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
-    <header></header>
+    <header>
+        <div class="header-left"></div>
+            <a href="../../Administrator/admin_login.php" class="admin-login-link">管理者ログイン</a>
+    </header>
 
     <img src="../../images/Kanpo.png" class="Kanpo_picture" alt="サンプル画像">
 
@@ -68,10 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
 
-    <hr>
-
-    <form action="../../Administrator/admin_login.php" method="post">
-        <h3>管理者の方はこちら</h3>
-        <p><button type="submit" class="button">管理者ログイン</button></p>
+    
 </body>
 </html>
