@@ -5,6 +5,9 @@ body {
     background: #fff;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* ヘッダー */
@@ -162,16 +165,17 @@ body {
     background-color:#e08ae0; 
 }
 
-.footer { 
-    text-align:center; 
-    padding:20px 0; 
-    margin-top:50px; 
-    font-size:14px; 
-    color:#555; 
-}
-
 .msg-error { 
     color:red; 
     text-align:center; 
     margin-top:20px; 
+}
+
+/* フッター */
+.footer { 
+    text-align:center; 
+    padding:20px 0; 
+    margin-top: auto; 
+    font-size:14px; 
+    color:#555; 
 }

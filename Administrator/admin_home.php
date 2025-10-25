@@ -20,6 +20,11 @@
         <button class="menu-btn" type="submit" onclick="location.href='members.php'">会員一覧</button>
         <button class="menu-btn" type="submit" onclick="location.href='admin_stores.php'">店舗一覧</button>
     </div>
+
+    <footer>
+        &copy; 2025 KANPO 管理者
+    </footer>
+
 </body>
 
 </html>
