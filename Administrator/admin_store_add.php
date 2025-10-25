@@ -107,6 +107,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="page-title">店舗追加</div>
     </div>
 
+    <!-- 戻るボタン -->
+    <div class="back-btn-container">
+        <a href="javascript:history.back();" class="back-link">
+            <img src="../images/back.png" alt="戻る" class="back-icon">
+        </a>
+    </div>
     <?php if ($error): ?>
         <p style="color:red"><?= htmlspecialchars($error) ?></p>
     <?php elseif ($success): ?>

@@ -18,18 +18,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_email'], $_POST
     $email = $_POST['admin_email'];
     $password = $_POST['admin_password'];
 
-    $stmt = $pdo->prepare("SELECT * FROM admin WHERE email=:email AND password=:password");
-    $stmt->execute([':email'=>$email, ':password'=>$password]);
-    $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare("SELECT * FROM admin WHERE email=:email");
+$stmt->execute([':email'=>$email]);
+$admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($admin) {
-        $error_message = "ログイン成功！<br>3秒後に自動でホーム画面へ遷移します。";
-        $message_class = 'success';
-        header("Refresh:3; url=admin_home.php");
-    } else {
-        $error_message = "メールアドレスまたはパスワードが間違っています。";
-        $message_class = 'error';
-    }
+if ($admin && password_verify($password, $admin['password'])) {
+    $error_message = "ログイン成功！<br>3秒後に自動でホーム画面へ遷移します。";
+    $message_class = 'success';
+    header("Refresh:3; url=admin_home.php");
+} else {
+    $error_message = "メールアドレスまたはパスワードが間違っています。";
+    $message_class = 'error';
+}
 }
 ?>
 <!DOCTYPE html>

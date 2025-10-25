@@ -133,6 +133,23 @@ body {
     background-color: #f1f1f1;
 }
 
+/* 戻るボタン */
+.back-btn-container {
+    position: absolute;
+    top: 140px;   /* 位置調整（上から） */
+    left: 20px;  /* 位置調整（左から） */
+}
+
+.back-link {
+    display: inline-block;
+}
+
+.back-icon {
+    width: 40px;   /* サイズ調整 */
+    height: auto;
+    cursor: pointer; /* マウスカーソルを「手」にする */
+}
+
 /* フッター */
 .footer {
     background-color: #F9A9FF;

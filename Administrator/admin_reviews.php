@@ -14,6 +14,17 @@
         <div class="page-title">管理者口コミ画面</div>
     </div>
 
+
+
+
+
+
+    <!-- 戻るボタン -->
+    <div class="back-btn-container">
+        <a href="javascript:history.back();" class="back-link">
+            <img src="../images/back.png" alt="戻る" class="back-icon">
+        </a>
+    </div>
     <!-- フッター -->
     <footer class="footer">
         <div class="footer-content">
