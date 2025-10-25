@@ -23,6 +23,11 @@ $stmt->execute([':email'=>$email]);
 $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($admin && password_verify($password, $admin['password'])) {
+    // セッションにログイン情報を保存
+    $_SESSION['admin_logged_in'] = true;
+    $_SESSION['admin_email'] = $admin['email'];
+    $_SESSION['admin_name'] = $admin['admin_name'];
+
     $error_message = "ログイン成功！<br>3秒後に自動でホーム画面へ遷移します。";
     $message_class = 'success';
     header("Refresh:3; url=admin_home.php");

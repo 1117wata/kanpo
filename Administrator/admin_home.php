@@ -1,3 +1,7 @@
+
+<?php
+require_once 'admin_auth.php';
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -9,9 +13,16 @@
 </head>
 
 <body>
-    <div class="header-bar">
+    <header class="header-bar">
         <div class="page-title">管理者ホーム画面</div>
-    </div>
+        <div class="admin-info">
+            <?= htmlspecialchars($_SESSION['admin_name'], ENT_QUOTES) ?> さん
+            <form method="post" action="admin_logout.php" style="margin:0;">
+                <button type="submit" class="logout-btn">ログアウト</button>
+            </form>
+        </div>
+    </header>
+
 
     <div class="btn-container">
         <button class="menu-btn" type="submit" onclick="location.href='members.php'">会員一覧</button>

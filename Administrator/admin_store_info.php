@@ -1,6 +1,7 @@
 <?php
-session_start();
+require_once 'admin_auth.php';
 
+// DB接続
 try {
     $pdo = new PDO("mysql:host=localhost;dbname=kanpo;charset=utf8",'root','');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

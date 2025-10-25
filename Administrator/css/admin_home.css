@@ -55,6 +55,35 @@ body::before {
     color: #ffffff;
 }
 
+/* ヘッダー右端に管理者情報表示 */
+.admin-info {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.admin-info .logout-btn {
+    background-color: #ff6b6b;
+    border: none;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.admin-info .logout-btn:hover {
+    background-color: #ff4b4b;
+}
+
+
 /* ボタンコンテナ */
 .btn-container {
     flex: 1;    /* ← これで中身が少なくても縦スペースを伸ばして埋める */

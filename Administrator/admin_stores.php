@@ -1,4 +1,7 @@
 <?php
+require_once 'admin_auth.php';
+
+// DB接続
 $pdo = new PDO('mysql:host=localhost;dbname=kanpo', 'root', '');
 
 // 並び替えの取得

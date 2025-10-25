@@ -1,8 +1,7 @@
 <?php
-// members.php (Administrator)
-session_start();
+require_once 'admin_auth.php';
 
-// DB接続（直接記述）
+// DB接続
 $pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8', 'root', '');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
