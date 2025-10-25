@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete"])) {
     <!-- フッター -->
     <footer class="footer">
         <div class="footer-content">
-            &copy; <?= date('Y') ?> KANPO 管理者画面
+            &copy; <?= date('Y') ?> KANPO 管理者
         </div>
     </footer>
 

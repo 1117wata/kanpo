@@ -18,8 +18,11 @@
         <button class="menu-btn" type="submit" onclick="location.href='admin_stores.php'">店舗一覧</button>
     </div>
 
-    <footer>
-        &copy; 2025 KANPO 管理者
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="footer-content">
+            &copy; <?= date('Y') ?> KANPO 管理者
+        </div>
     </footer>
 
 </body>

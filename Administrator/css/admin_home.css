@@ -2,16 +2,19 @@
 * { box-sizing: border-box; }
 
 html, body {
-    height: 100%; /* 画面全体を扱うために必要 */
+    height: 100%; 
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    position: relative;
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    background: #fff;
-
 }
 
 body::before {
@@ -82,10 +85,11 @@ body::before {
 }
 
 /* フッター */
-footer {
+.footer {
     background-color: #F9A9FF;
+    color: #ffffff;
     text-align: center;
-    padding: 20px 0;
-    color: #fff;
-    font-weight: bold;
+    padding: 15px 0;
+    margin-top: auto;
+    font-size: 14px;
 }

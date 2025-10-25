@@ -188,6 +188,13 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 <div class="btn-center"><button class="edit-btn" type="submit">更新</button></div>
 </form>
 
+<!-- フッター -->
+<footer class="footer">
+    <div class="footer-content">
+        &copy; <?= date('Y') ?> KANPO 管理者
+    </div>
+</footer>
+
 <script>
 // ジャンルドロップダウン
 const dropdown = document.querySelector('.dropdown');

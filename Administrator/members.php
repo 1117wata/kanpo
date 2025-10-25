@@ -100,7 +100,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- フッター -->
 <footer class="footer">
     <div class="footer-content">
-        &copy; <?= date('Y') ?> KANPO 管理者画面
+        &copy; <?= date('Y') ?> KANPO 管理者
     </div>
 </footer>
 
