@@ -4,8 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>管理者口コミ</title>
+    <link rel="stylesheet" href="css/admin_reviews.css">
 </head>
 <body>
-    
+    <div class="header-bar">
+        <a href="admin_home.php" class="logo-link">
+            <img src="../images/Akanpo.png" alt="サイトロゴ">
+        </a>
+        <div class="page-title">管理者口コミ画面</div>
+    </div>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="footer-content">
+            &copy; <?= date('Y') ?> KANPO 管理者
+        </div>
+    </footer>
 </body>
 </html>
