@@ -16,9 +16,21 @@ if ($user_id) {
 
 // 削除ボタン押されたとき
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete"])) {
+    $delete_id = $_POST['user_id']; 
+
+    // 削除前にユーザー名を取得
+    $stmt = $pdo->prepare("SELECT username FROM user WHERE user_id = ?");
+    $stmt->execute([$delete_id]);
+    $userToDelete = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // ユーザー削除
     $stmt = $pdo->prepare("DELETE FROM user WHERE user_id = ?");
-    $stmt->execute([$user_id]);
-    header("Location: members.php");
+    $stmt->execute([$delete_id]); 
+
+    // 削除メッセージをセッションに保存
+    $_SESSION['flash_message'] = $userToDelete['username'] . " さんを削除しました";
+
+    header("Location: members.php"); 
     exit;
 }
 ?>
@@ -31,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete"])) {
 <title>会員詳細</title>
 <link rel="stylesheet" href="css/members.css">
 </head>
-<link rel="stylesheet" href="css/members.css">
+
 <body>
     <header class="header-bar">
         <a href="admin_home.php" class="logo-link">
@@ -47,23 +59,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete"])) {
         </a>
     </div>
 
-
     <div class="detail-container">
         <p><strong>ユーザー名：</strong><?= htmlspecialchars($user['username']) ?></p>
         <p><strong>ユーザーID：</strong><?= htmlspecialchars($user['user_id']) ?></p>
         <p><strong>ニックネーム：</strong><?= htmlspecialchars($user['nickname']) ?></p>
         <p><strong>メールアドレス：</strong><?= htmlspecialchars($user['email']) ?></p>
         <p><strong>登録日：</strong>
-            <?php
-            if (!empty($user['created_at'])) {
-                echo date('Y/m/d', strtotime($user['created_at']));
-            } else {
-                echo '未登録';
-            }
-            ?>
+            <?= !empty($user['created_at']) ? date('Y/m/d', strtotime($user['created_at'])) : '未登録' ?>
         </p>
 
-        <button class="delete-btn">アカウント削除</button>
+        <!-- 削除フォーム -->
+        <form method="POST" onsubmit="return confirm('本当にこのアカウントを削除しますか？');">
+            <input type="hidden" name="user_id" value="<?= htmlspecialchars($user['user_id']) ?>">
+            <button type="submit" name="delete" class="delete-btn">アカウント削除</button>
+        </form>
     </div>
 
     <!-- フッター -->
@@ -73,7 +82,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["delete"])) {
         </div>
     </footer>
 
-
 </body>
-
 </html>

@@ -1,6 +1,10 @@
 <?php
 require_once 'admin_auth.php';
 
+// フラッシュメッセージがあれば取得して消す
+$flash_message = $_SESSION['flash_message'] ?? '';
+unset($_SESSION['flash_message']);
+
 // DB接続
 $pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8', 'root', '');
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -40,7 +44,12 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <link rel="stylesheet" href="css/members.css">
 </head>
 <body>
+<!-- フラッシュメッセージ -->
+<?php if ($flash_message): ?>
+    <div class="flash-message" id="flash-message"><?= htmlspecialchars($flash_message, ENT_QUOTES) ?></div>
+<?php endif; ?>
 
+<!-- ヘッダー -->
 <header class="header-bar">
     <a href="admin_home.php" class="logo-link">
         <img src="../images/Akanpo.png" alt="サイトロゴ">
@@ -105,4 +114,14 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 </body>
+<script>
+const flash = document.getElementById('flash-message');
+if(flash){
+    setTimeout(() => {
+        flash.style.opacity = '0';
+        flash.style.top = '0px';
+        setTimeout(() => flash.remove(), 500); 
+    }, 2000); 
+}
+</script>
 </html>
