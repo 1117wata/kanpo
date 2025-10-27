@@ -1,39 +1,98 @@
 <?php
 require_once 'admin_auth.php';
 
-// フラッシュメッセージがあれば取得して消す
-$flash_message = $_SESSION['flash_message'] ?? '';
-unset($_SESSION['flash_message']);
+try {
+    // フラッシュメッセージがあれば取得して消す
+    $flash_message = $_SESSION['flash_message'] ?? '';
+    unset($_SESSION['flash_message']);
 
-// DB接続
-$pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8', 'root', '');
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // DB接続
+    $pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8', 'root', '');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// GETパラメータ
-$search = trim($_GET['search'] ?? '');
-$sort = $_GET['sort'] ?? 'default';
+    // GETパラメータ
+    $search = trim($_GET['search'] ?? '');
+    $sort = $_GET['sort'] ?? 'default';
 
-// クエリ組立
-$query = "SELECT user_id, username, icon_path FROM user WHERE 1";
+    // ページング追加
+    $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+    $limit = 20;
+    $offset = ($page - 1) * $limit;
 
-if ($search !== '') {
-    $query .= " AND (user_id LIKE :search OR username LIKE :search)";
+    // 総件数取得
+    $count_query = "SELECT COUNT(*) FROM user WHERE 1";
+    $count_params = [];
+    if ($search !== '') {
+        $count_query .= " AND (user_id LIKE :count_search OR username LIKE :count_search)";
+        $count_params[':count_search'] = "%$search%";
+    }
+
+    $count_stmt = $pdo->prepare($count_query);
+    if ($count_stmt === false) {
+        throw new Exception('COUNT query prepare failed');
+    }
+
+    foreach ($count_params as $k => $v) {
+        $count_stmt->bindValue($k, $v, PDO::PARAM_STR);
+    }
+
+    $count_stmt->execute();
+    $total_users = (int)$count_stmt->fetchColumn();
+    $total_pages = ($total_users > 0) ? (int)ceil($total_users / $limit) : 1;
+
+    // 現在ページが総ページを超えていたら最後のページに揃える
+    if ($page > $total_pages) {
+        $page = $total_pages;
+        $offset = ($page - 1) * $limit;
+    }
+
+    // クエリ組立
+    $query = "SELECT user_id, username, icon_path FROM user WHERE 1";
+    $select_params = [];
+
+    if ($search !== '') {
+        $query .= " AND (user_id LIKE :search2 OR username LIKE :search2)";
+        $select_params[':search2'] = "%$search%";
+    }
+
+    switch ($sort) {
+        case 'id_asc':  $query .= " ORDER BY user_id ASC"; break;
+        case 'id_desc': $query .= " ORDER BY user_id DESC"; break;
+        case 'name_asc':  $query .= " ORDER BY username ASC"; break;
+        case 'name_desc': $query .= " ORDER BY username DESC"; break;
+        default: $query .= " ORDER BY user_id ASC"; break;
+    }
+
+    $query .= " LIMIT :limit OFFSET :offset";
+
+    $stmt = $pdo->prepare($query);
+    if ($stmt === false) {
+        throw new Exception('SELECT query prepare failed');
+    }
+
+    foreach ($select_params as $k => $v) {
+        $stmt->bindValue($k, $v, PDO::PARAM_STR);
+    }
+ 
+    $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+
+    $stmt->execute();
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    // DB 関連の例外を取得
+    $error_message = 'DBエラー: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    $users = [];
+    $total_pages = 1;
+    $page = 1;
+} catch (Exception $e) {
+    // その他の例外
+    $error_message = 'エラー: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES);
+    $users = [];
+    $total_pages = 1;
+    $page = 1;
 }
-
-switch ($sort) {
-    case 'id_asc':  $query .= " ORDER BY user_id ASC"; break;
-    case 'id_desc': $query .= " ORDER BY user_id DESC"; break;
-    case 'name_asc':  $query .= " ORDER BY username ASC"; break;
-    case 'name_desc': $query .= " ORDER BY username DESC"; break;
-    default: $query .= " ORDER BY user_id ASC"; break;
-}
-
-$stmt = $pdo->prepare($query);
-if ($search !== '') {
-    $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
-}
-$stmt->execute();
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -44,9 +103,14 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <link rel="stylesheet" href="css/members.css">
 </head>
 <body>
+
 <!-- フラッシュメッセージ -->
-<?php if ($flash_message): ?>
+<?php if (!empty($flash_message)): ?>
     <div class="flash-message" id="flash-message"><?= htmlspecialchars($flash_message, ENT_QUOTES) ?></div>
+<?php endif; ?>
+
+<?php if (!empty($error_message)): ?>
+    <div class="error-box"><?= $error_message ?></div>
 <?php endif; ?>
 
 <!-- ヘッダー -->
@@ -60,7 +124,6 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- 検索 + 並び替えフォーム -->
 <div class="search-container">
     <form method="get" action="">
-        <!-- 検索ボックス（ボタンはボックス内） -->
         <div class="search-box-wrapper">
             <input type="text" name="search" class="search-box" placeholder="検索" value="<?= htmlspecialchars($search, ENT_QUOTES) ?>">
             <button type="submit" class="search-btn" aria-label="検索">
@@ -68,7 +131,6 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </button>
         </div>
 
-        <!-- 並び替え（検索結果保持のため search を hidden にしていないが form 共通なので OK） -->
         <div class="sort-container">
             <label for="sort">並び替え：</label>
             <select name="sort" id="sort" onchange="this.form.submit()">
@@ -105,13 +167,39 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php endif; ?>
 </div>
 
+<!-- ページネーション -->
+<?php if (!empty($total_pages) && $total_pages > 1): ?>
+<div class="pagination" aria-label="ページネーション">
+    <?php if ($page > 1): ?>
+        <a href="?page=<?= $page - 1 ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">&laquo; 前へ</a>
+    <?php endif; ?>
+
+    <?php
+    $display_range = 5;
+    $start = max(1, $page - intval($display_range / 2));
+    $end = min($total_pages, $start + $display_range - 1);
+    if ($end - $start + 1 < $display_range) {
+        $start = max(1, $end - $display_range + 1);
+    }
+    for ($i = $start; $i <= $end; $i++): ?>
+        <a href="?page=<?= $i ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>"
+           class="<?= $i == $page ? 'active-page' : '' ?>">
+           <?= $i ?>
+        </a>
+    <?php endfor; ?>
+
+    <?php if ($page < $total_pages): ?>
+        <a href="?page=<?= $page + 1 ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">次へ &raquo;</a>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+
 <!-- フッター -->
 <footer class="footer">
     <div class="footer-content">
         &copy; <?= date('Y') ?> KANPO 管理者
     </div>
 </footer>
-
 
 </body>
 <script>
@@ -120,8 +208,8 @@ if(flash){
     setTimeout(() => {
         flash.style.opacity = '0';
         flash.style.top = '0px';
-        setTimeout(() => flash.remove(), 500); 
-    }, 2000); 
+        setTimeout(() => flash.remove(), 500);
+    }, 2000);
 }
 </script>
 </html>

@@ -24,11 +24,6 @@
 </script>
 </head>
 <body>
-<div class="header-bar">
-    <a href="../home-page/home.php" class="logo-link">
-        <img src="kanpo.png" alt="サイトロゴ">
-    </a>
-</div>
 
 <div class="success-message">
     <p>登録が完了しました！</p>
