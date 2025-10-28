@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 $_SESSION['user_id'] = 1; // テスト用にユーザーIDをセット
 $user_id = $_SESSION['user_id'];
 $pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8mb4', 'root', '', [
