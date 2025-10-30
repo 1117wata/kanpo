@@ -59,8 +59,8 @@ $user = $user_stmt->fetch();
       <a href="profile_edit.php?id=<?= $review['review_id'] ?>">編集</a><br>
       <a href="profile_delete.php?id=<?= $review['review_id'] ?>">削除</a>
       <ul class="menu">
-        <li id="edit">編集</li>
-        <li id="delete">削除</li>
+        <a href="review_edit.php?id=<? $review['review_id'] ?>">編集</a>
+        <a href="profile_delete.php?id=<? $review['review_id'] ?>">編集</a>
       </ul>
     </div>
     <hr>
