@@ -2,30 +2,77 @@
 require_once 'admin_auth.php';
 
 // DB接続
-$pdo = new PDO('mysql:host=localhost;dbname=kanpo', 'root', '');
+$pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8', 'root', '');
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// 並び替えの取得
-$order = 'store_id ASC';
-if (isset($_GET['sort'])) {
-    switch ($_GET['sort']) {
-        case 'store_id_desc': $order = 'store_id DESC'; break;
-        case 'store_name_asc': $order = 'store_name ASC'; break;
-        case 'store_name_desc': $order = 'store_name DESC'; break;
-    }
+// 検索
+$search = trim($_GET['search'] ?? '');
+
+// 並び替え
+$sort = $_GET['sort'] ?? 'default';
+switch ($sort) {
+    case 'store_id_desc': $order = 'store_id DESC'; break;
+    case 'store_name_asc': $order = 'store_name ASC'; break;
+    case 'store_name_desc': $order = 'store_name DESC'; break;
+    case 'store_id_asc':
+    case 'default':
+    default:
+        $order = 'store_id ASC';
+        break;
 }
 
-// 検索の取得
-$search = '';
-if (isset($_GET['search']) && $_GET['search'] !== '') {
-    $search = $_GET['search'];
-    $stmt = $pdo->prepare("SELECT * FROM store WHERE store_id LIKE ? OR store_name LIKE ? ORDER BY $order");
-    $stmt->execute(["%$search%", "%$search%"]);
-} else {
-    $stmt = $pdo->query("SELECT * FROM store ORDER BY $order");
+// ページング
+$page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+$limit = 20;
+$offset = ($page - 1) * $limit;
+
+// 件数取得
+$count_query = "SELECT COUNT(*) FROM store WHERE 1";
+$count_params = [];
+
+if ($search !== '') {
+    $count_query .= " AND (store_id LIKE :count_search OR store_name LIKE :count_search)";
+    $count_params[':count_search'] = "%$search%";
 }
 
+$count_stmt = $pdo->prepare($count_query);
+foreach ($count_params as $k => $v) {
+    $count_stmt->bindValue($k, $v, PDO::PARAM_STR);
+}
+$count_stmt->execute();
+$total_stores = (int)$count_stmt->fetchColumn();
+$total_pages = ($total_stores > 0) ? (int)ceil($total_stores / $limit) : 1;
+
+// ページ調整
+if ($page > $total_pages) {
+    $page = $total_pages;
+    $offset = ($page - 1) * $limit;
+}
+
+// データ取得
+$query = "SELECT * FROM store WHERE 1";
+$params = [];
+
+if ($search !== '') {
+    $query .= " AND (store_id LIKE :search2 OR store_name LIKE :search2)";
+    $params[':search2'] = "%$search%";
+}
+
+$query .= " ORDER BY $order LIMIT :limit OFFSET :offset";
+
+$stmt = $pdo->prepare($query);
+
+foreach ($params as $k => $v) {
+    $stmt->bindValue($k, $v, PDO::PARAM_STR);
+}
+$stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+$stmt->execute();
 $stores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -91,6 +138,34 @@ $stores = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p class="no-user">データがありません</p>
     <?php endif; ?>
 </div>
+
+    <?php if ($total_pages > 1): ?>
+<div class="pagination" aria-label="ページネーション">
+    <?php if ($page > 1): ?>
+        <a href="?page=<?= $page - 1 ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">&laquo; 前へ</a>
+    <?php endif; ?>
+
+    <?php
+    $display_range = 5;
+    $start = max(1, $page - intval($display_range / 2));
+    $end = min($total_pages, $start + $display_range - 1);
+    if ($end - $start + 1 < $display_range) {
+        $start = max(1, $end - $display_range + 1);
+    }
+    for ($i = $start; $i <= $end; $i++): ?>
+        <a href="?page=<?= $i ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>"
+           class="<?= $i == $page ? 'active-page' : '' ?>">
+           <?= $i ?>
+        </a>
+    <?php endfor; ?>
+
+    <?php if ($page < $total_pages): ?>
+        <a href="?page=<?= $page + 1 ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">次へ &raquo;</a>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+
+
 
     <footer class="footer">
             <div class="footer-content">
