@@ -44,7 +44,9 @@ $user = $user_stmt->fetch();
       口コミ
     </div>
   </div>
-  <button type="submit" class="profile_edit">プロフィール編集</button>
+  <form action="profile_edit.php" method="get">
+    <button type="submit" class="profile_edit">プロフィール編集</button>
+  </form>
 
   <?php foreach ($reviews as $review): ?>
   <div class="border_box"></div>
@@ -56,12 +58,8 @@ $user = $user_stmt->fetch();
       <?= htmlspecialchars($review['genre'] ?? 'ジャンル未登録', ENT_QUOTES, 'UTF-8') ?>
     </div>
     <div class="ellipsis-menu">
-      <a href="profile_edit.php?id=<?= $review['review_id'] ?>">編集</a><br>
+      <a href="review_edit.php?id=<?= $review['review_id'] ?>">編集</a><br>
       <a href="profile_delete.php?id=<?= $review['review_id'] ?>">削除</a>
-      <ul class="menu">
-        <a href="review_edit.php?id=<? $review['review_id'] ?>">編集</a>
-        <a href="profile_delete.php?id=<? $review['review_id'] ?>">編集</a>
-      </ul>
     </div>
     <hr>
     <div class="store_review">

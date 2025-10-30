@@ -1,0 +1,190 @@
+body {
+  font-family: "Hiragino Kaku Gothic ProN", sans-serif;
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* ヘッダー */
+header {
+  background-color: #f7d76b;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header img {
+  height: 30px;
+}
+header button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* タイトル */
+h3 {
+  margin: 15px;
+  font-size: 18px;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+/* 星評価 */
+.stars {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0 15px;
+}
+.star {
+  font-size: 35px;
+  color: #ddd;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.star.active {
+  color: #f7d76b;
+}
+
+/* 費用セレクト */
+.price-select {
+  text-align: center;
+  margin-bottom: 15px;
+}
+.price-select select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* コメント欄 */
+.comment-section {
+  width: 85%;
+  margin: 0 auto 20px;
+  text-align: left;
+}
+.comment-section h4 {
+  margin-bottom: 5px;
+}
+.comment-section textarea {
+  width: 100%;
+  height: 120px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  resize: none;
+  font-size: 14px;
+}
+
+/* 写真エリア */
+.photo-section {
+  width: 85%;
+  margin: 0 auto;
+  text-align: left;
+}
+.photo-section h4 {
+  margin-bottom: 5px;
+}
+.photo-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.photo-container {
+  position: relative;
+}
+.photo-container img {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.photo-container input[type="checkbox"] {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  transform: scale(1.3);
+}
+
+/* 写真追加ボタン */
+#photoInput {
+  display: none;
+}
+
+/* ・・・メニュー */
+.menu-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 15px;
+}
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+}
+.delete-menu {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 10;
+}
+.delete-menu button {
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+}
+.delete-menu .select-all {
+  color: #000;
+}
+.delete-menu .delete {
+  color: red;
+}
+
+.add-photo-btn {
+    display: block;
+    width: 92%;
+    background: #d7efff;
+    color: #333;
+    padding: 10px 25px;
+    border-radius: 20px;
+    text-align: center;
+    margin: 10px auto;
+    font-weight: bold;
+}
+
+/* 更新ボタン */
+.submit-btn {
+    display: block;
+    width: 85%;
+    background: #4169e1;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 16px;
+    margin: 10px auto;
+}
