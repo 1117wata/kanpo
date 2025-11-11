@@ -1,5 +1,4 @@
 <?php
-// db_connect.php
 
 function getDB() {
     static $pdo = null; 
