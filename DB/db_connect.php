@@ -2,7 +2,7 @@
 // db_connect.php
 
 function getDB() {
-    static $pdo = null; // 1回だけ接続する
+    static $pdo = null; 
 
     if ($pdo === null) {
         try {
@@ -13,7 +13,6 @@ function getDB() {
             );
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            // 接続エラーはここで止める
             echo "DB接続エラー: " . $e->getMessage();
             exit;
         }
