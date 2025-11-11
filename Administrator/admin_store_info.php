@@ -1,13 +1,9 @@
 <?php
 require_once 'admin_auth.php';
-
-// DB接続
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=kanpo;charset=utf8",'root','');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+require_once '../DB/db_connect.php';
+$pdo = getDB();
 
     $store_id = $_GET['id'] ?? 0;
-
     // 店舗情報取得
     $stmt = $pdo->prepare("SELECT * FROM store WHERE store_id=:id");
     $stmt->bindParam(':id', $store_id);
@@ -19,11 +15,7 @@ try {
     $stmt->bindParam(':id', $store_id);
     $stmt->execute();
     $photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    echo "DBエラー: ".$e->getMessage();
-    exit;
-}
+    
 ?>
 <!DOCTYPE html>
 <html lang="ja">

@@ -1,9 +1,7 @@
 <?php
 require_once 'admin_auth.php';
-
-// DB接続
-$pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8', 'root', '');
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+require_once '../DB/db_connect.php';
+$pdo = getDB();
 
 // 検索
 $search = trim($_GET['search'] ?? '');

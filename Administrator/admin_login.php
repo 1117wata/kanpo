@@ -1,13 +1,7 @@
 <?php
 session_start();
-
-// DB接続
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=kanpo;charset=utf8", 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("DB接続エラー: " . $e->getMessage());
-}
+require_once '../DB/db_connect.php';
+$pdo = getDB();
 
 // 初期設定
 $error_message = 'メールアドレスとパスワードを入力してください。';

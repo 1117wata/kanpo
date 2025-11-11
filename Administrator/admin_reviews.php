@@ -1,5 +1,7 @@
 <?php
 require_once 'admin_auth.php';
+require_once '../DB/db_connect.php';
+$pdo = getDB();
 ?>
 <!DOCTYPE html>
 <html lang="en">

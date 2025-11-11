@@ -1,14 +1,11 @@
 <?php
 require_once 'admin_auth.php';
+require_once '../DB/db_connect.php';
+$pdo = getDB();
 
-try {
     // フラッシュメッセージがあれば取得して消す
     $flash_message = $_SESSION['flash_message'] ?? '';
     unset($_SESSION['flash_message']);
-
-    // DB接続
-    $pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8', 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // GETパラメータ
     $search = trim($_GET['search'] ?? '');
@@ -80,19 +77,6 @@ try {
     $stmt->execute();
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-} catch (PDOException $e) {
-    // DB 関連の例外を取得
-    $error_message = 'DBエラー: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES);
-    $users = [];
-    $total_pages = 1;
-    $page = 1;
-} catch (Exception $e) {
-    // その他の例外
-    $error_message = 'エラー: ' . htmlspecialchars($e->getMessage(), ENT_QUOTES);
-    $users = [];
-    $total_pages = 1;
-    $page = 1;
-}
 ?>
 <!DOCTYPE html>
 <html lang="ja">

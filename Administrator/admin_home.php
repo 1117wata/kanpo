@@ -1,4 +1,3 @@
-
 <?php
 require_once 'admin_auth.php';
 ?>
@@ -27,6 +26,7 @@ require_once 'admin_auth.php';
     <div class="btn-container">
         <button class="menu-btn" type="submit" onclick="location.href='members.php'">会員一覧</button>
         <button class="menu-btn" type="submit" onclick="location.href='admin_stores.php'">店舗一覧</button>
+        <button class="menu-btn" type="submit" onclick="location.href='admin_dashboard.php'">ダッシュボード</button>
     </div>
 
     <!-- フッター -->
