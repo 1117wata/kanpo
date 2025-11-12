@@ -1,44 +1,83 @@
 /* ベース */
 * { box-sizing: border-box; }
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
 body {
     font-family: 'Noto Sans JP', sans-serif;
-    background: #fff;
+    background: #f7f8fa;
     margin: 0;
     padding: 0;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
+
 /* ヘッダー */
 .header-bar {
     background-color: #F9A9FF;
-    padding: 35px 20px;
+    padding: 12px 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; /* タイトル中央 */
     position: relative;
 }
 
 .header-bar .logo-link {
     position: absolute;
-    left: 20px;
+    left: 20px; /* ロゴを左固定 */
 }
 
 .header-bar .logo-link img {
     height: 60px;
 }
 
+/* ページタイトル */
 .page-title {
     font-size: 35px;
     font-weight: bold;
     color: #ffffff;
 }
+
+/* 切り替えボタン */
+.chart-buttons {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.chart-btn {
+    background-color: #3498db;      
+    color: #fff;                     
+    border: none;                    
+    padding: 8px 16px;               
+    border-radius: 6px;              
+    cursor: pointer;                 
+    font-weight: bold;               
+    transition: all 0.2s ease;  
+    margin-left: 10px;     
+}
+
+.chart-btn:hover {
+    background-color: #2e86c1;       /* ホバー時は濃い青 */
+    transform: translateY(-2px);     /* 少し浮かせる */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.chart-btn.active {
+    background-color: #1f6bb8;      /* クリック時はさらに濃い青 */
+    transform: translateY(0);        /* クリックしたら戻る */
+    box-shadow: 0 0 10px rgba(31, 107, 184, 0.5);
+}
+
+.title {
+    text-align: center;
+}
+
+/* チャートタイトル */
+.chart-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
 /* フッター */
 .footer {
     background-color: #F9A9FF;
