@@ -9,6 +9,19 @@ try {
     exit;
 }
 
+function getAreaIdFromAddress($pdo, $address) {
+    $sql = "SELECT area_id, area_name FROM area";
+    $stmt = $pdo->query($sql);
+    $areas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($areas as $area) {
+        if (strpos($address, $area['area_name']) !== false) {
+            return $area['area_id'];
+        }
+    }
+    return null;
+}
+
 $error = '';
 $success = '';
 
@@ -28,20 +41,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $homepage_url = trim($_POST['homepage'] ?? '');
     $open_date = trim($_POST['open_date'] ?? '');
 
+    $area_id = getAreaIdFromAddress($pdo, $store_address);
+
     if ($store_name === '' || $category_id === '' || $genre === '' || $store_address === '' || $access === '' || $opening_hours === '' || $budget === '' || $payment_methods === '' || $homepage_url === '' || $open_date === '') {
         $error = "必須項目をすべて入力してください。";
+    } elseif ($area_id === null) {
+        $error = "住所に対応するエリアが見つかりません。";
     } else {
         try {
             $sql = "INSERT INTO store (
                         store_name, category_id, genre, contact_info, reservation_available,
                         store_address, access, opening_hours, budget,
                         payment_methods, private_available, non_smoking,
-                        homepage_url, open_date
+                        homepage_url, open_date, area_id
                     ) VALUES (
                         :store_name, :category_id, :genre, :contact_info, :reservation_available,
                         :store_address, :access, :opening_hours, :budget,
                         :payment_methods, :private_available, :non_smoking,
-                        :homepage_url, :open_date
+                        :homepage_url, :open_date, :area_id
                     )";
             $stmt = $pdo->prepare($sql);
 
@@ -59,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(':non_smoking', $non_smoking);
             $stmt->bindParam(':homepage_url', $homepage_url);
             $stmt->bindParam(':open_date', $open_date);
+            $stmt->bindParam(':area_id', $area_id);
 
             $stmt->execute();
             $store_id = $pdo->lastInsertId();

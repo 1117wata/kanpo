@@ -3,6 +3,23 @@ body {
   margin: 0;
   background: #fff;
 }
+.header-bar {
+    background-color: #FFEC6E;
+    padding: 35px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.header-bar .logo-link {
+    position: absolute;
+    right: 20px;
+}
+
+.header-bar .logo-link img {
+    height: 60px;
+}
 
 header {
   background: #f7d76b;

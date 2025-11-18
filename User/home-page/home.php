@@ -14,10 +14,12 @@ session_start();
 </head>
 <body>
 
-<header>
-  <button onclick="history.back()">←</button>
-  <div>👤</div>
-</header>
+<div class="header-bar">
+    <a href="profile.php" class="logo-link">
+        <img src="../../images/aikon.png" alt="サイトロゴ">
+    </a>
+    <div class="page-title"></div>
+</div>
 
 <!-- ロゴ表示 -->
 <div class="logo">
@@ -86,7 +88,7 @@ $areas = $pdo->query("
 
 
 <?php
-// DB接続設定
+/*// DB接続設定
 $host = 'localhost';
 $dbname = 'kanpo';
 $user = 'root';
@@ -174,5 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['area_image'])) {
   </form>
 </section>
 
+*/
+?>
 </body>
 </html>

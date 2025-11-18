@@ -21,7 +21,6 @@ header a {
 h2 {
   padding: 16px;
   font-size: 20px;
-  border-bottom: 1px solid #ddd;
 }
 
 .search-box {
@@ -66,10 +65,27 @@ h2 {
   border-radius: 0;
 }
 
-.store-list h3 {
+.store-list h2 {
   margin: 0 0 6px;
-  font-size: 16px;
+  font-size: 30px;
   color: #000;
+}
+.store-list h2 a {
+  color: #000;              /* 黒色 */
+  text-decoration: none;   /* 下線なし */
+}
+
+.store-list h2 a:visited {
+  color: #000;              /* 訪問済みでも黒色 */
+}
+
+.store-list h2 a:hover {
+  color: #000;              /* ホバーしても黒色 */
+  text-decoration: underline; /* 必要なら下線を追加 */
+}
+
+.store-list h2 a:active {
+  color: #000;              /* クリック中も黒色 */
 }
 
 .store-list p {
@@ -82,4 +98,195 @@ p {
   padding: 16px;
   font-size: 14px;
   color: #777;
+}
+
+/* 検索フォーム */
+.search-box {
+  max-width: 640px;
+  margin: 20px auto;
+  display: flex;
+  gap: 8px;
+  padding: 0 16px;
+}
+
+.search-box input,
+.search-box select {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+}
+
+.search-box button {
+  padding: 10px 16px;
+  font-weight: bold;
+  background-color: #2dbe60;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* 店舗リスト */
+.store-list {
+  list-style: none;
+  padding: 0 16px;
+  margin: 0;
+}
+
+.store-list li {
+  border-bottom: 1px solid #ccc;
+  padding: 16px 0;
+}
+
+/* 店舗情報 */
+.store-list h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  color: #000;
+}
+
+.store-list p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.store-photos-wrapper {
+  position: relative;
+  margin-top: 20px;
+}
+
+.store-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+  justify-content: center; /* 中央寄せ */
+}
+
+.store-photo {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.store-photo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  z-index: 2;
+}
+
+.store-photo:nth-child(1),
+.store-photo:nth-child(3) {
+  margin-top: 30px;
+}
+
+
+/* 矢印ボタン */
+.photo-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 40px;
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+  padding: 8px 12px;
+  border-radius: 50%;
+}
+
+.photo-arrow:hover {
+  opacity: 1;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.photo-prev {
+  left: 0;
+}
+
+.photo-next {
+  right: 0;
+}
+
+/* サイド画像に触れたとき矢印表示 */
+.store-photo:hover ~ .photo-prev,
+.store-photo:hover ~ .photo-next {
+  opacity: 1;
+}
+
+/* モーダル */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+  display: block;
+  margin: 5% auto;
+  max-width: 80%;
+  max-height: 80%;
+  border-radius: 8px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+}
+
+.store-rating {
+      font-size: 2em;
+      color: #FFD700;
+    }
+    .review-count {
+      font-size: 1.0em;
+      color: #666666;
+      margin-left: 8px;
+    }
+
+    .star {
+  font-size: 2em;
+  display: inline-block;
+  position: relative;
+}
+
+.star.full {
+  color: #FFD700; /* ゴールド */
+}
+
+.star.empty {
+  color: #CCC; /* グレー */
+}
+
+.star.half {
+  color: #CCC; /* ベースはグレー */
+}
+.star.half::before {
+  content: '★';
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+  color: #FFD700;
 }
