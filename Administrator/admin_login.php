@@ -13,22 +13,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_email'], $_POST
     $password = $_POST['admin_password'];
 
     $stmt = $pdo->prepare("SELECT * FROM admin WHERE email=:email");
-$stmt->execute([':email'=>$email]);
-$admin = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt->execute([':email'=>$email]);
+    $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($admin && password_verify($password, $admin['password'])) {
-    // セッションにログイン情報を保存
-    $_SESSION['admin_logged_in'] = true;
-    $_SESSION['admin_email'] = $admin['email'];
-    $_SESSION['admin_name'] = $admin['admin_name'];
+    if ($admin && password_verify($password, $admin['password'])) {
+        // セッションにログイン情報を保存
+        $_SESSION['admin_logged_in'] = true;
+        $_SESSION['admin_email'] = $admin['email'];
+        $_SESSION['admin_name'] = $admin['admin_name'];
 
-    $error_message = "ログイン成功！<br>3秒後に自動でホーム画面へ遷移します。";
-    $message_class = 'success';
-    header("Refresh:3; url=admin_home.php");
-} else {
-    $error_message = "メールアドレスまたはパスワードが間違っています。";
-    $message_class = 'error';
-}
+        $error_message = "ログイン成功！<br>3秒後に自動でホーム画面へ遷移します。";
+        $message_class = 'success';
+        header("Refresh:3; url=admin_home.php");
+    } else {
+        $error_message = "メールアドレスまたはパスワードが間違っています。";
+        $message_class = 'error';
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -58,23 +58,6 @@ if ($admin && password_verify($password, $admin['password'])) {
 
     <button type="submit">ログイン</button>
 </form>
-
-<!-- アニメーション -->
-<script>
-function createJellyfish() {
-    const jelly = document.createElement('div');
-    jelly.classList.add('jellyfish');
-    jelly.style.left = Math.random() * window.innerWidth + 'px';
-    jelly.style.animationDuration = (8 + Math.random() * 4) + 's';
-    document.body.appendChild(jelly);
-
-    setTimeout(() => {
-        jelly.remove();
-    }, 10000);
-}
-
-setInterval(createJellyfish, 1000);
-</script>
 
 </body>
 </html>
