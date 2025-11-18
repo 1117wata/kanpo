@@ -1,12 +1,9 @@
 <?php
-session_start();
-
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=kanpo;charset=utf8",'root','');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+require_once 'admin_auth.php';
+require_once '../DB/db_connect.php';
+$pdo = getDB();
 
     $store_id = $_GET['id'] ?? 0;
-
     // 店舗情報取得
     $stmt = $pdo->prepare("SELECT * FROM store WHERE store_id=:id");
     $stmt->bindParam(':id', $store_id);
@@ -18,11 +15,7 @@ try {
     $stmt->bindParam(':id', $store_id);
     $stmt->execute();
     $photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    echo "DBエラー: ".$e->getMessage();
-    exit;
-}
+    
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -64,6 +57,13 @@ try {
         <img src="../images/Akanpo.png" alt="サイトロゴ">
     </a>
     <div class="page-title">店舗情報詳細</div>
+</div>
+
+<!-- 戻るボタン -->
+<div class="back-btn-container">
+    <a href="javascript:history.back();" class="back-link">
+        <img src="../images/back.png" alt="戻る" class="back-icon">
+    </a>
 </div>
 
 <!-- 店舗カルーセル -->
@@ -121,7 +121,7 @@ try {
 
 <footer class="footer">
     <div class="footer-content">
-        &copy; <?= date('Y') ?> KANPO 管理者画面
+        &copy; <?= date('Y') ?> KANPO 管理者
     </div>
 </footer>
 

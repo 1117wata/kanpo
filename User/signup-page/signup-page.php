@@ -1,4 +1,7 @@
 <?php
+require_once '../DB/db_connect.php';
+$pdo = getDB();
+
 $error = '';
 $username = $nickname = $email = $password = $address = '';
 
@@ -13,43 +16,46 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $error = "必須項目（お名前・メールアドレス・パスワード）を入力してください。";
     } else {
         try {
-            $pdo = new PDO("mysql:host=localhost;dbname=kanpo;charset=utf8", "root", "");
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
             // ニックネーム重複チェック
             $stmt = $pdo->prepare("SELECT COUNT(*) FROM user WHERE nickname = :nickname");
             $stmt->bindParam(':nickname', $nickname);
             $stmt->execute();
             if ($stmt->fetchColumn() > 0) {
                 $error = "このニックネームは既に使用されています。";
-            } else {
-                // メールアドレス重複チェック
+            }
+
+            // メールアドレス重複チェック
+            if (!$error) {
                 $stmt = $pdo->prepare("SELECT COUNT(*) FROM user WHERE email = :email");
                 $stmt->bindParam(':email', $email);
                 $stmt->execute();
                 if ($stmt->fetchColumn() > 0) {
                     $error = "このメールアドレスは既に登録されています。";
-                } else {
-                    $password_hash = password_hash($password, PASSWORD_DEFAULT);
-                    $icon_path = 'default.png';
-                    $sql = "INSERT INTO user (username, nickname, email, password_hash, address, icon_path)
-                            VALUES (:username, :nickname, :email, :password, :address, :icon_path)";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->bindParam(':username', $username);
-                    $stmt->bindParam(':nickname', $nickname);
-                    $stmt->bindParam(':email', $email);
-                    $stmt->bindParam(':password', $password_hash);
-                    $stmt->bindParam(':address', $address);
-                    $stmt->bindParam(':icon_path', $icon_path);
-                    $stmt->execute();
-
-                    header("Location: success-page.php");
-                    exit;
                 }
             }
 
+            // 問題なければINSERT
+            if (!$error) {
+                $password_hash = password_hash($password, PASSWORD_DEFAULT);
+                $icon_path = 'default.png';
+
+                $sql = "INSERT INTO user (username, nickname, email, password_hash, address, icon_path)
+                        VALUES (:username, :nickname, :email, :password, :address, :icon_path)";
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':username', $username);
+                $stmt->bindParam(':nickname', $nickname);
+                $stmt->bindParam(':email', $email);
+                $stmt->bindParam(':password', $password_hash);
+                $stmt->bindParam(':address', $address);
+                $stmt->bindParam(':icon_path', $icon_path);
+                $stmt->execute();
+
+                header("Location: success-page.php");
+                exit;
+            }
+
         } catch (PDOException $e) {
-            $error = "DBエラー: " . $e->getMessage();
+            $error = "DBエラー: " . htmlspecialchars($e->getMessage(), ENT_QUOTES);
         }
     }
 }

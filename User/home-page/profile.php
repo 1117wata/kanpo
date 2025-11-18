@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 $_SESSION['user_id'] = 1; // テスト用にユーザーIDをセット
 $user_id = $_SESSION['user_id'];
 $pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8mb4', 'root', '', [
@@ -7,8 +8,9 @@ $pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8mb4', 'root', '', 
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 ]);
 
-$sql = "SELECT * FROM review LEFT JOIN review_photo_id 
-ON review.review_id = review_photo_id.review_id WHERE review.user_id = ?
+$sql = "SELECT * FROM review INNER JOIN store 
+ON review.store_id = store.store_id 
+WHERE review.user_id = ? 
 ORDER BY review.created_at DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$user_id]);
@@ -30,7 +32,7 @@ $user = $user_stmt->fetch();
 </head>
 <body>
   <header>
-    <img src="../../images/Kanpo.png" alt="Logo" class="logo">
+    <img src="../../images/Kinpo.png" alt="Logo" class="logo">
     プロフィール
   </header>
   <div class="profile">
@@ -42,69 +44,37 @@ $user = $user_stmt->fetch();
       口コミ
     </div>
   </div>
-  <button type="submit" class="profile_edit">プロフィール編集</button>
+  <form action="profile_edit.php" method="get">
+    <button type="submit" class="profile_edit">プロフィール編集</button>
+  </form>
 
+  <?php foreach ($reviews as $review): ?>
   <div class="border_box"></div>
-
   <div class="store">
     <div class="store_name">
-      バーガーキング 博多駅筑紫口店<br>
+      <?= htmlspecialchars($review['store_name'], ENT_QUOTES, 'UTF-8') ?><br>
     </div>
     <div class="store_genre">
-      博多/ハンバーガー、サンドウィッチ、ファーストフード
+      <?= htmlspecialchars($review['genre'] ?? 'ジャンル未登録', ENT_QUOTES, 'UTF-8') ?>
     </div>
     <div class="ellipsis-menu">
-      <button class="ellipsis-button">...</button>
-      <ul class="menu">
-        <li id="edit">編集</li>
-        <li id="delete">削除</li>
-      </ul>
+      <a href="review_edit.php?id=<?= $review['review_id'] ?>">編集</a><br>
+      <a href="profile_delete.php?id=<?= $review['review_id'] ?>">削除</a>
     </div>
     <hr>
     <div class="store_review">
-      2025/09/01 訪問<br>
-      ☆☆☆☆☆ 5.0
-    </div>
-    <div class="store_image">
-      <img src="uploads/burger_king1.png">
-      <img src="uploads/burger_king2.png">
-      <img src="uploads/burger_king3.png">
+      <?= htmlspecialchars($review['created_at'], ENT_QUOTES, 'UTF-8') ?> 訪問<br>
+      ☆☆☆☆☆ <?= htmlspecialchars($review['rating'] ?? 'N/A', ENT_QUOTES, 'UTF-8') ?>
     </div>
     <div class="store_review_comment">
-      初バーガーキングのワッパーです。セットでDr.pepperとフレンチフライと王道の組み合わせでしょうか。肉肉しさも感じつつ野菜も割と入ってておいしかったです。ソースもケチャップとシンプルisベストでした。ソース味で食べてる感がしなかったのが良かったです。並んでなかったから入りました。
+      <?= nl2br(htmlspecialchars($review['comment'], ENT_QUOTES, 'UTF-8')) ?>
     </div>
   </div>
 
-  <div class="border_box"></div>
-
-  <div class="store">
-    <div class="store_name">
-      博多もつ鍋 徳永屋 総本店<br>
-    </div>
-    <div class="store_genre">
-      祇園/もつ鍋、手羽先、郷土料理
-    </div>
-    <div class="ellipsis-menu">
-      <button class="ellipsis-button">...</button>
-      <ul class="menu">
-        <li id="edit">編集</li>
-        <li id="delete">削除</li>
-      </ul>
-    </div>
-    <hr>
-    <div class="store_review">
-      2025/09/01 訪問<br>
-      ☆☆☆☆☆ 5.0
-    </div>
-    <div class="store_image">
-      <img src="uploads/burger_king1.png">
-      <img src="uploads/burger_king2.png">
-      <img src="uploads/burger_king3.png">
-    </div>
-    <div class="store_review_comment">
-      初バーガーキングのワッパーです。セットでDr.pepperとフレンチフライと王道の組み合わせでしょうか。肉肉しさも感じつつ野菜も割と入ってておいしかったです。ソースもケチャップとシンプルisベストでした。ソース味で食べてる感がしなかったのが良かったです。並んでなかったから入りました。
-    </div>
   </div>
+  <?php endforeach; ?>
+
+  
 
 <script>
 const button = document.querySelector('.ellipsis-button');

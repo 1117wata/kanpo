@@ -1,13 +1,7 @@
 <?php
 session_start();
-
-// DB接続
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=kanpo;charset=utf8", 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("DB接続エラー: " . $e->getMessage());
-}
+require_once '../DB/db_connect.php';
+$pdo = getDB();
 
 // 初期設定
 $error_message = 'メールアドレスとパスワードを入力してください。';
@@ -18,11 +12,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_email'], $_POST
     $email = $_POST['admin_email'];
     $password = $_POST['admin_password'];
 
-    $stmt = $pdo->prepare("SELECT * FROM admin WHERE email=:email AND password=:password");
-    $stmt->execute([':email'=>$email, ':password'=>$password]);
+    $stmt = $pdo->prepare("SELECT * FROM admin WHERE email=:email");
+    $stmt->execute([':email'=>$email]);
     $admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($admin) {
+    if ($admin && password_verify($password, $admin['password'])) {
+        // セッションにログイン情報を保存
+        $_SESSION['admin_logged_in'] = true;
+        $_SESSION['admin_email'] = $admin['email'];
+        $_SESSION['admin_name'] = $admin['admin_name'];
+
         $error_message = "ログイン成功！<br>3秒後に自動でホーム画面へ遷移します。";
         $message_class = 'success';
         header("Refresh:3; url=admin_home.php");
@@ -59,23 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['admin_email'], $_POST
 
     <button type="submit">ログイン</button>
 </form>
-
-<!-- アニメーション -->
-<script>
-function createJellyfish() {
-    const jelly = document.createElement('div');
-    jelly.classList.add('jellyfish');
-    jelly.style.left = Math.random() * window.innerWidth + 'px';
-    jelly.style.animationDuration = (8 + Math.random() * 4) + 's';
-    document.body.appendChild(jelly);
-
-    setTimeout(() => {
-        jelly.remove();
-    }, 10000);
-}
-
-setInterval(createJellyfish, 1000);
-</script>
 
 </body>
 </html>

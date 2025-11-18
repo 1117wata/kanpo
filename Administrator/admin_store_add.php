@@ -1,13 +1,7 @@
 <?php
-session_start();
-
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=kanpo;charset=utf8", 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo "DB接続エラー: " . $e->getMessage();
-    exit;
-}
+require_once 'admin_auth.php';
+require_once '../DB/db_connect.php';
+$pdo = getDB();
 
 function getAreaIdFromAddress($pdo, $address) {
     $sql = "SELECT area_id, area_name FROM area";
@@ -125,6 +119,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="page-title">店舗追加</div>
     </div>
 
+    <!-- 戻るボタン -->
+    <div class="back-btn-container">
+        <a href="javascript:history.back();" class="back-link">
+            <img src="../images/back.png" alt="戻る" class="back-icon">
+        </a>
+    </div>
     <?php if ($error): ?>
         <p style="color:red"><?= htmlspecialchars($error) ?></p>
     <?php elseif ($success): ?>
@@ -233,7 +233,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <!-- フッター -->
         <footer class="footer">
             <div class="footer-content">
-                &copy; <?= date('Y') ?> KANPO 管理者画面
+                &copy; <?= date('Y') ?> KANPO 管理者
             </div>
     </footer>
 

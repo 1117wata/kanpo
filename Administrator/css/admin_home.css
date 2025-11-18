@@ -1,0 +1,124 @@
+/* ベース */
+* { box-sizing: border-box; }
+
+html, body {
+    height: 100%; 
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../uploads/Bkanpo.png) no-repeat center center;
+    background-size: 500px;
+    opacity: 0.15; 
+    z-index: -1; 
+}
+
+/* ヘッダー */
+.header-bar {
+    background-color: #F9A9FF;
+    padding: 35px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.header-bar .logo-link {
+    position: absolute;
+    left: 20px;
+}
+
+.header-bar .logo-link img {
+    height: 60px;
+}
+
+.page-title {
+    font-size: 35px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* ヘッダー右端に管理者情報表示 */
+.admin-info {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.admin-info .logout-btn {
+    background-color: #ff6b6b;
+    border: none;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.admin-info .logout-btn:hover {
+    background-color: #ff4b4b;
+}
+
+
+/* ボタンコンテナ */
+.btn-container {
+    flex: 1;    /* ← これで中身が少なくても縦スペースを伸ばして埋める */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* 縦中央に配置 */
+    align-items: center;
+    gap: 100px;
+}
+
+/* 共通ボタンスタイル */
+.menu-btn {
+    width: 200px;
+    padding: 15px 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #838383;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.menu-btn:hover {
+    background-color: #6b6b6b;
+    transform: translateY(-3px);
+}
+
+/* フッター */
+.footer {
+    background-color: #F9A9FF;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: auto;
+    font-size: 14px;
+}

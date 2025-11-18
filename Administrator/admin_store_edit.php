@@ -1,12 +1,7 @@
 <?php 
-session_start();
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=kanpo;charset=utf8", 'root', '');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) { 
-    echo "DB接続エラー: ".$e->getMessage(); 
-    exit; 
-}
+require_once 'admin_auth.php';
+require_once '../DB/db_connect.php';
+$pdo = getDB();
 
 $store_id = $_GET['id'] ?? $_POST['store_id'] ?? null;
 if(!$store_id){ echo "店舗IDが不正です"; exit; }
@@ -83,10 +78,18 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 </head>
 <body>
 
+<!-- ヘッダー -->
 <div class="header-bar">
     <a href="admin_home.php" class="logo-link"><img src="../images/Akanpo.png" alt="サイトロゴ"></a>
     <div class="page-title">店舗編集</div>
 </div>
+
+<!-- 戻るボタン -->
+ <div class="back-btn-container">
+    <a href="javascript:history.back();" class="back-link">
+        <img src="../images/back.png" alt="戻る" class="back-icon">
+    </a>
+ </div>
 
 <?php if($error): ?>
 <p class="msg-error"><?= htmlspecialchars($error) ?></p>
@@ -179,6 +182,13 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 
 <div class="btn-center"><button class="edit-btn" type="submit">更新</button></div>
 </form>
+
+<!-- フッター -->
+<footer class="footer">
+    <div class="footer-content">
+        &copy; <?= date('Y') ?> KANPO 管理者
+    </div>
+</footer>
 
 <script>
 // ジャンルドロップダウン
