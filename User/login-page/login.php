@@ -38,8 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
     <header>
-        <div class="header-left"></div>
-            <a href="../../Administrator/admin_login.php" class="admin-login-link">管理者ログイン</a>
+        
     </header>
 
     <img src="../../images/Kanpo.png" class="Kanpo_picture" alt="サンプル画像">
