@@ -11,18 +11,18 @@ body {
     padding: 18px 20px;
     display: flex;
     align-items: center;
-    position: relative; /* これ大事 */
+    position: relative; 
 }
 
 .logo-link img {
     height: 60px;
 }
 
-/* タイトルを中央固定 */
+/* ページタイトル */
 .page-title {
-    position: absolute; /* 絶対配置 */
-    left: 50%;          /* 横幅中央 */
-    transform: translateX(-50%); /* 真ん中にピッタリ */
+    position: absolute; 
+    left: 50%;          
+    transform: translateX(-50%); 
     font-size: 35px;
     font-weight: bold;
     color: #000000;
