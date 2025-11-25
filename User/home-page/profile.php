@@ -1,25 +1,19 @@
 <?php
 session_start();
 
-$_SESSION['user_id'] = 1; // テスト用にユーザーIDをセット
-$user_id = $_SESSION['user_id'];
-$pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8mb4', 'root', '', [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-]);
+require_once '../../DB/db_connect.php';
+$pdo = getDB();
 
-$sql = "SELECT * FROM review INNER JOIN store 
-ON review.store_id = store.store_id 
-WHERE review.user_id = ? 
-ORDER BY review.created_at DESC";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$user_id]);
-$reviews = $stmt->fetchAll();
+$user = null;
 
-$user_sql = "SELECT username FROM user WHERE user_id = ?";
-$user_stmt = $pdo->prepare($user_sql);
-$user_stmt->execute([$user_id]);
-$user = $user_stmt->fetch();
+if (!empty($_SESSION['user_id'])) {
+    $stmt = $pdo->prepare("SELECT * FROM user WHERE user_id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch();
+}
+
+$reviews = [];
+
 ?>
 
 <!DOCTYPE html>
@@ -31,13 +25,17 @@ $user = $user_stmt->fetch();
   <link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
-  <header>
-    <img src="../../images/Kinpo.png" alt="Logo" class="logo">
-    プロフィール
-  </header>
+<!-- ヘッダー -->
+<header class="header-bar">
+    <a href="./home.php" class="logo-link">
+        <img src="../../images/Ukanpo.png" alt="サイトロゴ">
+    </a>
+    <h1 class="page-title">プロフィール</h1>
+</header>
+
   <div class="profile">
-    <div class="name">
-      <?= $user['username'] ?>
+    <div class="nickname-label">
+      <?= htmlspecialchars($user['nickname']) ?>
     </div>
     <div class="review">
       <?= count($reviews) ?><br>
