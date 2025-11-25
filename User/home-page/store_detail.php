@@ -70,7 +70,17 @@ if (!$store) {
         <p>画像が登録されていません。</p>
     <?php endif; ?>
 </div>
+<div class="review-actions">
+    <!-- 口コミ投稿 -->
+    <a href="review_post.php?store_id=<?= htmlspecialchars($store['store_id']) ?>" class="review-btn">
+        この店舗に口コミを投稿する
+    </a>
 
+    <!-- 口コミ一覧 -->
+    <a href="reviews.php?store_id=<?= htmlspecialchars($store['store_id']) ?>" class="review-btn">
+        この店舗の口コミ一覧を見る
+    </a>
+</div>
 <!-- 店舗基本情報 -->
 <div class="store-info">
     <div class="store-info-header">

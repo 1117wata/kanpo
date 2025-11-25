@@ -1,0 +1,154 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+
+header {
+  background: #f7d76b;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header img {
+  height: 40px;
+}
+
+.mypage-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: 20px;
+  border: 1px solid #aaa;
+  background: #fff;
+  cursor: pointer;
+}
+
+.mypage-btn:hover {
+  background: #f0f0f0;
+}
+
+.mypage-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #dcdcdc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main {
+  padding: 15px;
+}
+
+h2 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.stars {
+  display: flex;
+  gap: 5px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.star {
+  color: #ccc;
+  transition: 0.2s;
+}
+
+.star.active {
+  color: gold;
+}
+
+textarea {
+  width: 100%;
+  height: 80px;
+  margin: 10px 0;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+}
+
+.photo-upload {
+  display: block;
+  width: 100%;
+  background: #d6f0ff;
+  padding: 14px;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid #a8d4f5;
+  cursor: pointer;
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.photo-upload:hover {
+  background: #c4e6ff;
+}
+
+.photo-upload input {
+  display: none;
+}
+
+.uploaded-photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.uploaded-photos img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.cost-box {
+  background: #e6f3ff;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.cost-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.cost-options button {
+  padding: 8px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.cost-options button.active {
+  background: #66aaff;
+  color: #fff;
+  border-color: #66aaff;
+}
+
+.submit {
+  width: 100%;
+  padding: 12px;
+  background: #4169e1;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+

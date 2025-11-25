@@ -1,0 +1,197 @@
+/* ヘッダー */
+.header-bar {
+    background-color: #FFEC6E;
+    padding: 35px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.header-bar .logo-link {
+    position: absolute;
+    left: 20px;
+}
+
+.header-bar .logo-link img {
+    height: 60px;
+}
+
+.page-title {
+    font-size: 35px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* 店舗詳細全体 */
+.store-detail {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.store-detail h1 {
+    font-size: 40px;
+    margin-bottom: 30px;
+}
+
+/* Swiper カルーセル */
+.swiper {
+    width: 100%;  /* 画面いっぱいに近く */
+    max-width: 1500px;
+    margin: 0 auto 50px auto;
+}
+
+.store-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* 店舗情報 */
+.store-info {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto 50px auto;
+    text-align: left;
+}
+
+/* タイトル + 編集ボタン */
+.store-info-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.store-info-header h2 {
+    position: relative;
+    font-size: 28px;
+    margin: 0;
+    padding-left: 30px; /* 四角用 */
+}
+
+.store-info-header h2::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #FFEC6E;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* テーブル */
+.store-info-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.store-info-table th,
+.store-info-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+.store-info-table th {
+    width: 150px;
+    background-color: #FFEC6E;
+    color: #ffffff;
+    text-align: left;
+}
+
+.store-info-table td a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.store-info-table td a:hover {
+    text-decoration: underline;
+}
+
+
+.review-card {
+  margin-bottom: 20px;
+}
+
+/* 上枠：タイトル＋投稿日 */
+.review-header-box {
+  border: 2px solid #FFEC6E;
+  border-radius: 6px 6px 0 0;
+  background: #FFF9CC;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.review-title {
+  font-size: 16px;
+  color: #333;
+}
+
+.review-date {
+  font-size: 14px;
+  color: #666;
+}
+
+/* 下枠：詳細部分 */
+.review-body-box {
+  border: 2px solid #ddd;
+  border-top: none; /* 上枠とつなげる */
+  border-radius: 0 0 6px 6px;
+  background: #fff;
+  padding: 12px;
+}
+
+.review-user {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.review-rating {
+  margin-bottom: 6px;
+}
+
+.star {
+  font-size: 20px;
+  color: #ccc;
+}
+.star.full { color: gold; }
+.star.empty { color: #ccc; }
+.star.half { color: gold; opacity: 0.5; }
+
+.review-visit {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.review-comment {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.review-photo img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+
+
+/* フッター */
+.footer {
+    background-color: #FFEC6E;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 50px;
+    font-size: 14px;
+}
+
+

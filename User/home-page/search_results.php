@@ -126,7 +126,7 @@ function renderStars($rating) {
         <p class="store-rating">
           評価: <?= renderStars($store['avg_rating']) ?>
           （<?= $store['avg_rating'] !== null ? number_format($store['avg_rating'], 1) : '評価なし' ?>）
-          <a class="review-count" href="review.php">[<?= $store['review_count'] ?>件の口コミ]</a>
+          <a class="review-count" href="reviews.php">[<?= $store['review_count'] ?>件の口コミ]</a>
         </p>
 
         <div class="store-photos-wrapper">
