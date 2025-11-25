@@ -1,5 +1,17 @@
 <?php
 session_start();
+require_once '../../DB/db_connect.php';
+
+$pdo = getDB();
+
+$user = null;
+
+if (!empty($_SESSION['user_id'])) {
+    $stmt = $pdo->prepare("SELECT * FROM user WHERE user_id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -15,11 +27,20 @@ session_start();
 <body>
 
 <div class="header-bar">
-    <a href="profile.php" class="logo-link">
-        <img src="../../images/aikon.png" alt="サイトロゴ">
-    </a>
+
+    <div class="profile-box">
+        <a href="profile.php" class="icon-link">
+            <img src="../../images/aikon.png" class="user-icon" alt="プロフ画像">
+        </a>
+
+        <?php if ($user): ?>
+            <span class="nickname-label"><?= htmlspecialchars($user['nickname']) ?></span>
+        <?php endif; ?>
+    </div>
+    
     <div class="page-title"></div>
 </div>
+
 
 <!-- ロゴ表示 -->
 <div class="logo">

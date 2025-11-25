@@ -5,7 +5,7 @@ body {
 }
 .header-bar {
     background-color: #FFEC6E;
-    padding: 35px 20px;
+    padding: 55px 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -159,4 +159,29 @@ header {
   background-color: #28a956;
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* ユーザー情報スタイル */
+.profile-box {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.nickname-label {
+  margin-top: 0px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
 }

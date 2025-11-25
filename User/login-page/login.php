@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user && password_verify($password, $user['password_hash'])) {
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['email'] = $user['email'];
+        $_SESSION['nickname'] = $user['nickname'];
         header("Location: ../home-page/home.php");
         exit();
     } else {
