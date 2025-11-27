@@ -29,15 +29,16 @@ if (!empty($_SESSION['user_id'])) {
 <div class="header-bar">
 
     <div class="profile-box">
-        <a href="profile.php" class="icon-link">
-            <img src="../../images/aikon.png" class="user-icon" alt="プロフ画像">
-        </a>
+      <a href="profile.php" class="icon-link">
+        <img src="<?= !empty($user['icon_path']) ? htmlspecialchars($user['icon_path'], ENT_QUOTES) : '../../images/aikon.png' ?>" class="user-icon" alt="プロフ画像">
+      </a>
 
-        <?php if ($user): ?>
-            <span class="nickname-label"><?= htmlspecialchars($user['nickname']) ?></span>
-        <?php endif; ?>
+      <?php if ($user): ?>
+        <span class="nickname-label"><?= htmlspecialchars($user['nickname'], ENT_QUOTES) ?></span>
+      <?php endif; ?>
     </div>
-    
+
+
     <div class="page-title"></div>
 </div>
 

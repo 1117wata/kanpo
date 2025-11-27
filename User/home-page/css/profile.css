@@ -55,6 +55,8 @@ body {
     background: #fff;
     width: 60%;
     border-radius: 4px;
+    margin-bottom: 20px;
+    cursor: pointer;
 }
 
 .border_box {

@@ -1,5 +1,5 @@
 <?php
-require_once '../DB/db_connect.php';
+require_once '../../DB/db_connect.php';
 $pdo = getDB();
 
 $error = '';
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // 問題なければINSERT
             if (!$error) {
                 $password_hash = password_hash($password, PASSWORD_DEFAULT);
-                $icon_path = 'default.png';
+                $icon_path = '../../images/aikon.png'; 
 
                 $sql = "INSERT INTO user (username, nickname, email, password_hash, address, icon_path)
                         VALUES (:username, :nickname, :email, :password, :address, :icon_path)";
@@ -49,6 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $stmt->bindParam(':address', $address);
                 $stmt->bindParam(':icon_path', $icon_path);
                 $stmt->execute();
+                
+                session_start();
+                $_SESSION['user_id'] = $pdo->lastInsertId();
 
                 header("Location: success-page.php");
                 exit;

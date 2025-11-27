@@ -71,7 +71,7 @@ $reviews = [];
 
   </div>
   <?php endforeach; ?>
-
+<hr>
   
 
 <script>
