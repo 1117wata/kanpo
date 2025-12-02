@@ -1,11 +1,13 @@
 <?php
-session_start();
+require_once '../../DB/db_connect.php';
+$pdo = getDB();
 
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=kanpo;charset=utf8",'root','');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $store_id = $_GET['id'] ?? $_GET['store_id'] ?? 0;
+// URLパラメータ store_id 取得
+$store_id = isset($_GET['store_id']) ? (int)$_GET['store_id'] : 0;
+if ($store_id <= 0) {
+    echo "店舗IDが不正です";
+    exit;
+}
 
 // 店舗情報取得
 $stmt = $pdo->prepare("SELECT * FROM store WHERE store_id=:id");
@@ -14,21 +16,15 @@ $stmt->execute();
 $store = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$store) {
-    echo "<p style='color:red; text-align:center; margin-top:50px;'>該当する店舗情報が見つかりません。</p>";
+    echo "店舗が見つかりません";
     exit;
 }
 
-
-    // 画像取得
-    $stmt = $pdo->prepare("SELECT * FROM store_photo WHERE store_id=:id");
-    $stmt->bindParam(':id', $store_id);
-    $stmt->execute();
-    $photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    echo "DBエラー: ".$e->getMessage();
-    exit;
-}
+// 画像取得
+$stmt = $pdo->prepare("SELECT * FROM store_photo WHERE store_id=:id");
+$stmt->bindParam(':id', $store_id);
+$stmt->execute();
+$photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -47,6 +43,13 @@ if (!$store) {
         <img src="../../images/Ukanpo.png" alt="サイトロゴ">
     </a>
     <div class="page-title">店舗情報詳細</div>
+</div>
+
+<!-- 戻るボタン -->
+<div class="back-btn-container">
+    <a href="javascript:history.back();" class="back-link">
+        <img src="../../images/back.png" alt="戻る" class="back-icon">
+    </a>
 </div>
 
 <!-- 店舗カルーセル -->
@@ -70,17 +73,17 @@ if (!$store) {
         <p>画像が登録されていません。</p>
     <?php endif; ?>
 </div>
+
+<!-- 口コミリンク -->
 <div class="review-actions">
-    <!-- 口コミ投稿 -->
     <a href="review_post.php?store_id=<?= htmlspecialchars($store['store_id']) ?>" class="review-btn">
         この店舗に口コミを投稿する
     </a>
-
-    <!-- 口コミ一覧 -->
     <a href="reviews.php?store_id=<?= htmlspecialchars($store['store_id']) ?>" class="review-btn">
         この店舗の口コミ一覧を見る
     </a>
 </div>
+
 <!-- 店舗基本情報 -->
 <div class="store-info">
     <div class="store-info-header">
@@ -95,7 +98,40 @@ if (!$store) {
         <tr><th>交通手段</th><td><?= htmlspecialchars($store['access']) ?></td></tr>
         <tr><th>営業時間</th><td><?= htmlspecialchars($store['opening_hours']) ?></td></tr>
         <tr><th>予算口コミ</th><td><?= htmlspecialchars($store['budget']) ?></td></tr>
-        <tr><th>支払い方法</th><td><?= htmlspecialchars($store['payment_methods']) ?></td></tr>
+        <tr>
+            <th>支払い方法</th>
+            <td>
+                <?php
+                $methods = json_decode($store['payment_methods'], true) ?? [];
+                $details = json_decode($store['payment_details'], true) ?? [];
+
+                $groups = [
+                    "クレジットカード" => ["VISA", "MasterCard", "JCB", "AMEX", "Diners"],
+                    "電子マネー"        => ["Suica", "PASMO", "iD", "QUICPay"],
+                    "QR決済"            => ["PayPay", "楽天ペイ", "d払い"],
+                ];
+
+                $display = [];
+
+                foreach ($methods as $method) {
+                    if (!isset($groups[$method])) {
+                        $display[] = htmlspecialchars($method);
+                        continue;
+                    }
+
+                    $children = array_intersect($details, $groups[$method]);
+
+                    if (!empty($children)) {
+                        $display[] = htmlspecialchars($method) . "（" . htmlspecialchars(implode(", ", $children)) . "）";
+                    } else {
+                        $display[] = htmlspecialchars($method);
+                    }
+                }
+
+                echo implode("<br>", $display);
+                ?>
+            </td>
+        </tr>
         <tr><th>貸切</th><td><?= $store['private_available'] ? '可' : '不可' ?></td></tr>
         <tr><th>たばこ</th><td><?= $store['non_smoking'] ? '禁煙' : '喫煙可' ?></td></tr>
         <tr><th>ホームページ</th>
@@ -113,7 +149,7 @@ if (!$store) {
 
 <footer class="footer">
     <div class="footer-content">
-        &copy; <?= date('Y') ?> KANPO 管理者画面
+        &copy; <?= date('Y') ?> KANPO
     </div>
 </footer>
 

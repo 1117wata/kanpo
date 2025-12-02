@@ -103,7 +103,47 @@ $pdo = getDB();
         <tr><th>交通手段</th><td><?= htmlspecialchars($store['access']) ?></td></tr>
         <tr><th>営業時間</th><td><?= htmlspecialchars($store['opening_hours']) ?></td></tr>
         <tr><th>予算口コミ</th><td><?= htmlspecialchars($store['budget']) ?></td></tr>
-        <tr><th>支払い方法</th><td><?= htmlspecialchars($store['payment_methods']) ?></td></tr>
+        <tr>
+            <th>支払い方法</th>
+            <td>
+                <?php
+                // JSON を配列へ
+                $methods = json_decode($store['payment_methods'], true) ?? [];
+                $details = json_decode($store['payment_details'], true) ?? [];
+
+                // 紐付けルール
+                $groups = [
+                    "クレジットカード" => ["VISA", "MasterCard", "JCB", "AMEX", "Diners"],
+                    "電子マネー"        => ["Suica", "PASMO", "iD", "QUICPay"],
+                    "QR決済"            => ["PayPay", "楽天ペイ", "d払い"],
+                ];
+
+                $display = [];
+
+                foreach ($methods as $method) {
+
+                // 細分類と結びつかないもの（現金など）
+                if (!isset($groups[$method])) {
+                    $display[] = htmlspecialchars($method);
+                continue;
+                }
+
+                // 該当する支払い詳細を抽出
+                $children = array_intersect($details, $groups[$method]);
+
+                    if (!empty($children)) {
+                        $display[] = htmlspecialchars($method) . "（" . htmlspecialchars(implode(", ", $children)) . "）";
+                    } else {
+                        $display[] = htmlspecialchars($method);
+                    }
+                }
+
+                // 改行して表示
+                echo implode("<br>", $display);
+                ?>
+                
+                </td>
+            </tr>
         <tr><th>貸切</th><td><?= $store['private_available'] ? '可' : '不可' ?></td></tr>
         <tr><th>たばこ</th><td><?= $store['non_smoking'] ? '禁煙' : '喫煙可' ?></td></tr>
         <tr><th>ホームページ</th>

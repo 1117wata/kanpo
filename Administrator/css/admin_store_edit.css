@@ -179,3 +179,31 @@ body {
     margin-top: auto;
     font-size: 14px;
 }
+
+/* ===== 支払い方法（大分類） ===== */
+.payment-main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-left: 10px;
+}
+
+/* ===== 支払い方法（細分類） ===== */
+.payment-detail {
+    margin-left: 10px;
+    padding: 6px 10px;
+    background: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+
+    width: 180px;   /* ← ボックスの大きさを揃える */
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.payment-detail label {
+    display: block; /* ← ラベルも縦に並ぶ */
+    white-space: nowrap;
+}
+

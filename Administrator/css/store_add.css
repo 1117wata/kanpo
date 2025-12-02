@@ -10,6 +10,7 @@ body {
     min-height: 100vh;
 }
 
+/* ヘッダー */
 .header-bar {
     background-color: #F9A9FF;
     padding: 35px 20px;
@@ -70,8 +71,40 @@ body {
 /* ===== ラジオボタン ===== */
 .radio-group {
     display: flex;
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-left: 10px;
 }
+
+/* ===== 支払い方法（大分類） ===== */
+.payment-main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-left: 10px;
+}
+
+/* ===== 支払い方法（細分類） ===== */
+.payment-detail {
+    margin-left: 10px;
+    padding: 6px 10px;
+    background: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+
+    width: 180px;   /* ← ボックスの大きさを揃える */
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+}
+
+
+
+.payment-detail label {
+    display: block; /* ← ラベルも縦に並ぶ */
+    white-space: nowrap;
+}
+
 
 /* ===== 登録ボタン ===== */
 .btn-center {
@@ -93,7 +126,7 @@ body {
     background-color: #45a049;
 }
 
-/* ジャンル選択　*/
+/* ===== ジャンル選択 ===== */
 .dropdown {
     position: relative;
     width: 100%;
@@ -133,11 +166,11 @@ body {
     background-color: #f1f1f1;
 }
 
-/* 戻るボタン */
+/* ===== 戻るボタン ===== */
 .back-btn-container {
     position: absolute;
-    top: 140px;   /* 位置調整（上から） */
-    left: 20px;  /* 位置調整（左から） */
+    top: 140px;
+    left: 20px;
 }
 
 .back-link {
@@ -145,9 +178,9 @@ body {
 }
 
 .back-icon {
-    width: 40px;   /* サイズ調整 */
+    width: 40px;
     height: auto;
-    cursor: pointer; /* マウスカーソルを「手」にする */
+    cursor: pointer;
 }
 
 /* フッター */

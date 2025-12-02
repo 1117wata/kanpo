@@ -29,7 +29,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $access = trim($_POST['access'] ?? '');
     $opening_hours = trim($_POST['business_hours'] ?? '');
     $budget = trim($_POST['budget_review'] ?? '');
-    $payment_methods = trim($_POST['payment_method'] ?? '');
+
+    // ▼ 支払い方法（大分類・細分類）
+    $payment_methods = $_POST['payment_method'] ?? [];
+    $payment_details = $_POST['payment_details'] ?? [];
+
+    // JSON 形式に変換
+    $payment_methods_json = json_encode($payment_methods, JSON_UNESCAPED_UNICODE);
+    $payment_details_json = json_encode($payment_details, JSON_UNESCAPED_UNICODE);
+
     $private_available = trim($_POST['private_available'] ?? '');
     $non_smoking = trim($_POST['non_smoking'] ?? '');
     $homepage_url = trim($_POST['homepage'] ?? '');
@@ -37,7 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $area_id = getAreaIdFromAddress($pdo, $store_address);
 
-    if ($store_name === '' || $category_id === '' || $genre === '' || $store_address === '' || $access === '' || $opening_hours === '' || $budget === '' || $payment_methods === '' || $homepage_url === '' || $open_date === '') {
+    if ($store_name === '' || $category_id === '' || $genre === '' || $store_address === '' || 
+        $access === '' || $opening_hours === '' || $budget === '' || empty($payment_methods) || 
+        $homepage_url === '' || $open_date === '') {
         $error = "必須項目をすべて入力してください。";
     } elseif ($area_id === null) {
         $error = "住所に対応するエリアが見つかりません。";
@@ -46,14 +56,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $sql = "INSERT INTO store (
                         store_name, category_id, genre, contact_info, reservation_available,
                         store_address, access, opening_hours, budget,
-                        payment_methods, private_available, non_smoking,
+                        payment_methods, payment_details, private_available, non_smoking,
                         homepage_url, open_date, area_id
                     ) VALUES (
                         :store_name, :category_id, :genre, :contact_info, :reservation_available,
                         :store_address, :access, :opening_hours, :budget,
-                        :payment_methods, :private_available, :non_smoking,
+                        :payment_methods, :payment_details, :private_available, :non_smoking,
                         :homepage_url, :open_date, :area_id
                     )";
+
             $stmt = $pdo->prepare($sql);
 
             $stmt->bindParam(':store_name', $store_name);
@@ -65,7 +76,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(':access', $access);
             $stmt->bindParam(':opening_hours', $opening_hours);
             $stmt->bindParam(':budget', $budget);
-            $stmt->bindParam(':payment_methods', $payment_methods);
+
+            // ▼ 支払い方法 JSON
+            $stmt->bindParam(':payment_methods', $payment_methods_json);
+            $stmt->bindParam(':payment_details', $payment_details_json);
+
             $stmt->bindParam(':private_available', $private_available);
             $stmt->bindParam(':non_smoking', $non_smoking);
             $stmt->bindParam(':homepage_url', $homepage_url);
@@ -75,6 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->execute();
             $store_id = $pdo->lastInsertId();
 
+            // ▼ 画像登録
             if (!empty($_FILES['store_images']['name'][0])) {
                 $upload_dir = 'uploads/store_photos/';
                 if (!is_dir($upload_dir)) {
@@ -103,6 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -191,9 +208,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
 
         <div class="form-group">
-            <label>支払い方法：</label>
-            <input type="text" name="payment_method">
+            <label>支払い方法 <span class="required">*</span></label>
+
+        <!-- 大分類 -->
+        <div class="payment-main">
+            <label><input type="checkbox" name="payment_method[]" value="現金"> 現金</label>
+            <label><input type="checkbox" name="payment_method[]" value="クレジットカード" onclick="toggleDetail('card_detail')"> クレジットカード</label>
+            <label><input type="checkbox" name="payment_method[]" value="電子マネー" onclick="toggleDetail('emoney_detail')"> 電子マネー</label>
+            <label><input type="checkbox" name="payment_method[]" value="QR決済" onclick="toggleDetail('qr_detail')"> QR決済</label>
         </div>
+
+        <!-- クレカ詳細 -->
+        <div id="card_detail" class="payment-detail" style="display:none;">
+            <label><input type="checkbox" name="payment_details[]" value="VISA"> VISA</label>
+            <label><input type="checkbox" name="payment_details[]" value="MasterCard"> MasterCard</label>
+            <label><input type="checkbox" name="payment_details[]" value="JCB"> JCB</label>
+            <label><input type="checkbox" name="payment_details[]" value="AMEX"> AMEX</label>
+            <label><input type="checkbox" name="payment_details[]" value="Diners"> Diners</label>
+        </div>
+
+        <!-- 電子マネー詳細 -->
+        <div id="emoney_detail" class="payment-detail" style="display:none;">
+            <label><input type="checkbox" name="payment_details[]" value="Suica"> Suica</label>
+            <label><input type="checkbox" name="payment_details[]" value="PASMO"> PASMO</label>
+            <label><input type="checkbox" name="payment_details[]" value="iD"> iD</label>
+            <label><input type="checkbox" name="payment_details[]" value="QUICPay"> QUICPay</label>
+        </div>
+
+        <!-- QR決済詳細 -->
+        <div id="qr_detail" class="payment-detail" style="display:none;">
+            <label><input type="checkbox" name="payment_details[]" value="PayPay"> PayPay</label>
+            <label><input type="checkbox" name="payment_details[]" value="楽天Pay"> 楽天Pay</label>
+            <label><input type="checkbox" name="payment_details[]" value="d払い"> d払い</label>
+        </div>
+    </div>
 
         <div class="form-group">
             <label>貸切：</label>
@@ -265,4 +313,9 @@ document.addEventListener('click', e => {
     dropdownList.style.display = 'none';
   }
 });
+
+function toggleDetail(id) {
+    let elem = document.getElementById(id);
+    elem.style.display = elem.style.display === "none" ? "block" : "none";
+}
 </script>

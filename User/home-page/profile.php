@@ -31,6 +31,9 @@ $reviews = [];
         <img src="../../images/Ukanpo.png" alt="サイトロゴ">
     </a>
     <h1 class="page-title">プロフィール</h1>
+      <form method="post" action="user_logout.php" onsubmit="return confirmLogput();" style="margin:0;">
+        <button type="submit" class="logout-btn">ログアウト</button>
+      </form>
 </header>
 
   <div class="profile">
@@ -100,6 +103,9 @@ document.getElementById('delete').addEventListener('click', () => {
   menu.style.display = 'none';
 });
 
+function confirmLogput() {
+    return confirm("ログアウトしますか？");
+}
 </script>
 </body>
 </html>

@@ -12,6 +12,10 @@ $stmt->execute([$store_id]);
 $store = $stmt->fetch(PDO::FETCH_ASSOC);
 if(!$store){ echo "店舗情報が存在しません"; exit; }
 
+// 支払い方法・詳細を配列化
+$store_payment_methods = json_decode($store['payment_methods'], true) ?? [];
+$store_payment_details = json_decode($store['payment_details'], true) ?? [];
+
 // 既存画像取得
 $stmt = $pdo->prepare("SELECT * FROM store_photo WHERE store_id=?");
 $stmt->execute([$store_id]);
@@ -19,6 +23,9 @@ $photos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $error = '';
 if($_SERVER["REQUEST_METHOD"]==="POST"){
+    $payment_methods = $_POST['payment_method'] ?? [];
+    $payment_details = $_POST['payment_details'] ?? [];
+
     $data = [
         'store_name'=>trim($_POST['store_name']??''),
         'contact_info'=>trim($_POST['contact_info']??''),
@@ -29,7 +36,8 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
         'access'=>trim($_POST['access']??''),
         'opening_hours'=>trim($_POST['opening_hours']??''),
         'budget'=>trim($_POST['budget_review']??''),
-        'payment_methods'=>trim($_POST['payment_method']??''),
+        'payment_methods'=>json_encode($payment_methods, JSON_UNESCAPED_UNICODE),
+        'payment_details'=>json_encode($payment_details, JSON_UNESCAPED_UNICODE),
         'private_available'=>trim($_POST['private_available']??''),
         'non_smoking'=>trim($_POST['non_smoking']??''),
         'homepage_url'=>trim($_POST['homepage_url']??''),
@@ -41,8 +49,8 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
                 store_name=:store_name, contact_info=:contact_info, reservation_available=:reservation_available,
                 category_id=:category_id, genre=:genre,
                 store_address=:store_address, access=:access, opening_hours=:opening_hours,
-                budget=:budget, payment_methods=:payment_methods, private_available=:private_available,
-                non_smoking=:non_smoking, homepage_url=:homepage_url, open_date=:open_date
+                budget=:budget, payment_methods=:payment_methods, payment_details=:payment_details,
+                private_available=:private_available, non_smoking=:non_smoking, homepage_url=:homepage_url, open_date=:open_date
                 WHERE store_id=:store_id";
         $stmt_update = $pdo->prepare($sql);
         $stmt_update->execute($data);
@@ -78,18 +86,16 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 </head>
 <body>
 
-<!-- ヘッダー -->
 <div class="header-bar">
     <a href="admin_home.php" class="logo-link"><img src="../images/Akanpo.png" alt="サイトロゴ"></a>
     <div class="page-title">店舗編集</div>
 </div>
 
-<!-- 戻るボタン -->
- <div class="back-btn-container">
+<div class="back-btn-container">
     <a href="javascript:history.back();" class="back-link">
         <img src="../images/back.png" alt="戻る" class="back-icon">
     </a>
- </div>
+</div>
 
 <?php if($error): ?>
 <p class="msg-error"><?= htmlspecialchars($error) ?></p>
@@ -124,12 +130,14 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 </div>
 </div>
 </div>
-<!-- 連絡先、予約可否 -->
+
+<!-- お問い合わせ -->
 <div class="form-group">
 <label>お問い合わせ：</label>
 <input type="text" name="contact_info" value="<?= htmlspecialchars($store['contact_info']) ?>">
 </div>
 
+<!-- 予約可否 -->
 <div class="form-group">
 <label>予約可否：</label>
 <div class="radio-group">
@@ -143,7 +151,42 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 <div class="form-group"><label>交通手段：</label><input type="text" name="access" value="<?= htmlspecialchars($store['access']) ?>"></div>
 <div class="form-group"><label>営業時間：</label><input type="text" name="opening_hours" value="<?= htmlspecialchars($store['opening_hours']) ?>"></div>
 <div class="form-group"><label>予算口コミ：</label><input type="text" name="budget_review" value="<?= htmlspecialchars($store['budget']) ?>"></div>
-<div class="form-group"><label>支払い方法：</label><input type="text" name="payment_method" value="<?= htmlspecialchars($store['payment_methods']) ?>"></div>
+
+<!-- 支払い方法 -->
+<div class="form-group">
+<label>支払い方法 <span class="required">*</span></label>
+
+<div class="payment-main">
+<label><input type="checkbox" name="payment_method[]" value="現金" <?= in_array('現金',$store_payment_methods)?'checked':'' ?>> 現金</label>
+<label><input type="checkbox" name="payment_method[]" value="クレジットカード" onclick="toggleDetail('card_detail')" <?= in_array('クレジットカード',$store_payment_methods)?'checked':'' ?>> クレジットカード</label>
+<label><input type="checkbox" name="payment_method[]" value="電子マネー" onclick="toggleDetail('emoney_detail')" <?= in_array('電子マネー',$store_payment_methods)?'checked':'' ?>> 電子マネー</label>
+<label><input type="checkbox" name="payment_method[]" value="QR決済" onclick="toggleDetail('qr_detail')" <?= in_array('QR決済',$store_payment_methods)?'checked':'' ?>> QR決済</label>
+</div>
+
+<div id="card_detail" class="payment-detail" style="display:<?= in_array('クレジットカード',$store_payment_methods)?'block':'none' ?>;">
+<label><input type="checkbox" name="payment_details[]" value="VISA" <?= in_array('VISA',$store_payment_details)?'checked':'' ?>> VISA</label>
+<label><input type="checkbox" name="payment_details[]" value="MasterCard" <?= in_array('MasterCard',$store_payment_details)?'checked':'' ?>> MasterCard</label>
+<label><input type="checkbox" name="payment_details[]" value="JCB" <?= in_array('JCB',$store_payment_details)?'checked':'' ?>> JCB</label>
+<label><input type="checkbox" name="payment_details[]" value="AMEX" <?= in_array('AMEX',$store_payment_details)?'checked':'' ?>> AMEX</label>
+<label><input type="checkbox" name="payment_details[]" value="Diners" <?= in_array('Diners',$store_payment_details)?'checked':'' ?>> Diners</label>
+</div>
+
+<div id="emoney_detail" class="payment-detail" style="display:<?= in_array('電子マネー',$store_payment_methods)?'block':'none' ?>;">
+<label><input type="checkbox" name="payment_details[]" value="Suica" <?= in_array('Suica',$store_payment_details)?'checked':'' ?>> Suica</label>
+<label><input type="checkbox" name="payment_details[]" value="PASMO" <?= in_array('PASMO',$store_payment_details)?'checked':'' ?>> PASMO</label>
+<label><input type="checkbox" name="payment_details[]" value="iD" <?= in_array('iD',$store_payment_details)?'checked':'' ?>> iD</label>
+<label><input type="checkbox" name="payment_details[]" value="QUICPay" <?= in_array('QUICPay',$store_payment_details)?'checked':'' ?>> QUICPay</label>
+</div>
+
+<div id="qr_detail" class="payment-detail" style="display:<?= in_array('QR決済',$store_payment_methods)?'block':'none' ?>;">
+<label><input type="checkbox" name="payment_details[]" value="PayPay" <?= in_array('PayPay',$store_payment_details)?'checked':'' ?>> PayPay</label>
+<label><input type="checkbox" name="payment_details[]" value="楽天Pay" <?= in_array('楽天Pay',$store_payment_details)?'checked':'' ?>> 楽天Pay</label>
+<label><input type="checkbox" name="payment_details[]" value="d払い" <?= in_array('d払い',$store_payment_details)?'checked':'' ?>> d払い</label>
+</div>
+
+</div>
+
+<!-- 貸切 -->
 <div class="form-group">
 <label>貸切：</label>
 <div class="radio-group">
@@ -151,6 +194,8 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 <label><input type="radio" name="private_available" value="0" <?= !$store['private_available']?'checked':'' ?>>不可</label>
 </div>
 </div>
+
+<!-- タバコ -->
 <div class="form-group">
 <label>たばこ：</label>
 <div class="radio-group">
@@ -158,6 +203,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 <label><input type="radio" name="non_smoking" value="0" <?= !$store['non_smoking']?'checked':'' ?>>喫煙可</label>
 </div>
 </div>
+
 <div class="form-group"><label>ホームページ：</label><input type="text" name="homepage_url" value="<?= htmlspecialchars($store['homepage_url']) ?>"></div>
 <div class="form-group"><label>オープン日：</label><input type="date" name="open_date" value="<?= htmlspecialchars($store['open_date']) ?>"></div>
 
@@ -183,7 +229,6 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 <div class="btn-center"><button class="edit-btn" type="submit">更新</button></div>
 </form>
 
-<!-- フッター -->
 <footer class="footer">
     <div class="footer-content">
         &copy; <?= date('Y') ?> KANPO 管理者
@@ -209,7 +254,13 @@ dropdownList.querySelectorAll('div').forEach(item=>{
 });
 document.addEventListener('click', e=>{if(!dropdown.contains(e.target)){dropdownList.style.display='none';}});
 
-// 画像削除（Ajax）
+// 支払い詳細表示切替
+function toggleDetail(id){
+    let elem = document.getElementById(id);
+    elem.style.display = elem.style.display==="none"?"block":"none";
+}
+
+// 画像削除
 document.querySelectorAll('.delete-photo').forEach(btn=>{
     btn.addEventListener('click', ()=>{
         const container = btn.parentElement;
@@ -226,6 +277,5 @@ document.querySelectorAll('.delete-photo').forEach(btn=>{
     });
 });
 </script>
-
 </body>
 </html>
