@@ -1,3 +1,57 @@
+body {
+  background-color: #fffbed; /* ← 好きな色に変更 */
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.dai{
+  display: block;
+  text-align: center;
+  font-size: 75px;
+  margin-top: 23px;
+}
+.gen {
+  display: block;
+  font-size: 16px;
+  text-align: center;
+  padding: 50px;
+}
+
+/* カテゴリごとの装飾 */
+.cat-chinese {
+  font-family: 'Sawarabi Mincho', serif;
+ 
+}
+.cat-french {
+  font-family: 'Parisienne', cursive;
+  
+}
+.cat-global {
+  font-family: 'Roboto', sans-serif;
+
+}
+.cat-italian {
+  font-family: 'Italianno', cursive;
+  
+}
+.cat-izakaya {
+  font-family: 'Kosugi Maru', sans-serif;
+
+}
+.cat-japanese {
+  font-family: 'Sawarabi Gothic', sans-serif;
+}
+.cat-kaiseki {
+  font-family: 'Noto Serif JP', serif;
+}
+.cat-korean {
+  font-family: 'Nanum Brush Script', cursive;
+}
+.cat-robata {
+  font-family: 'Rock Salt', cursive;
+}
+
+
 /* ヘッダー */
 .header-bar {
     background-color: #FFEC6E;
@@ -26,7 +80,7 @@
 /* 店舗詳細全体 */
 .store-detail {
     text-align: center;
-    padding: 40px 20px;
+    padding: 10px 20px;
 }
 
 .store-detail h1 {
@@ -119,4 +173,60 @@
     padding: 15px 0;
     margin-top: 50px;
     font-size: 14px;
+}
+
+.rating-summary {
+  display: flex;
+  justify-content: center; /* 中央寄せ */
+  gap: 30px;               /* 左右の間隔 */
+  margin-bottom: 20px;
+}
+
+.rating-summary .rating-left {
+  font-size: 18px;
+  color: #333;
+}
+
+.rating-summary .rating-center {
+  font-size: 18px;
+}
+.review-count {
+  color: #007BFF;
+  text-decoration: none;
+}
+.review-count:hover {
+  text-decoration: underline;
+}
+
+.store-rating .star { font-size: 24px; }
+
+.star {
+  font-size: 20px;
+  color: #ccc; /* ベースは灰色 */
+  display: inline-block;
+  position: relative;
+}
+
+.star.full {
+  color: gold; /* 全部塗り */
+}
+
+.star.half {
+  color: #ccc; /* 半分星のベースは灰色 */
+}
+
+.star.half::before {
+  content: "★";       /* 金色の星を重ねる */
+  color: gold;
+  position: absolute;
+  left: 0;             /* 左側から配置 */
+  width: 50%;          /* 左半分だけ表示 */
+  overflow: hidden;    /* はみ出しを隠す */
+}
+
+.back{
+  padding: 10px;
+  text-decoration: none;
+  font-size: 30px;
+  color: #333;
 }

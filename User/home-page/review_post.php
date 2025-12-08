@@ -1,12 +1,21 @@
 <?php
+session_start();
+
 // DB接続
 $pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8mb4', 'root', '', [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 ]);
 
+// ログイン確認
+if (!isset($_SESSION['user_id'])) {
+    exit("ログインしてください");
+}
+
+$user_id = $_SESSION['user_id'];
+
 // 店舗IDを受け取る
-$store_id = $_GET['store_id'] ?? null;
+$store_id = $_GET['store_id'] ?? $_POST['store_id'] ?? null;
 if (!$store_id) {
     exit("店舗IDが指定されていません");
 }
@@ -18,6 +27,63 @@ $store = $stmt->fetch();
 if (!$store) {
     exit("店舗が存在しません");
 }
+
+// --------------------
+// 投稿処理 (POST時)
+// --------------------
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $rating = $_POST['rating'] ?? null;
+    $comment = $_POST['comment'] ?? '';
+    $price_range_id = $_POST['price_range_id'] ?? null;
+    $visit_date = $_POST['visit_date'] ?? null;
+
+    if (!$rating) {
+        exit("評価が入力されていません");
+    }
+
+    // reviewテーブルにINSERT
+    $stmt = $pdo->prepare("
+        INSERT INTO review (user_id, store_id, price_range_id, rating, comment, visit_date, created_at, updated_at)
+        VALUES (:user_id, :store_id, :price_range_id, :rating, :comment, :visit_date, NOW(), NOW())
+    ");
+    $stmt->execute([
+        ':user_id' => $user_id,
+        ':store_id' => $store_id,
+        ':price_range_id' => $price_range_id,
+        ':rating' => $rating,
+        ':comment' => $comment,
+        ':visit_date' => $visit_date
+    ]);
+
+    $review_id = $pdo->lastInsertId();
+
+    // 写真アップロード
+    if (!empty($_FILES['photos']['name'][0])) {
+        $uploadDir = "../../uploads/reviews/";
+        if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+
+        foreach ($_FILES['photos']['tmp_name'] as $i => $tmpName) {
+            if ($_FILES['photos']['error'][$i] === UPLOAD_ERR_OK) {
+                $filename = uniqid() . "_" . basename($_FILES['photos']['name'][$i]);
+                $filePath = $uploadDir . $filename;
+                move_uploaded_file($tmpName, $filePath);
+
+                $stmt = $pdo->prepare("
+                    INSERT INTO review_photo_id (review_id, photo_path, uploaded_at)
+                    VALUES (:review_id, :photo_path, NOW())
+                ");
+                $stmt->execute([
+                    ':review_id' => $review_id,
+                    ':photo_path' => $filePath
+                ]);
+            }
+        }
+    }
+
+    // 投稿完了 → 店舗詳細へ戻す
+    header("Location: store_detail.php?store_id=" . urlencode($store_id));
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -25,6 +91,7 @@ if (!$store) {
 <meta charset="UTF-8">
 <title>口コミ投稿</title>
 <link rel="stylesheet" href="css/review_post.css">
+<script src="js/review_post.js" defer></script>
 </head>
 <body>
 <header>
@@ -34,8 +101,7 @@ if (!$store) {
 <main>
   <h2><?= htmlspecialchars($store['store_name']) ?> に口コミを投稿</h2>
 
-  <form action="review_submit.php" method="post" enctype="multipart/form-data">
-    <!-- 店舗IDをhiddenで渡す -->
+  <form action="" method="post" enctype="multipart/form-data">
     <input type="hidden" name="store_id" value="<?= htmlspecialchars($store_id) ?>">
 
     <!-- 星評価 -->
@@ -52,11 +118,13 @@ if (!$store) {
     <textarea name="comment" placeholder="体験や感想を共有しましょう"></textarea>
 
     <!-- 写真アップロード -->
-    <label class="photo-upload">
-      📷 写真を追加
-      <input type="file" name="photos[]" id="photoInput" accept="image/*" multiple>
-    </label>
-    <div class="uploaded-photos" id="photoPreview"></div>
+    <div class="photo-v">
+      <label class="photo-upload">
+        📷 写真を追加
+        <input type="file" name="photos[]" id="photoInput" accept="image/*" multiple>
+      </label>
+      <div class="uploaded-photos" id="photoPreview"></div>
+    </div>
 
     <!-- 費用選択 -->
     <div class="cost-box">
@@ -79,45 +147,5 @@ if (!$store) {
     <button type="submit" class="submit">投稿</button>
   </form>
 </main>
-
-<script>
-// 星クリックで評価を反映
-const stars = document.querySelectorAll(".star");
-stars.forEach(star => {
-  star.addEventListener("click", () => {
-    const value = star.getAttribute("data-value");
-    document.getElementById("ratingInput").value = value;
-    stars.forEach(s => {
-      s.classList.toggle("active", s.getAttribute("data-value") <= value);
-    });
-  });
-});
-
-// 写真プレビュー
-const photoInput = document.getElementById("photoInput");
-const photoPreview = document.getElementById("photoPreview");
-photoInput.addEventListener("change", () => {
-  photoPreview.innerHTML = "";
-  Array.from(photoInput.files).forEach(file => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = document.createElement("img");
-      img.src = e.target.result;
-      photoPreview.appendChild(img);
-    };
-    reader.readAsDataURL(file);
-  });
-});
-
-// 費用選択
-const costButtons = document.querySelectorAll(".cost-options button");
-costButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    costButtons.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-    document.getElementById("priceRangeInput").value = btn.getAttribute("data-value");
-  });
-});
-</script>
 </body>
 </html>

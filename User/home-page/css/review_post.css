@@ -8,42 +8,12 @@ body {
 header {
   background: #f7d76b;
   padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-header img {
-  height: 40px;
-}
-
-.mypage-btn {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 10px;
-  border-radius: 20px;
-  border: 1px solid #aaa;
-  background: #fff;
-  cursor: pointer;
-}
-
-.mypage-btn:hover {
-  background: #f0f0f0;
-}
-
-.mypage-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: #dcdcdc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 main {
-  padding: 15px;
+  padding: 40px;
+  max-width: 1200px;  /* 子要素より広くする */
+  margin: 0 auto;
 }
 
 h2 {
@@ -53,44 +23,63 @@ h2 {
 
 .stars {
   display: flex;
+  justify-content: center; /* 横方向の中央寄せ */
   gap: 5px;
-  font-size: 28px;
+  font-size: 60px;
   cursor: pointer;
 }
 
+
 .star {
   color: #ccc;
-  transition: 0.2s;
+  position: relative;
+  display: flex;
+  justify-content: center; /* 横方向の中央寄せ */
 }
 
 .star.active {
   color: gold;
 }
 
+.star.half::before {
+  content: "★";
+  color: gold;
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+}
+
 textarea {
-  width: 100%;
-  height: 80px;
-  margin: 10px 0;
+  width: 1200px;       /* 横幅はそのまま */
+  height:200px;
+  margin: 10px auto;   /* 上下10px、左右は自動で中央寄せ */
+  display: block;      /* ブロック要素にする */
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: none;
 }
 
+
+
+.photo-v {
+  padding: 0;         /* 左右余白をなくす */
+  text-align: center; /* 中央寄せ */
+}
+
 .photo-upload {
-  display: block;
-  width: 100%;
+  display: inline-block;
+  width: 300px;       /* 横幅を小さく */
   background: #d6f0ff;
   padding: 14px;
   text-align: center;
   border-radius: 10px;
   border: 1px solid #a8d4f5;
   cursor: pointer;
-  margin-bottom: 15px;
   font-size: 16px;
   font-weight: bold;
 }
-
 .photo-upload:hover {
   background: #c4e6ff;
 }
@@ -104,7 +93,9 @@ textarea {
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
+   justify-content: center; /* プレビュー画像も中央寄せ */
 }
+
 
 .uploaded-photos img {
   width: 80px;
@@ -115,11 +106,13 @@ textarea {
 }
 
 .cost-box {
+  width: 1200px;       /* 横幅はそのまま */
+  margin: 0 auto 15px auto; /* 左右autoで中央寄せ */
   background: #e6f3ff;
   padding: 12px;
   border-radius: 8px;
-  margin-bottom: 15px;
 }
+
 
 .cost-options {
   display: grid;
@@ -142,7 +135,9 @@ textarea {
 }
 
 .submit {
-  width: 100%;
+  width: 500px;
+  margin: 20px auto;
+  display: block;
   padding: 12px;
   background: #4169e1;
   color: #fff;
@@ -151,4 +146,13 @@ textarea {
   font-size: 16px;
   cursor: pointer;
 }
+
+
+
+
+
+
+
+
+
 

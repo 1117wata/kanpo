@@ -65,7 +65,6 @@ function renderStars($rating) {
 
   return $stars;
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -75,6 +74,9 @@ function renderStars($rating) {
   <title>検索結果</title>
   <link rel="stylesheet" href="css/search_result.css">
   <script src="js/search_results.js" defer></script>
+
+  <!-- Google Fonts 読み込み -->
+  <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Parisienne&family=Italianno&family=Kosugi+Maru&family=Sawarabi+Gothic&family=Noto+Serif+JP&family=Nanum+Brush+Script&family=Rock+Salt&family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -117,16 +119,48 @@ function renderStars($rating) {
     <?php foreach ($stores as $store): ?>
       <?php $photos = getStorePhotos($pdo, $store['store_id']); ?>
       <li>
-        <h2>
+        <!-- 店舗名もカテゴリごとに装飾 -->
+        <h2 class="
+          <?php 
+            switch ($store['category_id']) {
+              case 1: echo 'cat-chinese'; break;
+              case 2: echo 'cat-french'; break;
+              case 3: echo 'cat-global'; break;
+              case 4: echo 'cat-italian'; break;
+              case 5: echo 'cat-izakaya'; break;
+              case 6: echo 'cat-japanese'; break;
+              case 7: echo 'cat-kaiseki'; break;
+              case 8: echo 'cat-korean'; break;
+              case 9: echo 'cat-robata'; break;
+            }
+          ?>">
           <a href="store_detail.php?store_id=<?= htmlspecialchars($store['store_id']) ?>">
             <?= htmlspecialchars($store['store_name']) ?>
           </a>
         </h2>
-        <p><?= htmlspecialchars($store['genre']) ?> / <?= htmlspecialchars($store['store_address']) ?></p>
+
+        <!-- ジャンルもカテゴリごとに装飾 -->
+        <p class="store-genre 
+          <?php 
+            switch ($store['category_id']) {
+              case 1: echo 'cat-chinese'; break;
+              case 2: echo 'cat-french'; break;
+              case 3: echo 'cat-global'; break;
+              case 4: echo 'cat-italian'; break;
+              case 5: echo 'cat-izakaya'; break;
+              case 6: echo 'cat-japanese'; break;
+              case 7: echo 'cat-kaiseki'; break;
+              case 8: echo 'cat-korean'; break;
+              case 9: echo 'cat-robata'; break;
+            }
+          ?>">
+          <?= htmlspecialchars($store['genre']) ?> / <?= htmlspecialchars($store['store_address']) ?>
+        </p>
+
         <p class="store-rating">
           評価: <?= renderStars($store['avg_rating']) ?>
           （<?= $store['avg_rating'] !== null ? number_format($store['avg_rating'], 1) : '評価なし' ?>）
-          <a class="review-count" href="reviews.php">[<?= $store['review_count'] ?>件の口コミ]</a>
+          <a class="review-count" href="reviews.php?store_id=<?= htmlspecialchars($store['store_id']) ?>">[<?= $store['review_count'] ?>件の口コミ]</a>
         </p>
 
         <div class="store-photos-wrapper">

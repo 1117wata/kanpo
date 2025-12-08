@@ -2,7 +2,7 @@ body {
   font-family: sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #fff;
+  background-color: #fffbed;
 }
 
 header {
@@ -290,3 +290,48 @@ p {
   overflow: hidden;
   color: #FFD700;
 }
+
+
+.store-genre {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+/* 店舗名もジャンルもカテゴリごとに装飾 */
+.cat-chinese {
+  font-family: 'Sawarabi Mincho', serif;
+  color: #B22222;
+}
+.cat-french {
+  font-family: 'Parisienne', cursive;
+  color: #2F4F4F;
+}
+.cat-global {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+.cat-italian {
+  font-family: 'Italianno', cursive;
+  color: #006400;
+}
+.cat-izakaya {
+  font-family: 'Kosugi Maru', sans-serif;
+  color: #8B4513;
+}
+.cat-japanese {
+  font-family: 'Sawarabi Gothic', sans-serif;
+  color: #000;
+}
+.cat-kaiseki {
+  font-family: 'Noto Serif JP', serif;
+  color: #444;
+}
+.cat-korean {
+  font-family: 'Nanum Brush Script', cursive;
+  color: #800000;
+}
+.cat-robata {
+  font-family: 'Rock Salt', cursive;
+}
+
+ 
