@@ -11,29 +11,18 @@ body {
     padding: 18px 20px;
     display: flex;
     align-items: center;
-    position: relative; 
+    justify-content: space-between;
 }
-
-.logo-link img {
-    height: 60px;
-}
-
-/* ページタイトル */
+.logo-link img { height: 60px; }
 .page-title {
-    position: absolute; 
-    left: 50%;          
-    transform: translateX(-50%); 
+    flex: 1;
+    text-align: center;
     font-size: 35px;
     font-weight: bold;
-    color: #000000;
+    color: #000;
     margin: 0;
 }
-/* ログアウトボタン */
 .logout-btn {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
     background-color: #ff6b6b;
     border: none;
     color: #fff;
@@ -41,35 +30,33 @@ body {
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
-    transition: background-color 0.2s;
 }
+.logout-btn:hover { background-color: #ff4b4b; }
 
-.logout-btn:hover {
-    background-color: #ff4b4b;
-}
-
-
+/* プロフィール部分 */
 .profile {
-    position: relative;       
-    margin: 40px 0;           
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;   /* 全体を中央に配置 */
+    align-items: baseline;     /* 下揃え */
+    gap: 60px;                 /* ニックネームと件数の間隔を広げる */
 }
 
 .nickname-label {
-    position: absolute;       
-    left: 50%;                
-    transform: translateX(-50%); 
-    font-size: 28px;         
+    font-size: 32px;           /* 少し大きめに */
     font-weight: bold;
     color: #333;
+    text-align: center;        /* 真ん中に配置 */
 }
-
 
 .review {
-    text-align: right;     
-    font-size: 16px;
+    font-size: 25px;           /* 件数を大きく */
+    font-weight: bold;
+    color: #444;
 }
 
 
+/* 編集ボタン */
 .profile_edit {
     background: #fff;
     width: 60%;
@@ -78,54 +65,57 @@ body {
     cursor: pointer;
 }
 
+/* 灰色ボックス（投稿日） */
 .border_box {
-    border: 1px solid #000000;
-    background-color: #dad6d1;
-    padding: 12px;
+    border-top: 1px solid #4a4a4a5c;
+    border-bottom: 1px solid #4a4a4a5c;
+    background-color: #d9d3b03d;
+    padding: 6px;
     margin: 8px auto;
-}
-
-.store {
-    font-size: 10px;
-    text-align: left;
-    margin-left: 50px;
-    margin-right: 50px;
-}
-
-.store_name {
     font-size: 14px;
-    font-weight: bold;
+    color: #333;
+    text-align: left;
 }
 
+/* レビューカード */
+.store {
+    font-size: 12px;
+    text-align: left;
+    margin: 0 50px;
+}
+.store-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.store_name { font-size: 19px; font-weight: bold; }
+.store_review_comment { margin-top: 6px; }
+
+/* 画像表示 */
 .store_image {
     display: flex;
+    gap: 6px;
+    margin: 8px 0;
+}
+.store_image img {
     width: 100px;
     height: 100px;
-    gap: 6px;
+    object-fit: cover;
+    border-radius: 4px;
 }
 
-.store_review_comment {
-    margin-top: 6px;
-}
-
-.ellipsis-menu {
-  position: relative;
-  display: inline-block;
-  position: absolute;
-  right: 10%;
-}
-
+/* ... メニュー */
+.ellipsis-menu { position: relative; }
 .ellipsis-button {
-  font-size: 24px;
+  font-size: 20px;
   background: none;
   border: none;
   cursor: pointer;
 }
-
 .menu {
-  display: none; /* 初期は非表示 */
+  display: none;
   position: absolute;
-  top: 100%; /* ボタンの下に表示 */
+  top: 100%;
   right: 0;
   background: white;
   border: 1px solid #ccc;
@@ -135,14 +125,26 @@ body {
   margin: 4px 0 0 0;
   min-width: 80px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  z-index: 100; /* 上に表示 */
+  z-index: 100;
+}
+.menu li { padding: 8px 12px; }
+.menu li:hover { background-color: #f0f0f0; }
+
+.star {
+  font-size: 15px;
+  margin-right: 2px;
 }
 
-.menu li {
-  padding: 8px 12px;
-  cursor: pointer;
+.star.full {
+  color: gold;   /* 完全な星は金色 */
 }
 
-.menu li:hover {
-  background-color: #f0f0f0;
+.star.empty {
+  color: #ccc;   /* 空の星はグレー */
+}
+
+.star.half {
+  background: linear-gradient(to right, gold 50%, #ccc 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
