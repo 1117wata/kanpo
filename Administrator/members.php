@@ -167,15 +167,23 @@ if ($raw === "" || $raw === "../../images/aikon.png") {
 </div>
 
 <!-- ページネーション -->
-<?php if ($total_pages > 1): ?>
 <div class="pagination">
 
+    <!-- 先頭へ -->
     <?php if ($page > 1): ?>
-    <a href="?page=<?= $page-1 ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">
-        &laquo; 前へ
+    <a href="?page=1&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">
+        « 先頭へ
     </a>
     <?php endif; ?>
 
+    <!-- 前へ -->
+    <?php if ($page > 1): ?>
+    <a href="?page=<?= $page-1 ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">
+        « 前へ
+    </a>
+    <?php endif; ?>
+
+    <!-- 数字ページ -->
     <?php
     $range = 5;
     $start = max(1, $page - floor($range/2));
@@ -188,14 +196,22 @@ if ($raw === "" || $raw === "../../images/aikon.png") {
         </a>
     <?php endfor; ?>
 
+    <!-- 次へ -->
     <?php if ($page < $total_pages): ?>
     <a href="?page=<?= $page+1 ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">
-        次へ &raquo;
+        次へ »
+    </a>
+    <?php endif; ?>
+
+    <!-- 最後へ -->
+    <?php if ($page < $total_pages): ?>
+    <a href="?page=<?= $total_pages ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">
+        最後へ »
     </a>
     <?php endif; ?>
 
 </div>
-<?php endif; ?>
+
 
 <footer class="footer">
     <div class="footer-content">

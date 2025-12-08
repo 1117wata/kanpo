@@ -45,7 +45,7 @@ if (!empty($_SESSION['user_id'])) {
 
 <!-- ロゴ表示 -->
 <div class="logo">
-  <img src="../../images/Kanpo.png" alt="ロゴ" />
+  <img src="../../images/Bkanpo.png" alt="ロゴ" />
 </div>
 
 <!-- 検索フォーム -->

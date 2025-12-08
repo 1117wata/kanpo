@@ -137,12 +137,25 @@ $stores = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php endif; ?>
 </div>
 
+<!-- ページネーション -->
     <?php if ($total_pages > 1): ?>
 <div class="pagination" aria-label="ページネーション">
+
+    <!-- 先頭へ -->
     <?php if ($page > 1): ?>
-        <a href="?page=<?= $page - 1 ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">&laquo; 前へ</a>
+        <a href="?page=1&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">
+            « 先頭へ
+        </a>
     <?php endif; ?>
 
+    <!-- 前へ -->
+    <?php if ($page > 1): ?>
+        <a href="?page=<?= $page - 1 ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">
+            « 前へ
+        </a>
+    <?php endif; ?>
+
+    <!-- 数字ボタン -->
     <?php
     $display_range = 5;
     $start = max(1, $page - intval($display_range / 2));
@@ -150,18 +163,31 @@ $stores = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if ($end - $start + 1 < $display_range) {
         $start = max(1, $end - $display_range + 1);
     }
+
     for ($i = $start; $i <= $end; $i++): ?>
         <a href="?page=<?= $i ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>"
            class="<?= $i == $page ? 'active-page' : '' ?>">
-           <?= $i ?>
+            <?= $i ?>
         </a>
     <?php endfor; ?>
 
+    <!-- 次へ -->
     <?php if ($page < $total_pages): ?>
-        <a href="?page=<?= $page + 1 ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">次へ &raquo;</a>
+        <a href="?page=<?= $page + 1 ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">
+            次へ »
+        </a>
     <?php endif; ?>
+
+    <!-- 最後へ -->
+    <?php if ($page < $total_pages): ?>
+        <a href="?page=<?= $total_pages ?>&search=<?= urlencode($search) ?>&sort=<?= urlencode($sort) ?>">
+            最後へ »
+        </a>
+    <?php endif; ?>
+
 </div>
 <?php endif; ?>
+
 
 
 
