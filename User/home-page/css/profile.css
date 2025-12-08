@@ -28,6 +28,25 @@ body {
     color: #000000;
     margin: 0;
 }
+/* ログアウトボタン */
+.logout-btn {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ff6b6b;
+    border: none;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.logout-btn:hover {
+    background-color: #ff4b4b;
+}
 
 
 .profile {
