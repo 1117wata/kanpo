@@ -30,7 +30,7 @@ if (!empty($_SESSION['user_id'])) {
 
     <div class="profile-box">
       <a href="profile.php" class="icon-link">
-        <img src="<?= !empty($user['icon_path']) ? htmlspecialchars($user['icon_path'], ENT_QUOTES) : '../../images/aikon.png' ?>" class="user-icon" alt="プロフ画像">
+        <img src="<?= !empty($user['icon_path']) ? htmlspecialchars($user['icon_path'], ENT_QUOTES) : '../images/aikon.png' ?>" class="user-icon" alt="プロフ画像">
       </a>
 
       <?php if ($user): ?>
