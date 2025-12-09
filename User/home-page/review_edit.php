@@ -32,14 +32,17 @@ $user = $user_stmt->fetch();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>口コミ編集画面</title>
     <link rel="stylesheet" href="css/review_edit.css">
+    <script src="js/review_edit.js" defer></script>
 </head>
 <body>
-    <header class="header">
-      <img src="../../images/Kinpo.png" alt="KANPO Logo" class="logo">
-      <form action="profile.php" method="get">
-        <button id="mypageBtn" class="mypage">マイページ</button>
-      </form>
-    </header>
+<!-- ヘッダー -->
+<div class="header-bar">
+    <a href="home.php" class="logo-link">
+        <img src="../../images/Ukanpo.png" alt="サイトロゴ">
+    </a>
+    <!--<div class="page-title">店舗情報詳細</div>-->
+</div>
+
 
     <h3><?= $reviews['store_name'] ?></h3>
 
@@ -48,13 +51,16 @@ $user = $user_stmt->fetch();
     </div>
 
     <!-- 星評価 -->
-    <div class="stars">
-      <span class="star" data-value="1">★</span>
-      <span class="star" data-value="2">★</span>
-      <span class="star" data-value="3">★</span>
-      <span class="star" data-value="4">★</span>
-      <span class="star" data-value="5">★</span>
-    </div>
+    <!-- 星評価 -->
+<div class="stars">
+  <span class="star" data-value="1">★</span>
+  <span class="star" data-value="2">★</span>
+  <span class="star" data-value="3">★</span>
+  <span class="star" data-value="4">★</span>
+  <span class="star" data-value="5">★</span>
+</div>
+<input type="hidden" id="ratingInput" name="rating" value="<?= $reviews['rating'] ?>">
+
 
     <!-- 価格選択 -->
     <div class="price-select">
@@ -95,62 +101,10 @@ $user = $user_stmt->fetch();
       <input type="file" id="photoInput" accept="image/*" multiple>
     </div>
 
+    <hr class="divider">
+
     <!-- 更新ボタン -->
     <button class="submit-btn">更新</button>
 
-    <script>
-    // 星評価
-    const stars = document.querySelectorAll('.star');
-    stars.forEach((star, index) => {
-      star.addEventListener('click', () => {
-        stars.forEach((s, i) => s.classList.toggle('active', i <= index));
-      });
-    });
-
-    // 写真追加
-    const photoInput = document.getElementById('photoInput');
-    const photoPreview = document.getElementById('photoPreview');
-
-    photoInput.addEventListener('change', () => {
-      [...photoInput.files].forEach(file => {
-        const reader = new FileReader();
-        reader.onload = e => {
-          const container = document.createElement('div');
-          container.classList.add('photo-container');
-          container.innerHTML = `
-            <input type="checkbox" class="photo-check">
-            <img src="${e.target.result}">
-          `;
-          photoPreview.appendChild(container);
-        };
-        reader.readAsDataURL(file);
-      });
-    });
-
-    // ・・・メニュー開閉
-    const menuBtn = document.querySelector('.menu-btn');
-    const deleteMenu = document.getElementById('deleteMenu');
-
-    menuBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      deleteMenu.style.display = deleteMenu.style.display === 'flex' ? 'none' : 'flex';
-    });
-
-    // 外をクリックしたら閉じる
-    document.addEventListener('click', (e) => {
-      if (!deleteMenu.contains(e.target) && !menuBtn.contains(e.target)) {
-        deleteMenu.style.display = 'none';
-      }
-    });
-
-    // 削除メニュー動作
-    document.querySelector('.select-all').addEventListener('click', () => {
-      document.querySelectorAll('.photo-check').forEach(c => c.checked = true);
-    });
-
-    document.querySelector('.delete').addEventListener('click', () => {
-      document.querySelectorAll('.photo-check:checked').forEach(c => c.parentElement.remove());
-    });
-    </script>
   </body>
 </html>
