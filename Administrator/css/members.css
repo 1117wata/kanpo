@@ -306,3 +306,69 @@ body {
     margin-top: auto;
     font-size: 14px;
 }
+
+/* 口コミ一覧ボタン */
+.review-list-btn {
+    margin-left: 10px;
+    padding: 5px 12px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.review-list-btn:hover {
+    background-color: #45a049;
+}
+
+/* 口コミ評価スター表示用 */
+.star {
+    font-size: 20px;          
+    display: inline-block;
+    position: relative;
+    margin-right: 2px;
+    color: #ccc;              
+    line-height: 1;
+}
+
+/* 全星（満タン星） */
+.star.full {
+    color: #FFD700;           
+}
+
+/* 半星（半分だけ色をつける） */
+.star.half {
+    background: linear-gradient(90deg, #FFD700 50%, #ccc 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;        
+}
+
+/* 空星 */
+.star.empty {
+    color: #ccc;              
+}
+
+/* 評価なしの表記 */
+.no-rating {
+    color: #888;
+    font-size: 14px;
+}
+
+/* 口コミ削除ボタン */
+.delete-btn {
+    background-color: #e74c3c; 
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
