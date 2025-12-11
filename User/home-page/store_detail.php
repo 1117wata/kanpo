@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../../DB/db_connect.php';
 $pdo = getDB();
 

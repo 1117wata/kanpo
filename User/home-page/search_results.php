@@ -1,4 +1,5 @@
 <?php
+session_start();
 $pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8', 'root', '');
 
 $category_stmt = $pdo->query("SELECT category_id, category_name FROM category");
