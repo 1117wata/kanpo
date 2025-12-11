@@ -1,13 +1,22 @@
 <?php
 session_start();
 
-$_SESSION['user_id'] = 1; // テスト用にユーザーIDをセット
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id'] ?? null;
+
+if (!$user_id) {
+    header("Location: user_login.php");
+    exit;
+}
 
 $pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8mb4', 'root', '', [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 ]);
+
+// ユーザ情報取得
+$stmt = $pdo->prepare("SELECT * FROM user WHERE user_id = ?");
+$stmt->execute([$user_id]);
+$user = $stmt->fetch();
 
 $review_id = $_GET['id'] ?? null;
 
@@ -18,12 +27,6 @@ ORDER BY review.created_at DESC";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$review_id]);
 $reviews = $stmt->fetch();
-
-$user_sql = "SELECT username FROM user WHERE user_id = ?";
-$user_stmt = $pdo->prepare($user_sql);
-$user_stmt->execute([$user_id]);
-$user = $user_stmt->fetch();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

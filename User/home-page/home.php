@@ -28,6 +28,13 @@ if (!empty($_SESSION['user_id'])) {
 
 <div class="header-bar">
 
+    <!-- 左側に map.php へのリンクアイコン -->
+    <a href="map.php" class="map-link">
+        <!-- 仮のアイコン（後で差し替え可能） -->
+       <img src="../../images/map.jpg" alt="マップ" class="map-icon">
+
+    </a>
+
     <div class="profile-box">
       <a href="profile.php" class="icon-link">
         <img src="<?= !empty($user['icon_path']) ? htmlspecialchars($user['icon_path'], ENT_QUOTES) : '../images/aikon.png' ?>" class="user-icon" alt="プロフ画像">
@@ -38,9 +45,9 @@ if (!empty($_SESSION['user_id'])) {
       <?php endif; ?>
     </div>
 
-
     <div class="page-title"></div>
 </div>
+
 
 
 <!-- ロゴ表示 -->

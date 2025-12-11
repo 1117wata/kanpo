@@ -1,0 +1,74 @@
+    body { margin:0; padding:0; font-family: "Segoe UI", sans-serif; }
+
+    /* ヘッダー */
+    .header-bar {
+        background: linear-gradient(135deg, #FFEC6E, #FFD54F);
+        padding: 25px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .header-bar .logo-link {
+        position: absolute;
+        left: 20px;
+    }
+    .header-bar .logo-link img {
+        height: 55px;
+        transition: transform 0.3s ease;
+    }
+    .header-bar .logo-link img:hover {
+        transform: scale(1.05);
+    }
+    .page-title {
+        font-size: 32px;
+        font-weight: bold;
+        color: #fff;
+        letter-spacing: 2px;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    /* トグルボタン */
+    #toggleFilter {
+        position:absolute; top:70px; right:20px; z-index:1100;
+        padding:6px 12px; border-radius:20px; border:none;
+        background:#ff9800; color:#fff; cursor:pointer;
+        box-shadow:0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    /* カテゴリ選択ボタンバー */
+    .filter-bar {
+        position: absolute;
+        top: 110px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.85);
+        padding: 12px 20px;
+        border-radius: 30px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 1000;
+    }
+    .category-btn {
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        color: #fff;
+    }
+    .category-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    }
+    .category-btn.active {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    }
+
+    /* 地図 */
+    #map { height: calc(100vh - 80px); width: 100%; }
