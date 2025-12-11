@@ -1,112 +1,123 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
+    font-family: "Noto Sans JP", sans-serif;
+    background-color: #FFEC6E; /* ホームと統一 */
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    height: 100vh; /* 縦いっぱいに */
     margin: 0;
-    flex-direction: column;
-}
-.header-bar {
-    width: 100%;
-    background-color: #FFEC6E;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    box-shadow: 0px 2px 6px rgba(0,0,0,0.2);
-    border-bottom: 2px solid black;
-}
-.header-bar img {
-    height: 40px;
-    width: auto;
-    margin-left: 20px;
-    cursor: pointer;
-}
-.logo-link {
-    display: inline-block;
 }
 
+/* ==== 中央のカード ==== */
 .form-container {
     background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
-    width: 700px;
-    max-width: 700px;
-    margin-top: 40px;
+    width: 420px;
+    max-width: 90%;
+    height: 80vh;               /* ← カードの高さを固定してスクロール */
+    padding: 20px 24px;
+    border-radius: 14px;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.2);
+    overflow-y: auto;           /* ← カード内だけスクロール */
+    scrollbar-width: thin;      /* Firefox */
 }
+
+/* WebKit用：スクロールバー細く */
+.form-container::-webkit-scrollbar {
+    width: 6px;
+}
+.form-container::-webkit-scrollbar-thumb {
+    background: #c2c2c2;
+    border-radius: 3px;
+}
+
+/* タイトル */
 h2 {
-    text-align: left;
+    text-align: center;
+    font-size: 22px;
     margin-bottom: 20px;
+    font-weight: bold;
 }
+
+/* グループ */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
+
+/* ラベル（上のグレー帯） */
 .form-label {
     display: block;
-    background-color: #ccc;
-    padding: 8px;
-    border-radius: 5px 5px 0 0;
+    background-color: #d6d6d6;
+    padding: 6px 10px;
+    border-radius: 6px 6px 0 0;
+    font-size: 14px;
 }
+
+/* 入力エリア */
 .input-wrapper {
-    background-color: #eee;
+    background-color: #f5f5f5;
     padding: 10px;
-    border-radius: 0 0 5px 5px;
+    border-radius: 0 0 6px 6px;
 }
+
 input[type="text"],
 input[type="email"],
 input[type="password"] {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 6px;
+    font-size: 14px;
     box-sizing: border-box;
-    background-color: white;
-}
-.note {
-    font-size: 0.9em;
-    color: #555;
-    margin-top: 5px;
 }
 
+/* 注釈 */
+.note {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* ボタン群 */
 .button-group {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
     margin-top: 20px;
 }
+
 button {
     padding: 12px;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 15px;
     cursor: pointer;
-    font-size: 1em;
-    width: 100%;
-    border: 2px solid black;
+    border: none;
+    transition: 0.2s;
 }
+
+/* 戻る */
 .back-btn {
-    background-color: #FFEC6E;
-    color: black;
+    background-color: #FFE25C;
 }
 .back-btn:hover {
-    background-color: #ddc50bff;
+    background-color: #e2cb4d;
 }
+
+/* 登録ボタン */
 .submit-btn {
-    background-color: #454646ff;
+    background-color: #2F4F4F;
     color: white;
 }
 .submit-btn:hover {
-    background-color: #212120ff;
+    background-color: #244040;
 }
 
-.alert {
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
+/* エラー */
 .alert-error {
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
 }

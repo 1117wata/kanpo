@@ -37,20 +37,20 @@ body {
 .profile {
     margin: 40px 0;
     display: flex;
-    justify-content: center;   /* 全体を中央に配置 */
-    align-items: baseline;     /* 下揃え */
-    gap: 60px;                 /* ニックネームと件数の間隔を広げる */
+    justify-content: center;   
+    align-items: baseline;     
+    gap: 60px;                 
 }
 
 .nickname-label {
-    font-size: 32px;           /* 少し大きめに */
+    font-size: 32px;           
     font-weight: bold;
     color: #333;
-    text-align: center;        /* 真ん中に配置 */
+    text-align: center;        
 }
 
 .review {
-    font-size: 25px;           /* 件数を大きく */
+    font-size: 25px;          
     font-weight: bold;
     color: #444;
 }
@@ -59,10 +59,18 @@ body {
 /* 編集ボタン */
 .profile_edit {
     background: #fff;
-    width: 60%;
+    width: 200px;
+    height: 40px;
     border-radius: 4px;
     margin-bottom: 20px;
     cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.profile_edit:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-4px);
 }
 
 /* 灰色ボックス（投稿日） */
@@ -136,11 +144,11 @@ body {
 }
 
 .star.full {
-  color: gold;   /* 完全な星は金色 */
+  color: gold;  
 }
 
 .star.empty {
-  color: #ccc;   /* 空の星はグレー */
+  color: #ccc;   
 }
 
 .star.half {

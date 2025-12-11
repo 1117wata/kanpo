@@ -28,49 +28,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ログイン画面</title>
+    <title>ログイン</title>
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
-    <header>
-        
-    </header>
 
-    <img src="../../images/Kanpo.png" class="Kanpo_picture" alt="サンプル画像">
+<div class="card">
+
+    <!-- 楽天風：左上ロゴ配置 -->
+    <img src="../../images/Kanpo.png" class="logo-left" alt="KANPO ロゴ">
+
+    <h1 class="title">ログイン</h1>
+    <p class="subtitle">メールアドレスとパスワードを入力してください。</p>
+
+    <?php if ($error): ?>
+        <p class="error"><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
 
     <form action="" method="post">
-        <h1>ログイン</h1>
 
-        <p>会員の方は、登録時に入力されたメールアドレスとパスワードでログインしてください。</p>
+        <label class="label">メールアドレス</label>
+        <input type="text" name="email" class="input-field" required>
 
-        <?php if ($error): ?>
-            <p style="color:red;"><?php echo $error; ?></p>
-        <?php endif; ?>
-        
-        <div class="message">メールアドレス</div><br>
-        <input type="text" name="email" class="input" required><br>
+        <label class="label">パスワード</label>
+        <input type="password" name="password" class="input-field" required>
 
-        <div class="message">パスワード</div><br>
-        <input type="password" name="password" class="input" required><br>
+        <button type="submit" class="btn-primary">ログイン</button>
 
-        <p><button type="submit" class="button">ログイン</button></p>
     </form>
 
-    <hr>
+    <div class="divider"></div>
+
+    <h3 class="subtitle2">まだ登録されていない方</h3>
+    <p class="subtext">新規会員登録はこちらから</p>
 
     <form action="../signup-page/signup-page.php" method="post">
-        <h3>まだ会員登録されてない方</h3>
-        <p>初めてご利用される方は、こちらから会員登録すると便利にご利用できます。</p>
-        <p><button type="submit" class="button">新規会員登録</button></p>
+        <button type="submit" class="btn-secondary">新規会員登録</button>
     </form>
 
+</div>
 
-    
 </body>
 </html>

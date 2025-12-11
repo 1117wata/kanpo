@@ -6,10 +6,12 @@ body {
 }
 
 header {
-  background-color: #f7d76b;
-  padding: 12px;
-  display: flex;
-  align-items: center;
+  background-color: #FFEC6E;
+    padding: 38px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
 }
 
 header a {

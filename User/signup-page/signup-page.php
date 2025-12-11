@@ -123,11 +123,6 @@ window.addEventListener('load', checkNickname);
 </script>
 </head>
 <body>
-<div class="header-bar">
-    <a href="../home-page/home.php" class="logo-link">
-        <img src="images/Ukanpo.png" alt="サイトロゴ">
-    </a>
-</div>
 
 <div class="form-container">
 <h2>新規会員登録</h2>
