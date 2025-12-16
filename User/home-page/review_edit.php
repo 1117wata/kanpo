@@ -50,7 +50,7 @@ $reviews = $stmt->fetch();
     <h3><?= $reviews['store_name'] ?></h3>
 
     <div class="user-info">
-      <span><?= $user['username'] ?></span>
+      <span><?= $user['nickname'] ?></span>
     </div>
 
     <!-- 星評価 -->
