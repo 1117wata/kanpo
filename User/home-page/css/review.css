@@ -419,3 +419,102 @@ body {
   border-radius: 4px;
   cursor: pointer;
 }
+
+/* 並び替えドロップダウン */
+.sort-dropdown {
+  position: relative;
+  display: block; /* inline-block → block に変更 */
+  margin: 12px 0; /* 統一 */
+}
+
+.sort-toggle {
+  padding: 8px 14px;
+  background: #ffcc24;
+  border: 0px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.sort-menu {
+  display: none;
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 0;
+  width: 180px;
+  z-index: 100;
+}
+
+.sort-menu a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+.sort-menu a:hover {
+  background: #f0f0f0;
+}
+
+.sort-divider {
+  height: 1px;
+  background: #ddd;
+  margin: 6px 0;
+}
+
+/* 絞り込みドロップダウン */
+.filter-dropdown {
+  position: relative;
+  display: block; /* inline-block → block に変更 */
+  margin: 12px 0; /* 統一 */
+}
+
+.filter-toggle {
+  padding: 8px 14px;
+  background:  #ffcc24;
+  border: 0px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.filter-menu {
+  display: none;
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px 0;
+  width: 160px;
+  z-index: 100;
+}
+
+.filter-menu a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+}
+
+.filter-menu a:hover {
+  background: #f0f0f0;
+}
+
+/* アクションバー */
+.action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.right-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0px 20px;
+}

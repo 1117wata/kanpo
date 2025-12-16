@@ -24,3 +24,36 @@ function openReviewGallery(id) {
 function closeReviewGallery(id) {
   document.getElementById("reviewGalleryModal" + id).style.display = "none";
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.querySelector(".sort-toggle");
+  const menu = document.querySelector(".sort-menu");
+
+  toggle.addEventListener("click", () => {
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  });
+
+  // メニュー外をクリックしたら閉じる
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".sort-dropdown")) {
+      menu.style.display = "none";
+    }
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.querySelector(".filter-toggle");
+  const menu = document.querySelector(".filter-menu");
+
+  toggle.addEventListener("click", () => {
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  });
+
+  // メニュー外クリックで閉じる
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".filter-dropdown")) {
+      menu.style.display = "none";
+    }
+  });
+});
+

@@ -8,6 +8,10 @@ $pdo = new PDO("mysql:host=localhost;dbname=kanpo;charset=utf8",'root','', [
 
 $store_id = $_GET['store_id'] ?? 0;
 
+// 並び替え・絞り込みパラメータ
+$sort = $_GET['sort'] ?? 'new'; // new, old, high, low
+$rating_filter = $_GET['rating'] ?? null;
+
 // 店舗情報 + 平均評価 + 件数
 $stmt = $pdo->prepare("
   SELECT 
@@ -22,6 +26,34 @@ $stmt = $pdo->prepare("
 $stmt->execute([':id' => $store_id]);
 $store = $stmt->fetch();
 
+/* ------------------------------
+   並び替え SQL を決定
+------------------------------ */
+$orderSql = "r.created_at DESC"; // デフォルト：新着順
+
+switch ($sort) {
+    case 'old':
+        $orderSql = "r.created_at ASC";
+        break;
+    case 'high':
+        $orderSql = "r.rating DESC";
+        break;
+    case 'low':
+        $orderSql = "r.rating ASC";
+        break;
+}
+
+/* ------------------------------
+   評価フィルター SQL
+------------------------------ */
+$whereRating = "";
+$params = [':store_id' => $store_id];
+
+if ($rating_filter !== null) {
+    $whereRating = " AND r.rating = :rating ";
+    $params[':rating'] = $rating_filter;
+}
+
 // 口コミ + 写真 + 価格帯取得
 $stmt = $pdo->prepare("
     SELECT r.*, u.nickname, u.username, p.photo_path, pr.label AS price_label
@@ -30,10 +62,12 @@ $stmt = $pdo->prepare("
     LEFT JOIN review_photo_id p ON r.review_id = p.review_id
     LEFT JOIN price_range pr ON r.price_range_id = pr.price_range_id
     WHERE r.store_id = :store_id
-    ORDER BY r.created_at DESC
+    $whereRating
+    ORDER BY $orderSql
 ");
-$stmt->execute([':store_id' => $store_id]);
+$stmt->execute($params);
 $rows = $stmt->fetchAll();
+
 
 // レビューごとに写真をまとめる
 $reviews = [];
@@ -49,17 +83,6 @@ foreach ($rows as $row) {
 }
 
 
-$stmt = $pdo->prepare("
-    SELECT r.*, u.nickname, u.username, p.photo_path, pr.label AS price_label
-    FROM review r
-    JOIN user u ON r.user_id = u.user_id
-    LEFT JOIN review_photo_id p ON r.review_id = p.review_id
-    LEFT JOIN price_range pr ON r.price_range_id = pr.price_range_id
-    WHERE r.store_id = :store_id
-    ORDER BY r.created_at DESC
-");
-$stmt->execute([':store_id' => $store_id]);
-$rows = $stmt->fetchAll();
 
 
 // 店舗画像取得
@@ -159,7 +182,10 @@ function renderStars($rating) {
     <div class="swiper-wrapper">
       <?php foreach($photos as $photo): ?>
       <div class="swiper-slide">
-        <img src="../../Administrator/<?= htmlspecialchars($photo['store_photo_path'], ENT_QUOTES) ?>" alt="店舗画像" class="store-image">
+        <img src="../../Administrator/<?= htmlspecialchars($photo['store_photo_path'], ENT_QUOTES) ?>" 
+     alt="店舗画像" class="store-image"
+     onclick="openImageLightbox(this.src)">
+
       </div>
       <?php endforeach; ?>
     </div>
@@ -172,12 +198,43 @@ function renderStars($rating) {
   <?php endif; ?>
 </div>
 
+<div class="action-bar">
 <!-- 投稿ボタン -->
   <div class="rating-right">
     <a class="review-btn" href="review_post.php?store_id=<?= htmlspecialchars($store_id) ?>">
       +口コミを投稿する
     </a>
   </div>
+   <!-- 右：並び替え & 絞り込み -->
+  <div class="right-actions">
+
+    <!-- 並び替え -->
+    <div class="sort-dropdown">
+      <button class="sort-toggle">並び替え ▼</button>
+      <div class="sort-menu">
+        <a href="?store_id=<?= $store_id ?>&sort=new">新着順</a>
+        <a href="?store_id=<?= $store_id ?>&sort=old">古い順</a>
+        <a href="?store_id=<?= $store_id ?>&sort=high">評価が高い順</a>
+        <a href="?store_id=<?= $store_id ?>&sort=low">評価が低い順</a>
+      </div>
+    </div>
+
+    <!-- 絞り込み -->
+    <div class="filter-dropdown">
+      <button class="filter-toggle">絞り込み ▼</button>
+      <div class="filter-menu">
+        <?php foreach ([1,1.5,2,2.5,3,3.5,4,4.5,5] as $r): ?>
+          <a href="?store_id=<?= $store_id ?>&rating=<?= $r ?>">
+            ★<?= $r ?> の口コミ
+          </a>
+        <?php endforeach; ?>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 
 
 <!-- <h1><?= htmlspecialchars($store['store_name']) ?>の口コミ一覧</h1>-->
