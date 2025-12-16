@@ -115,6 +115,12 @@ $areas = $pdo->query("
   <button class="toggle-btn" onclick="toggleArea()" id="toggle-area-btn">＋もっと見る</button>
 </section>
 
+<!-- フッター -->
+<footer class="footer">
+    <div class="footer-content">
+        &copy; <?= date('Y') ?> KANPO
+    </div>
+</footer>
 
 <?php
 /*// DB接続設定

@@ -180,5 +180,12 @@ function renderStars($rating) {
   <img class="modal-content" id="modalImage">
 </div>
 
+<!-- フッター -->
+<footer class="footer">
+    <div class="footer-content">
+        &copy; <?= date('Y') ?> KANPO
+    </div>
+</footer>
+
 </body>
 </html>
