@@ -102,6 +102,7 @@ body {
     border-radius: 10px;
 }
 
+
 /* 店舗情報 */
 .store-info {
     width: 90%;
@@ -229,4 +230,96 @@ body {
   text-decoration: none;
   font-size: 30px;
   color: #333;
+}
+
+.review-photo {
+  flex-wrap: wrap;       /* 複数枚なら折り返し */
+  gap: 10px;             /* 画像間の余白 */
+  margin-top: 10px;
+}
+
+.review-photo img {
+  width: 200px;          /* 画像の横幅を固定 */
+  height: 150px;         /* 高さも揃える */
+  object-fit: cover;     /* トリミングしてバランス良く表示 */
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+
+/* サムネイル */
+.review-thumb {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+
+/* モーダル全体 */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  padding-top: 50px;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* 閉じるボタン */
+.modal .close {
+  position: absolute;
+  top: 20px; right: 35px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* モーダル内画像 */
+.modal-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.modal-image {
+  max-width: 300px;
+  max-height: 200px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.modal-image:hover {
+  transform: scale(1.1);
+}
+
+/* 拡大表示用のLightbox */
+#imageLightbox {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.9);
+  text-align: center;
+}
+
+#imageLightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  margin-top: 5%;
+  border-radius: 8px;
+}
+
+#imageLightbox .close {
+  position: absolute;
+  top: 20px; right: 35px;
+  color: #fff;
+  font-size: 40px;
+  cursor: pointer;
 }

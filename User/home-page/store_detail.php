@@ -74,6 +74,7 @@ function renderStars($rating) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>店舗情報詳細</title>
 <link rel="stylesheet" href="css/store_detail.css">
+<script src="js/store_detail.js" defer></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Parisienne&family=Italianno&family=Kosugi+Maru&family=Sawarabi+Gothic&family=Noto+Serif+JP&family=Nanum+Brush+Script&family=Rock+Salt&family=Roboto&display=swap" rel="stylesheet">
 
@@ -146,7 +147,10 @@ function renderStars($rating) {
     <div class="swiper-wrapper">
       <?php foreach($photos as $photo): ?>
       <div class="swiper-slide">
-        <img src="../../Administrator/<?= htmlspecialchars($photo['store_photo_path'], ENT_QUOTES) ?>" alt="店舗画像" class="store-image">
+        <img src="../../Administrator/<?= htmlspecialchars($photo['store_photo_path'], ENT_QUOTES) ?>" 
+     alt="店舗画像" class="store-image"
+     onclick="openImageLightbox(this.src)">
+
       </div>
       <?php endforeach; ?>
     </div>
@@ -158,7 +162,6 @@ function renderStars($rating) {
     <p>画像が登録されていません。</p>
   <?php endif; ?>
 </div>
-
 <!-- 店舗基本情報 -->
 <div class="store-info">
     <span class="store-info-header
@@ -254,19 +257,11 @@ function renderStars($rating) {
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script>
-const swiper = new Swiper('.mySwiper', {
-    loop: true,
-    slidesPerView: 3,
-    spaceBetween: 20,
-    pagination: { el: '.swiper-pagination', clickable: true },
-    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-    breakpoints: {
-        1024: { slidesPerView: 3 },
-        768: { slidesPerView: 2 },
-        480: { slidesPerView: 1 }
-    }
-});
-</script>
+
+<!-- Lightbox本体 -->
+<div id="imageLightbox">
+  <span class="close" onclick="closeImageLightbox()">&times;</span>
+  <img id="lightboxImg" src="" alt="拡大画像">
+</div>
 </body>
 </html>
