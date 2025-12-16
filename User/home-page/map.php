@@ -6,6 +6,8 @@ $pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8mb4', 'root', '', 
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 ]);
 
+$target_store_id = $_GET['store_id'] ?? null;
+
 // カテゴリ一覧を取得
 $categories = $pdo->query("SELECT category_id, category_name FROM category")->fetchAll();
 
@@ -68,7 +70,8 @@ $stores = $stmt->fetchAll();
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script>
-const stores = <?= json_encode($stores, JSON_UNESCAPED_UNICODE) ?>;
+ const stores = <?= json_encode($stores, JSON_UNESCAPED_UNICODE) ?>;
+  const targetStoreId = <?= json_encode($target_store_id) ?>;
 </script>
 
 </body>

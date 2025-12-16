@@ -91,6 +91,7 @@ function renderStars($rating) {
 
 <a class="back" href="javascript:history.back()">←</a>
 
+<a href="map.php?store_id=<?= $store_id ?>">地図で見る</a>
 
 <!-- 店舗カルーセル -->
  <!-- 店舗名もカテゴリごとに装飾 -->
