@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 try {
-   include '../kanpo/DB/db_connect.php';
+    $pdo = new PDO('mysql:host=mysql322.phy.lolipop.lan;dbname=LAA1681943-watabe17;charset=utf8', 'LAA1681943', 'Watabe17');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $photo_id = $_GET['id'] ?? null;

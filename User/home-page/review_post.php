@@ -2,7 +2,10 @@
 session_start();
 
 // DB接続
-include '../kanpo/DB/db_connect.php';
+$pdo = new PDO('mysql:host=mysql322.phy.lolipop.lan;dbname=LAA1681943-watabe17;charset=utf8', 'LAA1681943', 'Watabe17', [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+]);
 
 // ログイン確認
 if (!isset($_SESSION['user_id'])) {

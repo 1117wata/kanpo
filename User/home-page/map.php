@@ -1,8 +1,11 @@
 <?php
 session_start();
 
-include '../kanpo/DB/db_connect.php';
-$pdo = getDB();
+$pdo = new PDO('mysql:host=mysql322.phy.lolipop.lan;dbname=LAA1681943-watabe17;charset=utf8', 'LAA1681943', 'Watabe17', [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+]);
+
 $target_store_id = $_GET['store_id'] ?? null;
 
 // カテゴリ一覧を取得

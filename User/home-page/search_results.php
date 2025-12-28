@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../kanpo/DB/db_connect.php';
+$pdo = new PDO('mysql:host=mysql322.phy.lolipop.lan;dbname=LAA1681943-watabe17;charset=utf8', 'LAA1681943', 'Watabe17');
 
 $category_stmt = $pdo->query("SELECT category_id, category_name FROM category");
 $categories = $category_stmt->fetchAll(PDO::FETCH_ASSOC);
