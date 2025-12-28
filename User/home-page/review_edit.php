@@ -8,10 +8,7 @@ if (!$user_id) {
     exit;
 }
 
-$pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8mb4', 'root', '', [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-]);
+include '../kanpo/DB/db_connect.php';
 
 // ユーザ情報取得
 $stmt = $pdo->prepare("SELECT * FROM user WHERE user_id = ?");

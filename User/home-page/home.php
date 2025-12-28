@@ -62,7 +62,8 @@ if (!empty($_SESSION['user_id'])) {
 </form>
 
 <?php
-$pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8', 'root', '');
+//$pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8', 'root', '');
+include '../kanpo/DB/db_connect.php';
 $categories = $pdo->query("SELECT category_id, category_name FROM category")->fetchAll(PDO::FETCH_ASSOC);
 $areas = $pdo->query("SELECT area_id, area_name FROM area")->fetchAll(PDO::FETCH_ASSOC);
 

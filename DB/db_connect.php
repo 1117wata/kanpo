@@ -5,11 +5,8 @@ function getDB() {
 
     if ($pdo === null) {
         try {
-            $pdo = new PDO(
-                "mysql:host=localhost;dbname=kanpo;charset=utf8",
-                "root",
-                ""
-            );
+            
+$pdo = new PDO('mysql:host=mysql322.phy.lolipop.lan;dbname=LAA1681943-watabe17;charset=utf8', 'LAA1681943', 'Watabe17');
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             echo "DB接続エラー: " . $e->getMessage();
