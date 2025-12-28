@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['nickname'])) {
     }
 
     try {
-        $pdo = new PDO("mysql:host=localhost;dbname=kanpo;charset=utf8", "root", "");
+        include '../kanpo/DB/db_connect.php';
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM user WHERE nickname = :nickname");
