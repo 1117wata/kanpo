@@ -1,11 +1,8 @@
 <?php
 session_start();
 
-$pdo = new PDO('mysql:host=localhost;dbname=kanpo;charset=utf8mb4', 'root', '', [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-]);
-
+include '../kanpo/DB/db_connect.php';
+$pdo = getDB();
 $target_store_id = $_GET['store_id'] ?? null;
 
 // カテゴリ一覧を取得

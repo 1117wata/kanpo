@@ -2,6 +2,7 @@
 session_start();
 
 include '../kanpo/DB/db_connect.php';
+$pdo = getDB();  
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
