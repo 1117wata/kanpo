@@ -73,25 +73,26 @@ document.addEventListener("DOMContentLoaded", () => {
   renderMarkers();
 
   // ② 店舗IDがあるならその店舗へズーム（カテゴリも自動選択）
-  if (targetStoreId) {
+
+// ★ 空文字や "0" を無効扱いにする
+if (targetStoreId === "" || targetStoreId === null || targetStoreId === "0") {
+  targetStoreId = null;
+}
+
+if (targetStoreId) {
     const target = stores.find(s => s.store_id == targetStoreId);
 
     if (target && target.latitude && target.longitude) {
 
-      // ★カテゴリボタンを自動で active にする
       const btn = document.querySelector(`.category-btn[data-id="${target.category_id}"]`);
       if (btn) {
         document.querySelectorAll(".category-btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
       }
 
-      // ★そのカテゴリだけ表示
       renderMarkers(target.category_id);
-
-      // ★対象店舗へズーム
       map.setView([target.latitude, target.longitude], 17);
 
-      // ★バグ修正：store → target に変更
       const targetMarker = markers.find(m => m.storeId == targetStoreId);
       if (targetMarker) {
         targetMarker.bindTooltip(
@@ -101,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-  } else {
+} else {
     // ③ 店舗IDがないときだけ現在地へズーム
     map.locate({ setView: true, maxZoom: 16 });
 
@@ -114,7 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
     map.on('locationerror', e => {
       console.warn("現在地を取得できませんでした: " + e.message);
     });
-  }
+}
+
 
   // カテゴリボタン
   document.querySelectorAll(".category-btn").forEach(btn => {

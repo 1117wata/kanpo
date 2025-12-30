@@ -1,6 +1,10 @@
 <?php
 session_start();
-include '../kanpo/DB/db_connect.php';
+$pdo = new PDO('mysql:host=mysql322.phy.lolipop.lan;dbname=LAA1681943-watabe17;charset=utf8', 'LAA1681943', 'Watabe17', [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+]);
+
 // ログイン中のユーザーIDを取得
 $user_id = $_SESSION['user_id'] ?? null;
 

@@ -6,5 +6,5 @@ $_SESSION = [];
 session_destroy();
 
 // ユーザー側ログインページにリダイレクト
-header("Location: ../User/login-page/login.php");
+header("Location: ../Administrator/admin_login.php");
 exit;
